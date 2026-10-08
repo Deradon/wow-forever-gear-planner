@@ -226,13 +226,19 @@ blind trust either.
 | Item | Generated | Wowhead | Verdict |
 |---|---|---|---|
 | Dreamstaff (249454, `Flags_4` 0x500, two-hand) | 62–93, 2.40, 32.29 DPS | 62–93, 2.40, 32.29 DPS | caster factor 0.743 on the two-hand table confirmed |
-| Searing Golden Blade (12260, `Flags_4` 0x100, one-hand) | 15–29, 1.40, 15.71 DPS | 14–26, 1.40, 14.29 DPS | mismatch (×0.91); the one-hand caster factor or table differs |
-| Satchel of Copper Bombs (285275, thrown) | 10–19, 2.00, 7.25 DPS | 2–10, 2.00, 3.09 DPS | mismatch (×0.43); the "two-hand table × 0.6" rule is wrong for thrown |
+| Searing Golden Blade (12260, `Flags_4` 0x100, one-hand) | 15–29, 1.40, 15.71 DPS | 14–26, 1.40, 14.29 DPS | **in-game tooltip confirms Wowhead**: one-hand caster weapons are OneHand table × 2/3, not × 0.743 |
+| Sageblade (22383, one-hand caster, epic ilvl 64) | 43–81, 34.44 DPS | 39–73, 31.11 DPS | same: ×0.668 of the OneHand table |
+| Glimmering Staff (249392), Solid Iron Maul (3851), two-hand caster | 32–49, 18.41 / 43–66, 15.57 | identical | two-hand caster factor 0.743 confirmed (with Dreamstaff) |
+| Mithril Blunderbuss (10508, gun) | 36–68, 17.93 DPS | identical | gun rule (TwoHand × 0.6) confirmed at ilvl 41 |
+| Cracked (285279), Mithril (285280), Arcanite (285281) Blacksmith Hammer, thrown | 13–25 8.64 / 24–46 16.67 / 43–80 27.95 | 15–29 10.00 / 28–53 19.29 / 49–92 32.05 | **in-game tooltip confirms Wowhead** (Cracked: 15–29, 2.20, 10 DPS): thrown hammers are OneHand table × 0.9, not the gun rule |
+| Satchel of Copper/Bronze/Iron/Dark Iron Bombs (285275–285278, thrown) | 7.25 / 13.25 / 21.25 / 26.5 DPS | "2–10" 3.09 / "2–20" 5.45 / "2–31" 8.34 / "2–39" 10.35 | **in-game tooltip (copper): 2–11, 2.00, 3.1 DPS, plus "Equip: thrown attacks explode for 1 to 11 Fire damage"**, so Wowhead is right and no table ratio fits: the satchels carry part of their budget in the explosion. Ship them as curated overrides (`curation/items.json` weapon fix, cite WH + in-game, checked 2026-10-08) |
 
-Wowhead derives its numbers from the same tables, so a mismatch is not proof either way; the in-game tooltip decides
-(`/run C_Item.RequestLoadItemDataByID(id)` then `GameTooltip:SetItemByID(id)`, any character level). Until then the
-rules stand and the three items stay in the report's check list; a confirmed correction becomes a curated
-override or a rule change in `pipeline/items.js` for the next data release (M1.1).
+Wowhead derives its numbers from the same tables, so a mismatch alone is not proof; the in-game tooltip decides.
+Macro, any character level: `/run local id=12260 C_Item.RequestLoadItemDataByID(id) C_Timer.After(2,function() local
+t=C_TooltipInfo.GetItemByID(id) for _,l in ipairs(t.lines) do print(l.leftText or "", l.rightText or "") end end)`.
+Corrections (planned for the first public build, P1): one-hand caster factor 2/3 (`pipeline/constants.js`; two-hand
+stays 0.743), thrown = OneHand table × 0.9 (hammers; fixtures 285279 15–29, 285280 28–53, 285281 49–92), satchels
+285275–285278 as curated weapon overrides (2–11, 2–20, 2–31, 2–39 at speed 2.00; the three higher ones from Wowhead).
 
 ### 6.4 Effects and sets
 
