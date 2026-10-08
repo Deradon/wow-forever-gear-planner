@@ -355,3 +355,43 @@ test("tooltip and About: offline tooltip with Get via and source, coverage table
   const cov = A.coverage();
   assert.ok(cov.alliance[0].known > 0 && cov.alliance[0].total >= cov.alliance[0].known);
 });
+
+test("review fixes: escaped labels, undo expires with its toast, no save on a broken page, undo slot survives a failed write", () => {
+  const { A, data, storage, FGP } = loadApp();
+  addEntry(A, { cls: "Mage", level: "10", label: "<b>x</b>" });
+  const h = A.viewHtml("gear");
+  assert.doesNotMatch(h, /<b>x<\/b>/);
+  assert.match(h, /&lt;b&gt;x&lt;\/b&gt;/);
+  // An undo belongs to its toast: a later toast, a reset or an import ends it.
+  const id = A.selected().id;
+  A.deleteEntry(id);
+  A.toast("something else");
+  assert.strictEqual(A.runUndo(), false);
+  assert.strictEqual(A.entries().length, 0);
+  addEntry(A, { cls: "Rogue", level: "5" });
+  A.deleteEntry(A.selected().id);
+  A.resetState();
+  assert.strictEqual(A.runUndo(), false);
+  // A page that can't start never saves (the theme key would otherwise write empty defaults over real data).
+  addEntry(A, { cls: "Rogue", level: "5" });
+  A.save();
+  const saved = storage.getItem(FGP.state.KEYS.state);
+  A.init({ data: Object.assign({}, data, { meta: Object.assign({}, data.meta, { schema: 99 }) }), storage });
+  assert.ok(A.problems.length);
+  A.acts.theme();
+  assert.strictEqual(storage.getItem(FGP.state.KEYS.state), saved);
+  assert.match(A.viewHtml("gear"), /can.t start/);
+  // Undo slot write rejected (quota): undo still restores the previous set, from memory.
+  const s2 = memStorage();
+  const real = s2.setItem;
+  s2.setItem = (k, v) => { if (k === FGP.state.KEYS.pricesUndo) { const e = new Error("full"); e.name = "QuotaExceededError"; throw e; } real(k, v); };
+  const b = loadApp({ storage: s2 }).A;
+  b.importBytes(auctionatorFile({ One: [[LINEN, 11, b.today, 3]] }), "Auctionator.lua");
+  b.importBytes(auctionatorFile({ Two: [[LINEN, 22, b.today, 3]] }), "Auctionator.lua");
+  assert.ok(b.undoImport());
+  assert.strictEqual(b.prices.imported.realm, "One");
+  assert.match(b.banners().map((x) => x.html).join(" "), /storage is full/);
+  // A file whose realms are all unusable offers no "Use these prices" button.
+  b.importBytes(auctionatorFile({ Empty: [] , Empty2: [] }), "Auctionator.lua");
+  assert.doesNotMatch(b.viewHtml("prices"), /id="realm-use"/);
+});

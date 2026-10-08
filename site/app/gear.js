@@ -217,7 +217,7 @@
         '<span class="ln-next">' + (nx ? '<span class="lvl-pill' + (ready ? " ready" : "") + '">' + nx.from + '</span><span class="nm-s' + (ready ? " ready" : "") + '">' + esc(A.item(nx.items[0]).name) + "</span>" :
           '<span class="faint">—</span>') + "</span></div>";
     }).join("");
-    var noneLine = none.length ? '<div class="lane-none">Crafting has nothing for ' + m.name + " in: " + none.map(function (l) { return esc(l.group); }).join(", ") + "</div>" : "";
+    var noneLine = none.length ? '<div class="lane-none">Crafting has nothing for ' + esc(m.name) + " in: " + none.map(function (l) { return esc(l.group); }).join(", ") + "</div>" : "";
     return '<section class="section"><div class="section-head"><h2>Slots</h2><span class="hint">level ' + L + " · what to wear now and every step of the path · pick a slot to filter the tables</span>" + legend + "</div>" +
       '<div class="lanes" role="group" aria-label="Slots; activate one to filter the tables" style="--now:' + trackPos(L) + '">' +
       '<div class="lane lane-axis"><span class="ln-slot"><button type="button" class="btn btn-small" id="slot-all" data-act="slot" data-key="" aria-pressed="' + (!sel) + '">All slots</button></span>' +

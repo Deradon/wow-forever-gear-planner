@@ -57,10 +57,10 @@
     A.form = null;
     A.dataUpdate = FGP.state.dataChanged(A.S, D().meta) && A.S.seen.build ? { from: A.S.seen.build, to: D().meta.build } : null;
     if (!A.S.seen.build) A.S.seen = { build: D().meta.build, generated: D().meta.generated };
+    A.undoAction = null;
     if (res.importedPrices && res.importedPrices.rows) {
-      A.storageSet(FGP.state.KEYS.pricesUndo, JSON.stringify(A.prices.imported || null));
+      A.keepUndo(A.prices.imported);
       A.storageSet(FGP.state.KEYS.prices, JSON.stringify(res.importedPrices));
-      A.prices.undo = true;
       A.setImported(res.importedPrices);
     }
     A.memo.paths = {};
@@ -68,6 +68,7 @@
   };
 
   A.resetState = function () {
+    A.undoAction = null;
     A.S = FGP.state.reset(A.S);
     A.S.seen = { build: D().meta.build, generated: D().meta.generated };
     A.dataUpdate = null;

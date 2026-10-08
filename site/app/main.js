@@ -141,11 +141,13 @@
     if (A.problems.length) { A.S = FGP.state.defaults(); return A.problems; }
     A.ctx = FGP.state.contextFrom(A.D);
     A.loadState();
-    A.prices = { imported: parseSet(storageGet(FGP.state.KEYS.prices)), undo: !!storageGet(FGP.state.KEYS.pricesUndo) };
+    var undoText = storageGet(FGP.state.KEYS.pricesUndo);
+    A.prices = { imported: parseSet(storageGet(FGP.state.KEYS.prices)), undo: undoText !== null, undoSet: parseSet(undoText) };
     return A.problems;
   };
 
   A.loadState = function () {
+    A.undoAction = null;
     var res = FGP.state.load(storageGet(FGP.state.KEYS.state), A.ctx);
     A.S = res.state;
     A.store.status = res.status;
@@ -159,8 +161,10 @@
   };
 
   A.save = function () {
-    if (A.store.readOnly) return false;
-    return storageSet(FGP.state.KEYS.state, FGP.state.serialize(A.S));
+    if (A.store.readOnly || A.problems.length) return false;
+    var ok = storageSet(FGP.state.KEYS.state, FGP.state.serialize(A.S));
+    if (ok) A.store.quota = false;
+    return ok;
   };
 
   // Entries, display names (label, else class; duplicates get a suffix, ui.md §3.2) and per-item state.
@@ -279,6 +283,7 @@
     var out = [], meta = A.D && A.D.meta;
     if (A.problems && A.problems.length) return out;
     if (!A.store.ok) out.push({ cls: "b-err", html: "Browser storage is blocked, so changes won't survive a reload. Use <strong>Export</strong> on the About tab to keep them." });
+    if (A.store.ok && A.store.quota) out.push({ cls: "b-err", html: "Browser storage is full, so the latest changes were not saved. Use <strong>Export</strong> on the About tab, or remove imported prices on the Prices tab." });
     if (A.store.readOnly) out.push({ cls: "b-err", html: "Your saved planner data was written by a newer version of this page. Reload to update; nothing is saved until then." });
     if (A.store.status === "corrupt" || A.store.status === "foreign") out.push({ cls: "", html: "Your saved planner data could not be read and was set aside as a backup in this browser. The planner starts empty." });
     if (A.dataUpdate) {
@@ -344,7 +349,12 @@
       var el = $(id);
       if (el) {
         el.focus({ preventScroll: true });
-        if (sel) { try { el.setSelectionRange(sel[0], sel[1]); } catch (e) { /* number inputs */ } }
+        if (sel) { try { el.setSelectionRange(sel[0], sel[1]); } catch (e) { /* not a text field */ } }
+        else if (el.type === "number") {
+          // Number inputs hide their caret position and get it at the start after focus(); typing on after a
+          // debounced re-render ("3", pause, "5") must give 35. Put the caret at the end via a moment as text.
+          try { el.type = "text"; el.setSelectionRange(el.value.length, el.value.length); el.type = "number"; } catch (e) { el.type = "number"; }
+        }
       }
     }
   };
@@ -373,10 +383,11 @@
     if (!t) return;
     if (t.contains(doc().activeElement) || t.matches(":hover")) { toastTimer = setTimeout(hideToast, 1500); return; }
     t.classList.remove("show", "has-action");
+    A.undoAction = null;
   }
-  // action: {label, fn}; also run by the "u" key while it is the latest undo.
+  // action: {label, fn}; also run by the "u" key while its toast is up. Any later toast replaces it.
   A.toast = function (msg, action) {
-    if (action) A.undoAction = action;
+    A.undoAction = action || null;
     var t = $("toast");
     if (!t) return;
     t.textContent = msg;
@@ -563,10 +574,13 @@
   }
 
   function onStorage(ev) {
-    if (ev.key !== FGP.state.KEYS.state && ev.key !== FGP.state.KEYS.prices) return;
-    if (ev.key === FGP.state.KEYS.prices) A.setImported(parseSet(storageGet(FGP.state.KEYS.prices)));
-    else A.loadState();
-    A.prices.undo = !!storageGet(FGP.state.KEYS.pricesUndo);
+    if (A.problems.length || (ev.key !== FGP.state.KEYS.state && ev.key !== FGP.state.KEYS.prices)) return;
+    if (ev.key === FGP.state.KEYS.prices) {
+      var u = storageGet(FGP.state.KEYS.pricesUndo);
+      A.prices.undo = u !== null; A.prices.undoSet = parseSet(u);
+      A.setImported(parseSet(storageGet(FGP.state.KEYS.prices)));
+    }
+    else { A.loadState(); if (A.form && A.form.mode === "edit" && !A.entry(A.form.id)) A.form = null; }
     A.render();
     A.toast("Updated from another tab");
   }

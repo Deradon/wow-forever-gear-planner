@@ -39,7 +39,7 @@
     var notes = [];
     if (set.entries > atr().MAX_STORED_ROWS) { set = atr().filterRows(set, A.isKnown); notes.push("This file has very many prices; only the " + set.entries + " items this planner knows were kept."); }
     var prev = A.prices.imported;
-    A.storageSet(K().pricesUndo, JSON.stringify(prev || null));
+    A.keepUndo(prev);
     if (!A.storageSet(K().prices, JSON.stringify(set))) {
       if (!set.filtered) {
         set = atr().filterRows(set, A.isKnown);
@@ -47,7 +47,6 @@
       }
       if (!A.storageSet(K().prices, JSON.stringify(set))) notes.push("These prices could not be saved in this browser; they last until you reload.");
     }
-    A.prices.undo = true;
     A.setImported(set);
     A.imp.phase = "done";
     A.imp.realmKey = key;
@@ -56,14 +55,20 @@
     return true;
   };
 
+  // The one undo slot (pricing §2.7): the set before the last import, null for "no prices"; kept in memory too,
+  // so a failed storage write never makes undo restore the wrong set.
+  A.keepUndo = function (prev) {
+    A.prices.undo = true;
+    A.prices.undoSet = prev || null;
+    if (!A.storageSet(K().pricesUndo, JSON.stringify(prev || null))) A.storageRemove(K().pricesUndo);
+  };
   A.undoImport = function () {
-    var text = A.storageGet(K().pricesUndo);
-    if (text === null && !A.prices.undo) return false;
-    var prev = null;
-    try { prev = JSON.parse(text); } catch (e) { prev = null; }
-    if (prev && prev.rows) A.storageSet(K().prices, JSON.stringify(prev)); else { A.storageRemove(K().prices); prev = null; }
+    if (!A.prices.undo) return false;
+    var prev = A.prices.undoSet && A.prices.undoSet.rows ? A.prices.undoSet : null;
+    if (prev) A.storageSet(K().prices, JSON.stringify(prev)); else A.storageRemove(K().prices);
     A.storageRemove(K().pricesUndo);
     A.prices.undo = false;
+    A.prices.undoSet = null;
     A.setImported(prev);
     A.imp = { phase: null, names: A.imp.names };
     return true;
@@ -71,9 +76,8 @@
 
   A.clearImported = function () {
     if (!A.prices.imported) return;
-    A.storageSet(K().pricesUndo, JSON.stringify(A.prices.imported));
+    A.keepUndo(A.prices.imported);
     A.storageRemove(K().prices);
-    A.prices.undo = true;
     A.setImported(null);
     A.imp = { phase: null, names: A.imp.names };
   };
@@ -173,7 +177,8 @@
           var id = "realm-" + i, info = r.usable ? r.entries + " prices, " + r.known + " used by the planner" + (r.newestDay !== null ? ", scanned " + atr().isoDay(r.newestDay) + " (" + A.ageText(A.today - r.newestDay) + ")" : "") : r.error ? "damaged" : "no prices";
           return '<label' + (r.usable ? "" : ' class="off"') + '><input type="radio" name="realm" id="' + id + '" value="' + i + '" data-change="realm"' + (r.key === imp.realmKey ? " checked" : "") + (r.usable ? "" : " disabled") +
             "> <strong>" + esc(r.label) + '</strong> <span class="muted small">' + esc(info) + "</span></label>";
-        }).join("") + '</div><button type="button" class="btn btn-primary" id="realm-use" data-act="realm-use">Use these prices</button></fieldset>');
+        }).join("") + "</div>" + (res.realms.some(function (r) { return r.usable; }) ? '<button type="button" class="btn btn-primary" id="realm-use" data-act="realm-use">Use these prices</button>' :
+          '<p class="err">No realm in this file has usable prices.</p>') + "</fieldset>");
       }
       out.push('<details class="section" id="diag"><summary>Diagnostic for a bug report</summary><p class="small muted">Copy this into an issue instead of attaching your file: your file holds character and realm names. ' +
         "Realm names and the file name are left out unless you tick the box.</p>" +

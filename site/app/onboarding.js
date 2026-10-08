@@ -95,10 +95,11 @@
   // Add or update an entry from a validated form result; returns its ID.
   A.saveEntry = function (data, id) {
     var es = A.S.roster.entries;
-    if (id) {
-      var e = A.entry(id);
+    var e = id ? A.entry(id) : null;
+    if (e) {
       ["cls", "label", "role", "level", "professions", "options"].forEach(function (k) { e[k] = data[k]; });
     } else {
+      // A new entry, or one deleted (another tab, an undo) while its edit form was open: added again.
       id = FGP.state.newEntryId(A.env.random, es);
       data.id = id;
       es.push(data);
