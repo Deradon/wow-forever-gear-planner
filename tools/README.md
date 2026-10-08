@@ -12,5 +12,8 @@ Maintenance scripts (CommonJS `.js`; see docs/synthesis.md D11).
 - `stamp.js <dir>`: deploy-time cache busting: rewrites local `src=`/`href=` in `<dir>/index.html` to `?v=<hash>`
   (run by `.github/workflows/pages.yml` on the `_site` copy, never on `site/`).
 - `make-db2-fixture.js`: cuts `tests/fixtures/db2/` (the rows a dozen fixture items need) from the DB2 cache.
-
-Later: `prices-default.js`.
+- `prices-default.js <Auctionator.lua> --realm <key> --build <build> --date <YYYY-MM-DD>`: the default price list
+  (docs/pricing-import.md §4) as `site/data/forever/prices-default.js` (gitignored). Refuses a build other than the
+  game data's and a scan more than 14 days old (`--allow-old`); lists the realms when `--realm` is missing and the file
+  has several. None ships before a live scan exists (U3). To ship one: drop the `.gitignore` line, add
+  `<script src="data/forever/prices-default.js"></script>` after `reference.js` in `site/index.html`, run `check.sh`.

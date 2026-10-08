@@ -32,7 +32,8 @@ test("index.html: script order data → lib → app, every data, lib and app fil
   const order = srcs.map(kind);
   assert.deepStrictEqual(order, [...order].sort((a, b) => ["data", "lib", "app"].indexOf(a) - ["data", "lib", "app"].indexOf(b)));
   assert.strictEqual(new Set(srcs).size, srcs.length, "no script twice");
-  const want = [...list("data/forever"), ...list("lib"), ...list("app")];
+  // The default price list (tools/prices-default.js) is optional and gitignored until one ships (U3).
+  const want = [...list("data/forever").filter((f) => f !== "data/forever/prices-default.js" || srcs.includes(f)), ...list("lib"), ...list("app")];
   assert.deepStrictEqual([...srcs].sort(), want.sort());
   assert.strictEqual(srcs[srcs.length - 1].startsWith("app/"), true);
   assert.strictEqual(srcs.indexOf("app/main.js"), srcs.findIndex((s) => s.startsWith("app/")), "main.js first of the app scripts");

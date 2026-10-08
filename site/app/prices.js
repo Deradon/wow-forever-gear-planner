@@ -139,10 +139,12 @@
       out.push("<dt>Scanned</dt><dd>" + (age === null ? "unknown" : esc(atr().isoDay(s.scanDay)) + ' <span class="age age-' + esc(band) + '">' + esc(age > 0 ? A.ageText(age) + " old" : "today") + " · " + esc(band) + "</span>") + "</dd>");
       out.push("<dt>Prices</dt><dd>" + esc(s.entries) + " items" + (s.filtered ? " (only items the planner knows)" : "") + (s.build && s.build !== D().meta.build ? ' <span class="badge b-warn">imported with data build ' + esc(s.build) + "</span>" : "") + "</dd>");
       out.push("<dt>Imported at</dt><dd>" + esc(s.importedAt || "?") + "</dd>");
-    } else {
+    } else if (!A.defaultSet()) {
       out.push("<dt>Imported</dt><dd>none yet: every price shows “no price” until you import your Auctionator file or set your own.</dd>");
-    }
-    out.push("<dt>Your prices</dt><dd>" + esc(A.plural(n, "override")) + "</dd><dt>Precedence</dt><dd>your price › vendor › Auction House › craft cost of the mats</dd></dl>");
+    } else out.push("<dt>Imported</dt><dd>none yet: the default list fills in until you import your Auctionator file.</dd>");
+    var dl = A.defaultSet();
+    if (dl) out.push("<dt>Default list</dt><dd>" + esc(dl.entries) + " prices, scan " + esc(dl.scanDate) + " (" + esc(A.plural(dl.realms, "realm")) + "), build " + esc(dl.build) + "</dd>");
+    out.push("<dt>Your prices</dt><dd>" + esc(A.plural(n, "override")) + "</dd><dt>Precedence</dt><dd>your price › vendor › Auction House" + (dl ? " › default list" : "") + " › craft cost of the mats</dd></dl>");
     out.push('<div class="actions" style="margin-top:8px">' +
       (A.prices.undo ? '<button type="button" class="btn" id="price-undo" data-act="price-undo">Undo last import</button>' : "") +
       (s ? '<button type="button" class="btn btn-quiet" id="price-clear" data-act="price-clear">Remove imported prices</button>' : "") + "</div>");
