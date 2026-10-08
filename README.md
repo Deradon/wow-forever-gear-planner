@@ -4,9 +4,10 @@ A planner for **crafted gear in WoW: Forever, levels 1–60**. Tell it which cha
 up to two professions), and it shows for each one which crafted pieces to make or buy at which level, who in your
 roster can craft them, where the patterns come from, and what the materials cost at your Auction House.
 
-**Status: M1 in progress: data and ranking library.** The generated beta data, the build report and the browser
-libraries exist; the page itself is the next step of milestone M1 in [docs/roadmap.md](docs/roadmap.md). The plan is to go public during the Forever beta,
-before the game launches on 2026-11-05, and to refresh the data for the live game right after launch.
+**Status: M1: first usable page on beta data (build 1.60.1.70205).** Open `site/index.html` from disk (no server,
+no network needed), build a roster, and get a ranked crafted-gear path for levels 1–60 per character, with recipe
+source badges and prices from your own Auctionator file. The plan is to go public during the Forever beta, before
+the game launches on 2026-11-05, and to refresh the data for the live game right after launch.
 
 ## Who it is for
 
@@ -41,7 +42,7 @@ your Auctionator file ──(file picker, stays in your browser)──▶ site/ 
 | Path | What | Status |
 |---|---|---|
 | `docs/` | design documents, synthesis of decisions, roadmap | written |
-| `site/` | the published page | `lib/` written; page in progress (M1) |
+| `site/` | the published page | first usable page (M1) |
 | `site/data/` | generated game data, never hand-edited | beta build 1.60.1.70205 |
 | `pipeline/` | the data generator (Node, no dependencies) | written |
 | `curation/` | hand-maintained inputs (JSON) | first version |

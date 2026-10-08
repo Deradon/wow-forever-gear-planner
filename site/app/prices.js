@@ -281,11 +281,17 @@
   A.boots.push(function () {
     var d = root.document;
     function zone(ev) { return ev.target.closest && ev.target.closest("[data-drop]"); }
-    d.addEventListener("dragover", function (ev) { var z = zone(ev); if (z) { ev.preventDefault(); z.classList.add("over"); } });
+    function files(ev) { return ev.dataTransfer && [].indexOf.call(ev.dataTransfer.types || [], "Files") >= 0; }
+    // A file dropped anywhere else must not replace the page with the file.
+    d.addEventListener("dragover", function (ev) {
+      var z = zone(ev);
+      if (z) { ev.preventDefault(); z.classList.add("over"); }
+      else if (files(ev)) { ev.preventDefault(); ev.dataTransfer.dropEffect = "none"; }
+    });
     d.addEventListener("dragleave", function (ev) { var z = zone(ev); if (z) z.classList.remove("over"); });
     d.addEventListener("drop", function (ev) {
       var z = zone(ev);
-      if (!z) return;
+      if (!z) { if (files(ev)) ev.preventDefault(); return; }
       ev.preventDefault();
       z.classList.remove("over");
       var f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];

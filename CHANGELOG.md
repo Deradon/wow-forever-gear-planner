@@ -11,6 +11,13 @@ versions follow semver, and data-only releases are patch releases (see docs/rele
   armor and weapon damage, recipes, derived and curated sources, deterministic emitter, build report.
 - Curation inputs (`curation/*.json`) with a schema check.
 - Browser libraries (`site/lib/`): ranking path rule, Auctionator reader (Lua literals, CBOR), price model, user state.
+- M1 page (`site/index.html`, `style.css`, `app/`): onboarding (one character, several, example roster), entry form,
+  Gear view (roster cards with inline level, slot lanes 1–60, next upgrades, full plan, alternatives for Favor,
+  reputation and drop-only patterns, Get via, source badges, status, hide with undo, search, keyboard shortcuts),
+  Prices (Auctionator file by picker or drop, realm choice, one undo slot, your own prices, redacted diagnostic),
+  About (data freshness, source coverage per level band and faction, export, import, reset), offline item tooltips
+  and Wowhead links. Works from `file://` with networking off; light and dark themes.
+- `tests/js/site-static.test.js` (static-page constraints) and `site-app.test.js` (acceptance steps 1–6 in Node).
 - Tests (`tests/js/`, `node --test`) and `tools/check.sh`.
 
 ### Data

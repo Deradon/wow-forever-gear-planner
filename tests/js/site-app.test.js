@@ -229,6 +229,34 @@ test("step 5: hide and undo, the next-best piece takes its place; [ and ] switch
   for (const t of tags) assert.match(t, /\sid="/, t);
 });
 
+test("search, slot filter, core only and status: the tables follow, the lanes show what is in hand", () => {
+  const { A } = loadApp();
+  A.acts.start(el({ "data-key": "example" }));
+  const e = A.selected(), m = A.gearModel(e);
+  A.setQuery("boots");
+  let rows = A.filterRows(m, m.rows);
+  assert.ok(rows.length > 0 && rows.every((r) => r.group === "Feet" || /boots/i.test(r.it.name)), "search by name");
+  A.setQuery("");
+  A.acts.slot(el({ "data-key": "Chest" }));
+  rows = A.filterRows(A.gearModel(e), A.gearModel(e).rows);
+  assert.ok(rows.length > 0 && rows.every((r) => r.group === "Chest"));
+  assert.match(A.viewHtml("gear"), /id="slot-chest"[^>]*aria-pressed="true"/);
+  A.acts.slot(el({ "data-key": "Chest" }));
+  assert.strictEqual(A.S.prefs.slot, "", "a second click clears the slot filter");
+  A.changes.filter(el({ "data-key": "core" }, { checked: true }));
+  assert.ok(A.filterRows(m, m.rows).every((r) => r.core));
+  A.changes.filter(el({ "data-key": "core" }, { checked: false }));
+  // Mark the current Chest piece equipped: the lane says so, and the piece is pinned in the path.
+  const lane = A.gearModel(e).lanes.find((l) => l.group === "Chest" && l.cur);
+  const id = lane.cur.items[0];
+  A.changes.status(el({ "data-key": `${e.id}:${id}` }, { value: "equipped" }));
+  const after = A.gearModel(e);
+  assert.strictEqual(after.lanes.find((l) => l.group === "Chest").state, "equipped");
+  assert.ok(after.rows.find((r) => r.id === id).status === "equipped");
+  A.changes.filter(el({ "data-key": "hideDone" }, { checked: true }));
+  assert.ok(!A.filterRows(after, after.rows).some((r) => r.id === id), "Hide done");
+});
+
 test("entry form: validation messages, edit and delete with undo", () => {
   const { A } = loadApp();
   A.acts.start(el({ "data-key": "several" }));
