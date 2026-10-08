@@ -59,7 +59,7 @@
     return '<div class="toolbar">' + profsOf(e).map(function (p) {
       var id = "qskill-" + e.id + "-" + A.slug(p.id), est = FGP.rank.pace(D().roles, e.level);
       return '<label for="' + id + '">' + esc(p.id) + ' skill</label><input type="number" class="inp inp-num" min="0" max="' + cap + '" id="' + id + '" data-input="qskill" data-change="qskill" data-key="' +
-        esc(e.id + ":" + p.id) + '" value="' + (typeof p.skill === "number" ? p.skill : "") + '" placeholder="~' + est + '" aria-label="' + esc(p.id) + " skill of " + esc(q.names[e.id]) + ' (empty: estimated from the level)">' +
+        esc(e.id + ":" + p.id) + '" value="' + (typeof p.skill === "number" ? p.skill : "") + '" placeholder="~" aria-label="' + esc(p.id) + " skill of " + esc(q.names[e.id]) + ' (empty: estimated from the level)">' +
         (typeof p.skill === "number" ? "" : '<span class="faint" title="Estimated from level ' + e.level + ' (crafter pace heuristic)">~' + est + "</span>") +
         (p.spec ? ' <span class="badge b-info" title="Specialisation">' + esc(p.spec) + "</span>" : "");
     }).join("") + "</div>";

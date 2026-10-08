@@ -487,7 +487,7 @@ test("M2 queue: crafters, Auction House, prices and owned mats, crafter choice, 
   const mageRows = FGP.queue.select(q, mage.id);
   assert.deepStrictEqual([...new Set(mageRows.map((r) => r.prof))].sort(), ["Enchanting", "Tailoring"]);
   for (const r of mageRows) assert.match(h, new RegExp(`id="qlrn-${mage.id}-${r.recipe}"`));
-  assert.match(h, new RegExp(`id="qskill-${mage.id}-tailoring"[^>]*placeholder="~${FGP.rank.pace(A.D.roles, 20)}"`));
+  assert.match(h, new RegExp(`id="qskill-${mage.id}-tailoring"[^>]*value=""[^>]*><span class="faint"[^>]*>~${FGP.rank.pace(A.D.roles, 20)}<`));
   assert.match(h, /<h2>Crafter pace<\/h2>[\s\S]*Tailoring:<\/strong> Example Mage reaches \d+ → needs \d+/);
   assert.match(h, /<h2>Shopping list<\/h2>[\s\S]*id="q-within"[^>]*value="5"/);
   assert.match(h, /Value of mats used[\s\S]*To buy/);

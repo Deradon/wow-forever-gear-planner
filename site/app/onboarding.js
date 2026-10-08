@@ -214,7 +214,7 @@
           return '<option value="' + esc(sp) + '"' + (sp === p.spec ? " selected" : "") + ">" + esc(sp) + "</option>";
         }).join("") + '</select><span class="hint-line">Decides which specialisation recipes this character can make; until one is chosen they count as makeable, marked "needs …".</span></div>';
     }
-    out.push('<details class="profs" id="f-profs"' + (F.showProfs || F.profs[0].id || F.profs[1].id ? " open" : "") + "><summary>" +
+    out.push('<details class="profs" id="f-profs"' + (F.showProfs || F.profs[0].id || F.profs[1].id ? " open" : "") + "><summary id=\"f-profs-sum\">" +
       (F.start === "one" ? "This character has professions (optional)" : "Professions (optional, up to two)") + "</summary>" +
       profSelect(0) + profSelect(1) + '<div class="hint-line">Empty skill = estimated from the level (shown with ~). Crafters in your roster make BoE pieces for the others and mail them.</div></details>');
     // Label
@@ -275,7 +275,9 @@
   A.changes.form = function (el) {
     var name = el.name, shown = A.form ? [specShown(A.form, 0), specShown(A.form, 1)].join() : "";
     syncForm(el.form);
-    if (name === "cls" || name === "role" || (A.form && [specShown(A.form, 0), specShown(A.form, 1)].join() !== shown)) A.commit();
+    if (name === "cls" || name === "role") A.commit();
+    // The specialisation select appears or goes: re-render after Tab has moved focus, so focus stays where it went.
+    else if (A.form && [specShown(A.form, 0), specShown(A.form, 1)].join() !== shown) setTimeout(function () { A.commit(); }, 0);
   };
   A.submits.entry = function (f, submitter) {
     syncForm(f);
