@@ -669,7 +669,10 @@ All thresholds live in `worth` in the JSON, so tuning needs no code change.
 **M1 implementation notes (2026-10-08, `site/lib/rank.js`), where this section left a choice open:**
 
 - When keep-for-N fails, the step or its successor is dropped, whichever keeps more score × levels; banning is by
-  the failing step's new items.
+  the failing step's new items. **v0.1.1 (2026-10-08):** bans are permanent and were decided front to back, which
+  dropped a piece whose successor was itself dropped a round later (White Leather Jerkin 8–11 behind Fine Leather
+  Tunic 12 for a feral Druid). Now, when the contiguous successor is shorter-lived than the step and fails its own
+  `keepMin`, the successor goes first. 9 of 252 class/role/slot paths regained a piece; oracle unchanged.
 - The par item includes armor (heaviest wearable type) and weapon DPS: `baseline.dpsEfficiency` (0.9) and par speeds
   in `roles.json`.
 - Core thresholds are `worth.coreGain`, `worth.coreKeep` and `worth.coreAlone`.
