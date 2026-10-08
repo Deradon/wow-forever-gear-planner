@@ -5,6 +5,8 @@ versions follow semver, and data-only releases are patch releases (see docs/rele
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-08
+
 ### Fixed
 - Upgrade path: a piece was dropped as "worn too briefly" because of a successor that was itself dropped later, so
   hiding an earlier piece could make it reappear (e.g. White Leather Jerkin for a feral Druid after hiding the
