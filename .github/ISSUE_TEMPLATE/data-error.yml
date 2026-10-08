@@ -1,0 +1,42 @@
+name: Data error
+description: An item, recipe, source, stat or damage value differs from the game.
+labels: ["data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! The planner's data is generated from the game client's tables and can be wrong. An in-game tooltip
+        screenshot settles most cases. Please crop it to the tooltip: no character, guild or realm names.
+  - type: input
+    id: item
+    attributes:
+      label: Item or recipe
+      description: Name and ID (the ID is in the Wowhead link the planner opens).
+      placeholder: Searing Golden Blade (12260)
+    validations:
+      required: true
+  - type: textarea
+    id: planner
+    attributes:
+      label: What the planner shows
+    validations:
+      required: true
+  - type: textarea
+    id: game
+    attributes:
+      label: What the game shows
+      description: Paste or attach a cropped in-game tooltip screenshot if you can.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version line
+      description: The footer line of the page, e.g. "Forever Gear Planner 0.1.0 · build 1.60.1.70205 (beta) · data 2026-10-08".
+    validations:
+      required: true
+  - type: input
+    id: context
+    attributes:
+      label: Faction and class (if it matters)
+      placeholder: Alliance Mage

@@ -1,0 +1,18 @@
+name: Feature request
+description: Something the planner should do.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: The roadmap (docs/roadmap.md) lists what is planned; the queue, shopping list, Merchant's Favor and enchants are already on it.
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you want to do?
+      description: The situation in the game and what the planner should help with.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How it could look

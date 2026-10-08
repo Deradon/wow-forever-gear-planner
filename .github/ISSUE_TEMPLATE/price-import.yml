@@ -1,0 +1,32 @@
+name: Price import problem
+description: The Auctionator file does not import, or the prices look wrong.
+labels: ["prices"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not attach your Auctionator file.** It contains your character and realm names. The Prices tab shows
+        a redacted diagnostic (format, number of realms and entries, no names): copy that instead.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Firefox 140
+    validations:
+      required: true
+  - type: input
+    id: auctionator
+    attributes:
+      label: Auctionator version
+  - type: textarea
+    id: error
+    attributes:
+      label: What the page says
+      description: The error message, and the diagnostic copied from the Prices tab.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version line
+      description: The footer line of the page.
