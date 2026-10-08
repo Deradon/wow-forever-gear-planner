@@ -1,0 +1,3 @@
+#!/bin/sh
+# Opt-in: git config core.hooksPath .githooks
+exec tools/privacy-check.sh --staged

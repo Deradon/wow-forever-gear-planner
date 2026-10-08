@@ -1,0 +1,26 @@
+# local caches and environments
+node_modules/
+.cache/
+tmp/
+
+# deploy outputs (built by the Pages workflow)
+_site/
+dist/
+
+# raw inputs are never committed: DB2 CSVs, Auctionator files, Wowhead data
+*.csv
+!tests/fixtures/**/*.csv
+*.lua
+!tests/fixtures/**/*.lua
+wowhead-*.json
+
+# the private privacy-check denylist lives outside the repo; this catches a misplaced copy
+*denylist*
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
