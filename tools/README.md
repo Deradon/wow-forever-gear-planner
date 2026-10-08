@@ -9,6 +9,8 @@ Maintenance scripts (CommonJS `.js`; see docs/synthesis.md D11).
   (default), `--staged` (`.githooks/pre-commit`), `--message <file>` (`.githooks/commit-msg`), `--range A..B`
   and `--history` (`.githooks/pre-push`, CI). Private hits print as rule numbers only. Exit 0 clean, 1 findings,
   2 configuration error. Details in the script header.
+- `stamp.js <dir>`: deploy-time cache busting: rewrites local `src=`/`href=` in `<dir>/index.html` to `?v=<hash>`
+  (run by `.github/workflows/pages.yml` on the `_site` copy, never on `site/`).
 - `make-db2-fixture.js`: cuts `tests/fixtures/db2/` (the rows a dozen fixture items need) from the DB2 cache.
 
-Later: `prices-default.js`, deploy helpers.
+Later: `prices-default.js`.

@@ -1,0 +1,38 @@
+# Privacy gate and tests (docs/release-maintenance.md §7.5, §10). Pushes to branches and pages.yml (workflow_call)
+# scan the whole history; pull requests scan their range. The private denylist comes from the PRIVACY_DENYLIST
+# secret; without it (forks) the check runs generic rules only and says so.
+name: ci
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_call:
+    secrets:
+      PRIVACY_DENYLIST:
+        required: false
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Privacy check and tests (tools/check.sh)
+        env:
+          FGP_PRIVACY_DENYLIST: ${{ secrets.PRIVACY_DENYLIST }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -eu
+          if [ -n "$PR_BASE" ]; then mode="--range $PR_BASE..$PR_HEAD"; else mode=--history; fi
+          private=
+          if [ -z "$FGP_PRIVACY_DENYLIST" ]; then
+            echo "::warning::PRIVACY_DENYLIST secret not available: generic privacy rules only"
+            private=--no-private
+          fi
+          tools/check.sh $mode $private

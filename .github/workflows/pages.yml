@@ -1,0 +1,59 @@
+# Deploy site/ to GitHub Pages on v* tags and manual dispatch (docs/release-maintenance.md §5, D2). CI runs first;
+# the deploy copy is stamped for cache busting (§5.3); a tag also gets a release with the offline site.zip, whose
+# notes come from the tag message (§11.4).
+name: pages
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  check:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Copy site/ and stamp the copy
+        run: |
+          rm -rf _site && cp -r site _site
+          node tools/stamp.js _site
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Release with the offline site.zip (unstamped; file:// needs no cache busting)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --force origin "refs/tags/$GITHUB_REF_NAME:refs/tags/$GITHUB_REF_NAME"
+          (cd site && zip -qr ../site.zip .)
+          gh release create "$GITHUB_REF_NAME" site.zip --verify-tag --notes-from-tag --title "$GITHUB_REF_NAME"
