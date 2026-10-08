@@ -2,6 +2,8 @@
 // User state schema 1 (docs/ui.md §10, D24, D34, D35, D37).
 const test = require("node:test");
 const assert = require("node:assert");
+const fs = require("fs");
+const path = require("path");
 const S = require("../../site/lib/state");
 const { loadSite } = require("./helpers/load-site");
 
@@ -44,8 +46,36 @@ test("a valid state survives normalize unchanged in substance", () => {
   assert.strictEqual(n.prefs.filters.hideUnob, true);
   assert.strictEqual(n.prefs.view, "gear", "default view");
   assert.strictEqual(S.normalize({ prefs: { view: "prices" } }, ctx).prefs.view, "prices");
-  assert.strictEqual(S.normalize({ prefs: { view: "queue" } }, ctx).prefs.view, "gear", "unknown views fall back");
+  assert.strictEqual(S.normalize({ prefs: { view: "queue" } }, ctx).prefs.view, "queue");
+  assert.strictEqual(S.normalize({ prefs: { view: "favor" } }, ctx).prefs.view, "gear", "unknown views fall back");
   assert.deepStrictEqual(S.normalize(n, ctx), n, "idempotent");
+});
+
+test("M2 additions at schema 1: queue prefs, owned mats, spec and crafter choice; a v0.1.1 export loads unchanged", () => {
+  const d = S.normalize({}, ctx).prefs;
+  assert.deepStrictEqual([d.queueSel, d.within, d.showHidden.queue], [null, 5, false]);
+  const r = raw();
+  r.prefs = { queueSel: "r0b7m3c", within: null, showHidden: { gear: true, queue: true } };
+  let n = S.normalize(r, ctx);
+  assert.deepStrictEqual([n.prefs.queueSel, n.prefs.within, n.prefs.showHidden], ["r0b7m3c", null, { gear: true, queue: true }]);
+  assert.deepStrictEqual(S.normalize(n, ctx), n, "idempotent");
+  for (const [sel, want] of [["ah", "ah"], ["all", "all"], ["rzzzzzz", null], [7, null]]) assert.strictEqual(S.normalize({ prefs: { queueSel: sel } }, ctx).prefs.queueSel, want);
+  for (const [w, want] of [["3", 3], [-2, 0], [99, 60], ["x", 5], [undefined, 5]]) assert.strictEqual(S.normalize({ prefs: { within: w } }, ctx).prefs.within, want);
+  r.prices.owned = { 2589: 40, 2592: "12", 2: -1, x: 3, 4306: 0 };
+  r.items["r4k9q2x:4316"] = { hidden: true, via: "r0b7m3c" };
+  n = S.normalize(r, ctx);
+  assert.deepStrictEqual(n.prices.owned, { 2589: 40, 2592: 12 });
+  assert.deepStrictEqual(n.items["r4k9q2x:4316"], { hidden: true, via: "r0b7m3c" });
+  const gone = S.removeEntry(n, "r0b7m3c");
+  assert.deepStrictEqual([gone.items["r4k9q2x:4316"], gone.prefs.queueSel], [{ hidden: true }, null], "a removed crafter's choice and selection are cleared");
+  // An export made by v0.1.1 (before the queue): imports at schema 1, every stored field kept, queue prefs defaulted.
+  const old = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "fixtures", "state-v0.1.1-export.json"), "utf8"));
+  assert.ok(S.validateImport(old).ok);
+  const imp = S.importState(old, ctx).state;
+  for (const k of ["roster", "items", "recipes", "seen"]) assert.deepStrictEqual(imp[k], old[k], k);
+  assert.deepStrictEqual(imp.prices.overrides, old.prices.overrides);
+  assert.deepStrictEqual([imp.prefs.queueSel, imp.prefs.within, imp.prefs.showHidden.queue], [null, 5, false]);
+  assert.deepStrictEqual(imp.prefs.upTo, old.prefs.upTo);
 });
 
 test("normalize drops and clamps what it cannot trust", () => {

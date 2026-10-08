@@ -15,7 +15,8 @@
   var PAIR_KEY = /^(r[0-9a-z]{6}):(\d+)$/;
   var DATE = /^\d{4}-\d{2}-\d{2}$/;
   var LEVELS = [1, 60];
-  var VIEWS = ["gear", "prices", "about"];
+  var VIEWS = ["gear", "queue", "prices", "about"];
+  var WITHIN = 5;
 
   function own(o, k) { return o && Object.prototype.hasOwnProperty.call(o, k); }
   function isObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
@@ -36,7 +37,8 @@
       prefs: {
         selected: null, view: "gear", theme: "auto", tooltips: "planner", icons: false,
         filters: { core: false, hideDone: false, hideUnob: true },
-        showHidden: { gear: false }, slot: "", upTo: {},
+        showHidden: { gear: false, queue: false }, slot: "", upTo: {},
+        queueSel: null, within: WITHIN,
         dismissed: { freshness: null, example: false },
       },
     };
@@ -150,7 +152,10 @@
     d.prefs.icons = pr.icons === true;
     var f = isObj(pr.filters) ? pr.filters : {};
     d.prefs.filters = { core: f.core === true, hideDone: f.hideDone === true, hideUnob: f.hideUnob !== false };
-    d.prefs.showHidden = { gear: isObj(pr.showHidden) && pr.showHidden.gear === true };
+    d.prefs.showHidden = { gear: isObj(pr.showHidden) && pr.showHidden.gear === true, queue: isObj(pr.showHidden) && pr.showHidden.queue === true };
+    // Queue (ui.md §5): the selected crafter (entry ID, "ah" or "all"); "within N levels", null = every level.
+    d.prefs.queueSel = pr.queueSel === "ah" || pr.queueSel === "all" || (typeof pr.queueSel === "string" && seen[pr.queueSel]) ? pr.queueSel : null;
+    d.prefs.within = pr.within === null ? null : clampInt(pr.within, 0, LEVELS[1], WITHIN);
     d.prefs.slot = typeof pr.slot === "string" ? pr.slot.slice(0, 20) : "";
     for (k in isObj(pr.upTo) ? pr.upTo : {}) if (seen[k]) d.prefs.upTo[k] = clampInt(pr.upTo[k], LEVELS[0], LEVELS[1], LEVELS[1]);
     var dm = isObj(pr.dismissed) ? pr.dismissed : {};
@@ -251,6 +256,7 @@
     for (k in s.recipes) if (k.indexOf(id + ":") === 0) delete s.recipes[k];
     for (k in s.items) if (s.items[k].via === id) { delete s.items[k].via; if (!Object.keys(s.items[k]).length) delete s.items[k]; }
     delete s.prefs.upTo[id];
+    if (s.prefs.queueSel === id) s.prefs.queueSel = null;
     if (s.prefs.selected === id) s.prefs.selected = s.roster.entries[0] ? s.roster.entries[0].id : null;
     return s;
   }

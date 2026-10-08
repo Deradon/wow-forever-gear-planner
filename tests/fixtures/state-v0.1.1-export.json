@@ -1,0 +1,116 @@
+{
+ "schema": 1,
+ "app": "forever-gear-planner",
+ "seen": {
+  "build": "1.60.1.70205",
+  "generated": "2026-10-08"
+ },
+ "roster": {
+  "faction": "alliance",
+  "includeAH": true,
+  "knownSourceOnly": false,
+  "entries": [
+   {
+    "id": "r8wmx1u",
+    "cls": "Mage",
+    "label": "Example Mage",
+    "role": "caster",
+    "level": 20,
+    "professions": [
+     {
+      "id": "Tailoring",
+      "skill": null,
+      "spec": null
+     },
+     {
+      "id": "Enchanting",
+      "skill": null,
+      "spec": null
+     }
+    ],
+    "options": {},
+    "favor": 0
+   },
+   {
+    "id": "rc12zzj",
+    "cls": "Warrior",
+    "label": "Example Warrior",
+    "role": "melee",
+    "level": 14,
+    "professions": [
+     {
+      "id": "Mining",
+      "skill": null,
+      "spec": null
+     },
+     {
+      "id": "Blacksmithing",
+      "skill": null,
+      "spec": null
+     }
+    ],
+    "options": {},
+    "favor": 0
+   },
+   {
+    "id": "rgjlrsf",
+    "cls": "Rogue",
+    "label": "Example Rogue",
+    "role": "melee",
+    "level": 9,
+    "professions": [],
+    "options": {},
+    "favor": 0
+   }
+  ]
+ },
+ "items": {
+  "rgjlrsf:5957": {
+   "status": "equipped",
+   "via": "ah"
+  },
+  "r8wmx1u:4307": {
+   "status": "have"
+  },
+  "rgjlrsf:2847": {
+   "hidden": true
+  }
+ },
+ "recipes": {
+  "r8wmx1u:3840": "learned"
+ },
+ "prices": {
+  "overrides": {
+   "2589": {
+    "c": 5000,
+    "set": "2026-10-08"
+   }
+  },
+  "owned": {}
+ },
+ "prefs": {
+  "selected": "r8wmx1u",
+  "view": "gear",
+  "theme": "auto",
+  "tooltips": "planner",
+  "icons": false,
+  "filters": {
+   "core": false,
+   "hideDone": false,
+   "hideUnob": true
+  },
+  "showHidden": {
+   "gear": false
+  },
+  "slot": "",
+  "upTo": {
+   "r8wmx1u": 30
+  },
+  "dismissed": {
+   "freshness": null,
+   "example": false
+  }
+ },
+ "exported": "2026-10-08T12:00",
+ "dataBuild": "1.60.1.70205"
+}

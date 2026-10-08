@@ -171,20 +171,64 @@
 
   function learnedKey(entryId, spell) { return entryId + ":" + spell; }
 
+  // Specialisations (roles §5.3, D28): the Master specs are Weaponsmith sub-specs.
+  var SPEC_PARENT = { "Master Axesmith": "Weaponsmith", "Master Hammersmith": "Weaponsmith", "Master Swordsmith": "Weaponsmith" };
+  function specCovers(have, need) { return have === need || SPEC_PARENT[have] === need; }
+
+  // Crafters for one recipe: the entry first, then the roster (BoE only), each eligible unless its chosen spec does
+  // not cover the recipe's; a covering spec goes before an unset one. [{entry, covers}]
+  function craftersFor(r, item, entry, roster) {
+    var need = r.pattern && r.pattern.spec, list = [], entries = roster.entries || [];
+    function add(e) {
+      var p = profOf(e, r.prof);
+      if (!p) return;
+      var covers = !!need && !!p.spec && specCovers(p.spec, need);
+      if (need && p.spec && !covers) return;
+      list.push({ entry: e, covers: covers });
+    }
+    add(entry);
+    if (item.bind !== "BoP") for (var j = 0; j < entries.length; j++) if (entries[j].id !== entry.id) add(entries[j]);
+    var order = list.slice();
+    list.sort(function (a, b) { return (b.covers ? 1 : 0) - (a.covers ? 1 : 0) || order.indexOf(a) - order.indexOf(b); });
+    return list;
+  }
+
+  // Every way the entry can get the item, over its open recipes: [{via, crafter}] (the Gear/Queue crafter choice).
+  function routeOptions(itemId, item, entry, roster, data) {
+    var out = [], seen = {}, ah = false;
+    if (item.avail === "unobtainable") return out;
+    for (var i = 0; i < item.recipes.length; i++) {
+      var r = data.recipes.rows[item.recipes[i]];
+      if (!r || !recipeOpen(r, data.sources.rows[item.recipes[i]] || [], roster)) continue;
+      craftersFor(r, item, entry, roster).forEach(function (c) {
+        if (seen[c.entry.id]) return;
+        seen[c.entry.id] = true;
+        out.push({ via: c.entry.id === entry.id ? "self" : "crafter", crafter: c.entry.id });
+      });
+      if (item.bind !== "BoP" && roster.includeAH !== false) ah = true;
+    }
+    if (ah) out.push({ via: "ah", crafter: null });
+    return out;
+  }
+
   // How the entry gets the item: {via: "self"|"crafter"|"ah", crafter, recipe, flags, scarce, unconfirmed} or null.
+  // opts.via[itemId] ("ah" or an entry ID) is the user's crafter choice; it wins where it is possible.
   function route(itemId, item, entry, roster, data, opts) {
     if (item.avail === "unobtainable") return null;
     var roles = data.roles, recs = item.recipes, best = null;
-    var entries = roster.entries || [];
+    var choice = opts.via && opts.via[itemId] || null;
+    var ahOk = item.bind !== "BoP" && roster.includeAH !== false;
     for (var i = 0; i < recs.length; i++) {
       var spell = recs[i], r = data.recipes.rows[spell], src = data.sources.rows[spell] || [];
       if (!r || !recipeOpen(r, src, roster)) continue;
-      var crafters = [];
-      if (profOf(entry, r.prof)) crafters.push(entry);
-      if (item.bind !== "BoP") for (var j = 0; j < entries.length; j++) if (entries[j].id !== entry.id && profOf(entries[j], r.prof)) crafters.push(entries[j]);
-      var via, crafter = null;
-      if (crafters.length) { crafter = crafters[0]; via = crafter.id === entry.id ? "self" : "crafter"; }
-      else if (item.bind !== "BoP" && roster.includeAH !== false) via = "ah";
+      var crafters = craftersFor(r, item, entry, roster), pick = crafters[0] || null, chosen = false;
+      if (choice === "ah" && ahOk) { pick = null; chosen = true; }
+      else if (choice) {
+        for (var j = 0; j < crafters.length; j++) if (crafters[j].entry.id === choice) { pick = crafters[j]; chosen = true; }
+      }
+      var via, crafter = pick ? pick.entry : null;
+      if (crafter) via = crafter.id === entry.id ? "self" : "crafter";
+      else if (ahOk) via = "ah";
       else continue;
       var flags = [], sc = scarcity(r, src);
       if (sc && crafter && (opts.allLearned || (opts.learned && opts.learned[learnedKey(crafter.id, spell)]))) sc = null;
@@ -193,14 +237,14 @@
         var sk = skillAt(roles, crafter, r.prof, Math.max(1, item.req));
         if (sk && sk.skill < r.skill.learn) flags.push(sk.estimated ? "~!" : "!");
       }
-      if (r.pattern && r.pattern.spec) flags.push("needs " + r.pattern.spec);
+      if (r.pattern && r.pattern.spec && !(pick && pick.covers)) flags.push("needs " + r.pattern.spec);
       var unknown = true;
       for (var k = 0; k < src.length; k++) if (src[k].kind !== "unknown") unknown = false;
       if (unknown) flags.push("source unknown");
       if (sc) flags.push("needs " + SCARCE_TEXT[sc]);
-      var cand = { via: via, crafter: crafter ? crafter.id : null, recipe: spell, flags: flags, scarce: sc, unconfirmed: r.avail === "unconfirmed" || item.avail === "unconfirmed" };
-      // Prefer: not scarce, confirmed, self, roster crafter, AH; then the lowest recipe ID (recipes are sorted).
-      var rank = function (c) { return (c.scarce ? 8 : 0) + (c.unconfirmed ? 4 : 0) + (c.via === "self" ? 0 : c.via === "crafter" ? 1 : 2); };
+      var cand = { via: via, crafter: crafter ? crafter.id : null, recipe: spell, flags: flags, scarce: sc, unconfirmed: r.avail === "unconfirmed" || item.avail === "unconfirmed", chosen: chosen };
+      // Prefer: the user's choice, not scarce, confirmed, self, roster crafter, AH; then the lowest recipe ID.
+      var rank = function (c) { return (c.chosen ? 0 : 16) + (c.scarce ? 8 : 0) + (c.unconfirmed ? 4 : 0) + (c.via === "self" ? 0 : c.via === "crafter" ? 1 : 2); };
       if (!best || rank(cand) < rank(best)) best = cand;
     }
     return best;
@@ -518,7 +562,7 @@
     return finish(steps, group, cands, data, opts);
   }
 
-  // The per-slot path for one roster entry. opts: {hidden, inHand, learned, allLearned, costOf, fromLevel}.
+  // The per-slot path for one roster entry. opts: {hidden, inHand, learned, allLearned, costOf, fromLevel, via}.
   // Returns {entry, weights, groups: [{id, steps, alternatives}]}. Scarce (D19) and unconfirmed (D15) pieces
   // never enter the main path; they are listed as alternatives where a path including them would use them.
   function path(data, roster, entry, opts) {
@@ -554,7 +598,8 @@
 
   var api = {
     effectiveWeights: effectiveWeights, defaultRole: defaultRole, score: score, weaponTerm: weaponTerm,
-    proficiencyLevel: proficiencyLevel, scarcity: scarcity, recipeOpen: recipeOpen, route: route, equipGate: equipGate,
+    proficiencyLevel: proficiencyLevel, scarcity: scarcity, recipeOpen: recipeOpen, route: route, routeOptions: routeOptions, equipGate: equipGate,
+    specCovers: specCovers,
     candidates: candidates, par: par, path: path, groupOf: groupOf, pace: pace, tierOf: tierOf,
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;

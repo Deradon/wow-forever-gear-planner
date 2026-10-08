@@ -105,6 +105,63 @@ test("recipe skill flags (!, ~!) and specialisation badges never filter (D26, D2
   assert.ok(rank.pace(data.roles, items[spec].req) < recipe.skill.learn ? flag.includes("~!") : !flag.includes("~!"));
 });
 
+test("specialisation gate (D28, roles §5.3): a set spec that does not cover excludes the crafter; Masters cover Weaponsmith", () => {
+  const gated = (spec, bind) => +Object.keys(items).find((id) => items[id].avail === "ok" && items[id].bind === (bind || "BoE") && items[id].recipes.length === 1 &&
+    (data.recipes.rows[items[id].recipes[0]].pattern || {}).spec === spec && rank.recipeOpen(data.recipes.rows[items[id].recipes[0]], data.sources.rows[items[id].recipes[0]] || [], roster([])));
+  const armor = gated("Armorsmith"), weapon = gated("Weaponsmith");
+  assert.ok(armor && weapon);
+  const bs = (id, spec) => entry(id, "Warrior", "melee", [{ id: "Blacksmithing", skill: 300, spec }], { level: 60 });
+  const wearer = entry("rhunt01", "Hunter", "ranged", [], { level: 60 });
+  const opt = { allLearned: true };
+  const routeOf = (r, id) => rank.route(id, items[id], wearer, r, data, opt);
+  // Unset spec: craftable with the badge.
+  let rt = routeOf(roster([wearer, bs("rsmith1", null)]), weapon);
+  assert.deepStrictEqual([rt.via, rt.crafter, rt.flags.includes("needs Weaponsmith")], ["crafter", "rsmith1", true]);
+  // Armorsmith: Weaponsmith recipes go to the AH (BoE), Armorsmith recipes stay, without the badge.
+  rt = routeOf(roster([wearer, bs("rsmith1", "Armorsmith")]), weapon);
+  assert.deepStrictEqual([rt.via, rt.crafter, rt.flags.includes("needs Weaponsmith")], ["ah", null, true]);
+  assert.strictEqual(routeOf(roster([wearer, bs("rsmith1", "Armorsmith")], { includeAH: false }), weapon), null);
+  rt = routeOf(roster([wearer, bs("rsmith1", "Armorsmith")]), armor);
+  assert.deepStrictEqual([rt.via, rt.crafter, rt.flags.includes("needs Armorsmith")], ["crafter", "rsmith1", false]);
+  // A Master Swordsmith is a Weaponsmith; a covering spec wins over an unset crafter earlier in the roster.
+  rt = routeOf(roster([wearer, bs("rsmith1", null), bs("rsmith2", "Master Swordsmith")]), weapon);
+  assert.deepStrictEqual([rt.crafter, rt.flags.includes("needs Weaponsmith")], ["rsmith2", false]);
+  assert.ok(rank.specCovers("Master Axesmith", "Weaponsmith") && !rank.specCovers("Weaponsmith", "Master Axesmith") && !rank.specCovers("Armorsmith", "Weaponsmith"));
+  // A BoP spec piece with a non-covering spec on its only crafter: no route.
+  const bop = gated("Armorsmith", "BoP") || gated("Weaponsmith", "BoP") || gated("Master Swordsmith", "BoP") || gated("Master Axesmith", "BoP") || gated("Master Hammersmith", "BoP");
+  if (bop) {
+    const need = data.recipes.rows[items[bop].recipes[0]].pattern.spec, other = need === "Armorsmith" ? "Weaponsmith" : "Armorsmith";
+    const me = Object.assign(bs("rsmith1", other), { cls: "Warrior" });
+    assert.strictEqual(rank.route(bop, items[bop], me, roster([me]), data, opt), null);
+    assert.strictEqual(rank.route(bop, items[bop], Object.assign(bs("rsmith1", null)), roster([bs("rsmith1", null)]), data, opt).via, "self");
+  }
+});
+
+test("crafter choice (opts.via): an eligible crafter or the AH wins; an impossible choice falls back silently", () => {
+  const mage = entry("rmage01", "Mage", "caster", ["Tailoring"]);
+  const priest = entry("rpriest", "Priest", "caster", ["Tailoring"]);
+  const warrior = entry("rwarr01", "Warrior", "melee", ["Blacksmithing"]);
+  const rogue = entry("rrogue1", "Rogue", "melee", []);
+  const r = roster([mage, priest, warrior, rogue]);
+  const cloth = +Object.keys(items).find((id) => items[id].avail === "ok" && items[id].bind === "BoE" && items[id].type === "Cloth" && items[id].recipes.length === 1 &&
+    data.recipes.rows[items[id].recipes[0]].prof === "Tailoring" && !data.recipes.rows[items[id].recipes[0]].pattern && items[id].req >= 10);
+  const go = (e, via, extra) => rank.route(cloth, items[cloth], e, extra || r, data, { via: via ? { [cloth]: via } : undefined });
+  assert.deepStrictEqual([go(rogue).via, go(rogue).crafter], ["crafter", "rmage01"], "recommended: first crafter in the roster");
+  assert.deepStrictEqual([go(rogue, "rpriest").via, go(rogue, "rpriest").crafter], ["crafter", "rpriest"]);
+  assert.strictEqual(go(rogue, "ah").via, "ah");
+  assert.strictEqual(go(mage, "rpriest").crafter, "rpriest", "even over self");
+  assert.strictEqual(go(priest, "rpriest").via, "self");
+  assert.strictEqual(go(rogue, "rwarr01").crafter, "rmage01", "not a tailor: ignored");
+  assert.strictEqual(go(rogue, "ah", roster([mage, rogue], { includeAH: false })).crafter, "rmage01", "AH switched off: ignored");
+  const opts = rank.routeOptions(cloth, items[cloth], rogue, r, data);
+  assert.deepStrictEqual([...opts].map((o) => o.via + ":" + o.crafter), ["crafter:rmage01", "crafter:rpriest", "ah:null"]);
+  assert.deepStrictEqual([...rank.routeOptions(cloth, items[cloth], mage, r, data)].map((o) => o.via), ["self", "crafter", "ah"]);
+  assert.deepStrictEqual([...rank.routeOptions(bopTailoring, items[bopTailoring], mage, r, data)].map((o) => o.via), ["self"], "BoP: one route, no choice");
+  // The path honours it: the step's route carries the chosen crafter.
+  const p = rank.path(data, r, rogue, { via: { [cloth]: "rpriest" } });
+  for (const g of p.groups) for (const s of g.steps) if (s.routes[cloth]) assert.strictEqual(s.routes[cloth].crafter, "rpriest");
+});
+
 test("scarce patterns (D19) and unconfirmed pieces (D15) are alternatives, never core steps", () => {
   const favorSpell = Object.keys(data.sources.rows).find((s) => {
     const r = data.recipes.rows[s], it = items[r.item];
