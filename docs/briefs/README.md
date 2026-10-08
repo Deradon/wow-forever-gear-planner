@@ -12,3 +12,4 @@ A brief is launched with the command in its closing chat message, from the repo 
 | [2026-10-08-m1-pipeline-data-ranking.md](2026-10-08-m1-pipeline-data-ranking.md) | M1 part 1: Node pipeline, curation, generated data, ranking library, tests | done (3684cbb) |
 | [2026-10-08-m1-page.md](2026-10-08-m1-page.md) | M1 part 2: the static page in `site/` (onboarding, Gear view, Prices, About), site-static test | done (51f5bb5) |
 | [2026-10-08-p1-publish.md](2026-10-08-p1-publish.md) | P1: weapon-rule corrections, opt-in icons, Node privacy check, re-authored history, GitHub push, Actions, Pages, `v0.1.0` | done (9c70cf7, `v0.1.0`) |
+| [2026-10-08-m1-1-rehearsal.md](2026-10-08-m1-1-rehearsal.md) | M1.1 rehearsal: refresh on beta build 1.60.1.70245 with the diff report, data release v0.1.2 | done, no release (70245 is byte-identical to 70205) |

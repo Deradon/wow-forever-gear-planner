@@ -455,6 +455,61 @@ build report's diff section working against a committed baseline (`data-beta-1.6
 
 Prices: the shipped default price list stays marked as beta until live scans exist (pricing document).
 
+**Correction, 2026-10-08 (M1.1 rehearsal on beta build 1.60.1.70245; record: `reports/1.60.1.70245.md`).** The
+procedure above was planned before the pipeline existed. What holds now:
+
+- **Commands.** There is no `tools/db2-fetch`, `tools/gen` or `tools/wowhead-sync`. Use
+  `node pipeline/main.js fetch --build <b>`, then
+  `node pipeline/main.js build --build <b> --date <YYYY-MM-DD> --diff-against data-beta-1.60.1.70205`. The build
+  writes `site/data/forever/*.js` (not `data/forever/`) and `reports/<b>.md`; `--out <dir>` and `--report <file>`
+  redirect them, for a dry run that leaves the shipped data alone. Step 4 does not exist: there is no Wowhead
+  snapshot (D7), and the Wowhead cross-check is a local step whose results are not committed. Step 6 is
+  `tools/check.sh`.
+- **Product name (step 1).** wago.tools lists the 1.60 builds under both `wow_classic_beta` and `wow_cn_beta`.
+  `/api/builds` sorts versions as strings, so the 5.5.0 entries come first in `wow_classic_beta` and hide the 1.60
+  rows. List every 1.60 build with:
+  `curl -s -A x https://wago.tools/api/builds | node -e 'const d=JSON.parse(require("fs").readFileSync(0));for(const[p,v]of Object.entries(d))for(const b of v)if(/^1\.60\./.test(b.version))console.log(p,b.version,b.created_at)'`.
+  The live product code (S5) is still unknown. `meta.product` stays the client's `wow_classic_beta`.
+- **What changed between beta builds.** 70245 (2026-10-06) and 70235 are byte-identical to 70205 in all 25 tables:
+  the same hash manifest, and 12 further tables sampled (Spell, GlobalStrings, Map, …) are equal too. The DB2
+  content last changed at 70170 (2026-10-01): 69876 → 70009 (= 70124) → 70170 (= 70205 = 70235 = 70245). wago
+  honours `?build=` (an unknown build returns HTTP 400), so identical files are real. A new build number is
+  therefore no evidence of new data. Step 3's diff section now opens with the DB2 tables that differ from the
+  baseline build.
+- **Step 3's report sections** are implemented in `pipeline/report.js` §8, in review order:
+  1. removed items, recipes and mats;
+  2. changes field by field (nested objects one level deep, sources as labels);
+  3. added items and recipes grouped by profession and derived source;
+  4. counts per profession × bracket and source counts per bracket, as old → new;
+  5. R1 items that gained an ItemSparse row (read from the baseline build's cached ItemSparse), stub patterns
+     that became real or the reverse, and availability changes.
+
+  The funnel's third column shows the baseline's counts when the build has no planning measurement.
+  `--diff-against` also takes a directory of generated `*.js`, so two builds can be compared without committing
+  either. On a real change (70124 → 70245, from a scratch directory), the diff listed 14 changed tables but only
+  11 items, 1 recipe and 1 mat with changes: binds `none`/`BoP` → `BoE` on bronze and iron smithing pieces and on
+  Green Leather Armor, and the name "Alchemists' Stone" → "Alchemist's Stone".
+- **Timing** (wall clock, WSL2, i5-12400F):
+  - fetch of a new build: 12–13 s (25 tables, 14 MB, with the Era reference and the listfile already cached; a
+    new listfile tag adds a 146 MB download);
+  - build: 2 s (840 MB peak memory);
+  - `tools/check.sh`: 4 s;
+  - review: the agent read the 13-row 70124 diff in under a minute; reading the whole report (~460 lines) by hand
+    takes longer and was not measured.
+
+  So the launch-day data path is minutes. The time goes into curation of whatever the diff shows.
+- **Fixed during the rehearsal:**
+  - the diff section listed only IDs of items and recipes, without fields, families, counts or R1/R3, and capped
+    silently at 400 rows; overflow is now printed as "… N more";
+  - the funnel's comparison column was empty for every build except 70205;
+  - `--diff-against` accepted only a git tag, and `git show` errors leaked to the terminal.
+
+  Fetch and build were not flaky.
+- **Still open for 2026-11-05:**
+  - S5 (the live product and build);
+  - `meta.status` and `meta.product` are constants in `pipeline/main.js` (`status: "beta"`, `PRODUCT`), so going
+    live needs that code change plus the `data-<build>` and `v0.2.0` tags (roadmap M1.1).
+
 ## 15. Tests the pipeline needs
 
 - CSV parser: row/field counts per table equal the reference counts.

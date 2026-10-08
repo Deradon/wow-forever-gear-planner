@@ -12,8 +12,8 @@ node pipeline/main.js build --build 1.60.1.70205 --date 2026-10-08  # offline; d
 
 Options: `--cache <dir>` (else `$FGP_CACHE`, else `$XDG_CACHE_HOME/forever-gear-planner`, else
 `~/.cache/forever-gear-planner`; layout `db2/<build>/<Table>.csv`, `listfile/<tag>/community-listfile.csv`),
-`--accept-new-hashes` (update `build-inputs/db2-<build>.sha256` or `listfile-<tag>.sha256` deliberately after wago.tools re-exported a table), `--diff-against <git tag>`
-(adds a diff section to the report), `--out`, `--report`. The build exits non-zero when the report's blocking
+`--accept-new-hashes` (update `build-inputs/db2-<build>.sha256` or `listfile-<tag>.sha256` deliberately after wago.tools re-exported a table), `--diff-against <git tag|dir>`
+(adds a diff section to the report against the data at that tag or in a directory of generated `*.js`), `--out`, `--report`. The build exits non-zero when the report's blocking
 section is not empty.
 
 | File | Does |

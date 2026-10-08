@@ -5,7 +5,7 @@
 //   node pipeline/main.js fetch --build <b> [--cache <dir>] [--accept-new-hashes]
 //       download missing DB2 tables (the only network step) and record their hashes in build-inputs/
 //   node pipeline/main.js build --build <b> --date <YYYY-MM-DD> [--cache <dir>] [--out <dir>]
-//                               [--report <file>] [--diff-against <git tag>] [--accept-new-hashes]
+//                               [--report <file>] [--diff-against <git tag|dir>] [--accept-new-hashes]
 //       generate site/data/forever/*.js and reports/<b>.md from the cache and curation/ (offline)
 
 const fs = require("fs");

@@ -2,13 +2,16 @@
 // Build report reports/<build>.md (game-data-pipeline §14 step 3, roadmap M1): the maintainer's review surface.
 // Deterministic: everything comes from the generated sections; the ranking is site/lib/rank.js, as on the page.
 
+const fs = require("fs");
+const path = require("path");
 const { execFileSync } = require("child_process");
+const db2 = require("./db2");
 const emit = require("./emit");
 const rank = require("../site/lib/rank");
 
 // Planning measurements for build 1.60.1.70205 (game-data-pipeline §4), shown next to the computed counts.
 const MEASURED = {
-  "1.60.1.70205": { craftRows: 2303, equippable: 1567, noSparse: 286, inGame: 1281, items: 1274, mats: 356, intermediates: 131, specGated: 86 },
+  "1.60.1.70205": { craftRows: 2303, equippable: 1567, noSparse: 286, inGame: 1281, items: 1274, mats: 356, intermediates: 131, specGated: 86, cosmeticItems: 5 },
 };
 
 // Review rosters (D30: top picks per role and bracket). Professions follow roles-stat-weights §5.4.
@@ -42,43 +45,58 @@ function itemLabel(data, id) {
 
 // --- sections -------------------------------------------------------------------------------------------------
 
-function funnel(g, build) {
-  const f = g.info.funnel, c = g.sections.meta.counts, m = MEASURED[build] || {};
-  const row = (label, v, key) => [label, n(v), m[key] === undefined ? "–" : n(m[key]) + (m[key] === v ? " ✓" : " ✗")];
-  return table(["Step", "This build", "Planning measurement"], [
+// Third column: the planning measurement for its build, else the baseline's meta.counts when diffing.
+function funnel(g, build, baseMeta) {
+  const f = g.info.funnel, c = g.sections.meta.counts;
+  const m = MEASURED[build] || (baseMeta && baseMeta.counts) || {};
+  const head = MEASURED[build] || !baseMeta ? "Planning measurement" : `Baseline ${baseMeta.build}`;
+  const mark = (want, v) => (MEASURED[build] ? (want === v ? " ✓" : " ✗") : "");
+  const row = (label, v, key) => [label, n(v), m[key] === undefined ? "–" : n(m[key]) + mark(m[key], v)];
+  return table(["Step", "This build", head], [
     row("Craft rows (profession spells with effect 24)", f.craftRows, "craftRows"),
     row("Equippable results (rows)", f.equippable, "equippable"),
-    [`… without an ItemSparse row (R1: ${f.noSparseByOrigin.sod} SoD, ${f.noSparseByOrigin.forever} Forever-new, ${f.noSparseByOrigin.vanilla} vanilla)`, n(f.noSparse), m.noSparse === undefined ? "–" : n(m.noSparse) + (m.noSparse === f.noSparse ? " ✓" : " ✗")],
+    [`… without an ItemSparse row (R1: ${f.noSparseByOrigin.sod} SoD, ${f.noSparseByOrigin.forever} Forever-new, ${f.noSparseByOrigin.vanilla} vanilla)`, n(f.noSparse), m.noSparse === undefined ? "–" : n(m.noSparse) + mark(m.noSparse, f.noSparse)],
     row("In the game, required level ≤ 60 (rows)", f.inGame, "inGame"),
-    ["Cosmetic items dropped (R2)", n(f.cosmeticItems), "5"],
+    row("Cosmetic items dropped (R2)", f.cosmeticItems, "cosmeticItems"),
     row("**Items shipped**", c.items, "items"),
-    ["Gear recipes shipped", n(c.gearRecipes), "–"],
-    ["Intermediate recipes shipped", n(c.intermediateRecipes), "–"],
+    row("Gear recipes shipped", c.gearRecipes, "gearRecipes"),
+    row("Intermediate recipes shipped", c.intermediateRecipes, "intermediateRecipes"),
     row("Mats (incl. intermediates' reagents)", c.mats, "mats"),
     row("Intermediates (mats with a recipe)", c.intermediates, "intermediates"),
     row("Gear recipes that need a specialisation", c.specGated, "specGated"),
-    ["Gear recipes with curated sources", n(c.curatedRecipes), "–"],
-    ["Faction mirror pairs (D17)", n(c.mirrorPairs), "–"],
+    row("Gear recipes with curated sources", c.curatedRecipes, "curatedRecipes"),
+    row("Faction mirror pairs (D17)", c.mirrorPairs, "mirrorPairs"),
   ]);
 }
 
-function professionTable(data) {
-  const profs = ["Blacksmithing", "Leatherworking", "Tailoring", "Engineering", "Enchanting", "Alchemy"];
-  const head = ["Profession", "0–9", "10–19", "20–29", "30–39", "40–49", "50–59", "60", "Total"];
-  const rows = [], tot = new Array(8).fill(0);
-  for (const p of profs) {
+const PROFS = ["Blacksmithing", "Leatherworking", "Tailoring", "Engineering", "Enchanting", "Alchemy"];
+const BRACKET_HEAD = ["0–9", "10–19", "20–29", "30–39", "40–49", "50–59", "60"];
+
+// Gear recipes per profession: 7 bracket counts and the total; the last row "All" sums them.
+function professionCounts(data) {
+  const out = {}, tot = new Array(8).fill(0);
+  for (const p of PROFS) {
     const c = new Array(8).fill(0);
     for (const r of Object.values(data.recipes.rows)) {
       if (r.kind !== "gear" || r.prof !== p) continue;
-      const req = data.items.rows[r.item].req;
-      const b = req >= 60 ? 6 : Math.floor(req / 10);
-      c[b]++; c[7]++;
+      c[bracketOf(data.items.rows[r.item].req)]++; c[7]++;
     }
     c.forEach((v, i) => { tot[i] += v; });
-    rows.push([p, ...c.map(n)]);
+    out[p] = c;
   }
-  rows.push(["**All**", ...tot.map((v) => `**${n(v)}**`)]);
-  return table(head, rows);
+  out.All = tot;
+  return out;
+}
+
+// cell(profession, index) renders one count; the "All" row is bold.
+function professionGrid(cell) {
+  return table(["Profession", ...BRACKET_HEAD, "Total"],
+    [...PROFS, "All"].map((p) => (p === "All" ? ["**All**", ...[...Array(8).keys()].map((i) => `**${cell(p, i)}**`)] : [p, ...[...Array(8).keys()].map((i) => cell(p, i))])));
+}
+
+function professionTable(data) {
+  const c = professionCounts(data);
+  return professionGrid((p, i) => n(c[p][i]));
 }
 
 function tally(values) {
@@ -102,7 +120,8 @@ function overview(data) {
   ].join("\n");
 }
 
-function sourceTables(data) {
+// Gear recipes per required-level bracket: curated, derived with a known source, derived source unknown.
+function sourceCounts(data) {
   const kinds = {}, byBracket = BRACKETS.map(() => ({ curated: 0, derivedKnown: 0, unknown: 0 }));
   for (const [spell, r] of Object.entries(data.recipes.rows)) {
     if (r.kind !== "gear") continue;
@@ -117,6 +136,11 @@ function sourceTables(data) {
     else if (src.every((e) => e.kind === "unknown")) b.unknown++;
     else b.derivedKnown++;
   }
+  return { kinds, byBracket };
+}
+
+function sourceTables(data) {
+  const { kinds, byBracket } = sourceCounts(data);
   const t1 = table(["Source entry (kind · certainty)", "Gear recipes"], Object.keys(kinds).sort().map((k) => [k, n(kinds[k])]));
   const t2 = table(["Required level", "Curated", "Derived: trainer or reputation", "Derived: source unknown"],
     BRACKETS.map((b, i) => [b[0] === b[1] ? `${b[0]}` : `${b[0]}–${b[1]}`, n(byBracket[i].curated), n(byBracket[i].derivedKnown), n(byBracket[i].unknown)]));
@@ -207,30 +231,172 @@ function pathSummary(data, r) {
 
 // --- diff against a git tag -----------------------------------------------------------------------------------
 
-function diffAgainst(repo, tag, data) {
+// Baseline sections from a git tag (site/data/forever/<section>.js at the tag) or a directory of generated files.
+const baselineDir = (ref) => (fs.existsSync(ref) && fs.statSync(ref).isDirectory() ? path.resolve(ref) : null);
+// A directory is named by its last component only, so no local path lands in the report.
+const baselineLabel = (ref) => (baselineDir(ref) ? `directory ${path.basename(baselineDir(ref))}` : ref);
+
+function readBaseline(repo, ref, sections = ["meta", "items", "recipes", "mats", "sources"]) {
+  const dir = baselineDir(ref);
   const read = (section) => {
     try {
-      return emit.parse(execFileSync("git", ["show", `${tag}:site/data/forever/${section}.js`], { cwd: repo, encoding: "utf8", maxBuffer: 64 << 20 })).value;
+      const text = dir ? fs.readFileSync(path.join(dir, `${section}.js`), "utf8")
+        : execFileSync("git", ["show", `${ref}:site/data/forever/${section}.js`], { cwd: repo, encoding: "utf8", maxBuffer: 64 << 20, stdio: ["ignore", "pipe", "ignore"] });
+      return emit.parse(text).value;
     } catch (e) { return null; }
   };
-  const lines = [];
-  for (const section of ["items", "recipes"]) {
-    const old = read(section);
-    if (!old) { lines.push(`- ${section}: not found at ${tag}`); continue; }
-    const a = old.rows, b = data[section].rows;
-    const removed = Object.keys(a).filter((k) => !(k in b)), added = Object.keys(b).filter((k) => !(k in a));
-    const changed = [];
+  const out = { label: baselineLabel(ref) };
+  for (const s of sections) out[s] = read(s);
+  return out;
+}
+
+const fmt = (v) => (v === undefined ? "–" : JSON.stringify(v));
+const isMap = (v) => v && typeof v === "object" && !Array.isArray(v);
+
+// Field-by-field differences; plain objects (stats, weapon, skill, pattern, set) one level deep.
+function fieldDiff(a, b, prefix = "") {
+  const out = [];
+  for (const f of new Set([...Object.keys(a || {}), ...Object.keys(b || {})])) {
+    const x = a ? a[f] : undefined, y = b ? b[f] : undefined;
+    if (JSON.stringify(x) === JSON.stringify(y)) continue;
+    if (!prefix && isMap(x) && isMap(y)) out.push(...fieldDiff(x, y, `${f}.`));
+    else out.push(`${prefix}${f} ${fmt(x)} → ${fmt(y)}`);
+  }
+  return out;
+}
+
+// One source entry in a few words: kind, reputation or vendor, the unknown-source reason, certainty.
+function srcLabel(e, factions) {
+  const rep = e.rep ? ` ${(factions[e.rep.faction] || {}).name || `faction ${e.rep.faction}`}${e.rep.standing ? ` ${e.rep.standing}` : ""}` : "";
+  const who = e.npc || e.where || e.quest || "";
+  const why = e.kind === "unknown" && e.text ? ` (${e.text.split(/[:;]/)[0]})` : "";
+  return `${e.kind}${rep}${who ? ` ${who}` : ""}${why} · ${e.certainty}`;
+}
+const srcLabels = (rows, spell, factions) => [...new Set((rows[spell] || []).map((e) => srcLabel(e, factions)))].join(" / ") || "no source";
+
+const capped = (list, max = 400) => (list.length > max ? [...list.slice(0, max), `… ${n(list.length - max)} more`] : list);
+
+// §14 step 3 items 2–6 against a baseline: removed, changed field by field, added by family with the derived
+// source, counts old vs new, and new content (R1 items that gained an ItemSparse row, stub patterns that became real).
+function diffAgainst(o, data) {
+  const base = readBaseline(o.repo, o.diffAgainst);
+  if (!base.items || !base.recipes) return `Baseline not readable: ${esc(base.label)} has no site/data/forever/items.js or recipes.js.`;
+  const oldBuild = base.meta ? base.meta.build : "?";
+  const A = { items: base.items.rows, recipes: base.recipes.rows, mats: (base.mats || { rows: {} }).rows, sources: (base.sources || { rows: {} }).rows };
+  const B = { items: data.items.rows, recipes: data.recipes.rows, mats: data.mats.rows, sources: data.sources.rows };
+  const factions = { ...((base.sources || {}).factions || {}), ...data.sources.factions };
+  const nameOf = (rows, id) => (rows.items[id] || rows.mats[id] || {}).name || `item ${id}`;
+  const recLabel = (rows, spell) => { const r = rows.recipes[spell]; return `${spell} ${esc(nameOf(rows, r.item))} (${r.prof}, ${r.kind})`; };
+  const itLabel = (it, id) => `${esc(it.name)} (${id}, req ${it.req})`;
+  const keys = {}, d = {};
+  for (const s of ["items", "recipes", "mats"]) {
+    const a = A[s], b = B[s];
+    d[s] = { removed: Object.keys(a).filter((k) => !(k in b)), added: Object.keys(b).filter((k) => !(k in a)), changed: [] };
     for (const k of Object.keys(b)) {
       if (!(k in a)) continue;
-      const fields = [...new Set([...Object.keys(a[k]), ...Object.keys(b[k])])].filter((f) => JSON.stringify(a[k][f]) !== JSON.stringify(b[k][f]));
-      if (fields.length) changed.push(`${k}: ${fields.map((f) => `${f} ${JSON.stringify(a[k][f])} → ${JSON.stringify(b[k][f])}`).join("; ")}`);
+      const f = fieldDiff(a[k], b[k]);
+      if (s === "recipes") {
+        const x = srcLabels(A.sources, k, factions), y = srcLabels(B.sources, k, factions);
+        if (JSON.stringify(A.sources[k]) !== JSON.stringify(B.sources[k])) f.push(x === y ? `sources (details) ${x}` : `sources ${x} → ${y}`);
+      }
+      if (f.length) d[s].changed.push([k, f]);
     }
-    lines.push(`- ${section}: ${removed.length} removed, ${added.length} added, ${changed.length} changed`);
-    for (const k of removed) lines.push(`  - removed ${k}${a[k].name ? ` ${esc(a[k].name)}` : ""}`);
-    for (const k of added) lines.push(`  - added ${k}${b[k].name ? ` ${esc(b[k].name)}` : ""}`);
-    for (const c of changed.slice(0, 400)) lines.push(`  - ${esc(c)}`);
+    keys[s] = Object.keys(b).length;
   }
-  return lines.join("\n");
+  const out = [];
+  out.push(`Baseline: ${esc(base.label)}, build ${oldBuild}${base.meta ? `, generated ${base.meta.generated}` : ""}.`);
+  out.push("");
+
+  // DB2 tables: compare the two hash manifests.
+  const ma = db2.readManifest(db2.manifestPath(o.repo, oldBuild)), mb = db2.readManifest(db2.manifestPath(o.repo, data.meta.build));
+  if (!ma.size || !mb.size) out.push(`- DB2 tables: no manifest for ${ma.size ? data.meta.build : oldBuild} in build-inputs/, not compared.`);
+  else {
+    const diffT = [...new Set([...ma.keys(), ...mb.keys()])].sort().filter((t) => ma.get(t) !== mb.get(t));
+    out.push(diffT.length ? `- DB2 tables that differ from ${oldBuild}: ${diffT.join(", ")} (${mb.size - diffT.length} of ${mb.size} byte-identical).`
+      : `- DB2 tables: all ${mb.size} byte-identical to ${oldBuild}; any change below comes from curation or the generator.`);
+  }
+  out.push("");
+  out.push(table(["Section", `Baseline ${oldBuild}`, `This build ${data.meta.build}`, "Removed", "Added", "Changed"],
+    ["items", "recipes", "mats"].map((s) => [s, n(Object.keys(A[s]).length), n(keys[s]), n(d[s].removed.length), n(d[s].added.length), n(d[s].changed.length)])));
+
+  out.push("");
+  out.push("### 8.1 Removed (each one breaks saved user state; the page reports them to users)");
+  out.push("");
+  const removed = [
+    ...d.items.removed.map((k) => `- item ${itLabel(A.items[k], k)}`),
+    ...d.recipes.removed.map((k) => `- recipe ${recLabel(A, k)}`),
+    ...d.mats.removed.map((k) => `- mat ${esc(A.mats[k].name)} (${k})`),
+  ];
+  out.push(removed.join("\n") || "None.");
+
+  out.push("");
+  out.push("### 8.2 Changed, field by field");
+  out.push("");
+  const changed = [
+    ...d.items.changed.map(([k, f]) => `- item ${itLabel(B.items[k], k)}: ${esc(f.join("; "))}`),
+    ...d.recipes.changed.map(([k, f]) => `- recipe ${recLabel(B, k)}: ${esc(f.join("; "))}`),
+    ...d.mats.changed.map(([k, f]) => `- mat ${esc(B.mats[k].name)} (${k}): ${esc(f.join("; "))}`),
+  ];
+  out.push(capped(changed).join("\n") || "None.");
+
+  out.push("");
+  out.push("### 8.3 Added, by profession and derived source");
+  out.push("");
+  const fam = new Map();
+  const addTo = (key, line, sort) => { if (!fam.has(key)) fam.set(key, []); fam.get(key).push([sort, line]); };
+  const addedItems = new Set(d.items.added);
+  for (const k of d.items.added) {
+    const it = B.items[k], first = B.recipes[it.recipes[0]];
+    addTo(`${first ? first.prof : "?"} · ${srcLabels(B.sources, it.recipes[0], factions)}`,
+      `${itLabel(it, k)}${it.origin !== "forever" ? ` ${it.origin}` : ""}${it.avail !== "ok" ? ` _${it.avail}_` : ""}`, [it.req, +k]);
+  }
+  for (const k of d.recipes.added) {
+    const r = B.recipes[k];
+    if (r.kind === "gear" && addedItems.has(String(r.item)) && B.items[r.item].recipes[0] === +k) continue;
+    addTo(`${r.prof} · ${srcLabels(B.sources, k, factions)}`, `recipe ${recLabel(B, k)}`, [Infinity, +k]);
+  }
+  const famKeys = [...fam.keys()].sort();
+  out.push(famKeys.map((key) => `- **${esc(key)}**: ${fam.get(key).sort((x, y) => x[0][0] - y[0][0] || x[0][1] - y[0][1]).map((x) => x[1]).join(", ")}`).join("\n") || "None.");
+  if (d.mats.added.length) out.push(`- Mats: ${d.mats.added.map((k) => `${esc(B.mats[k].name)} (${k})`).join(", ")}`);
+
+  out.push("");
+  out.push(`### 8.4 Counts, baseline → this build`);
+  out.push("");
+  const oldData = { items: base.items, recipes: base.recipes, sources: base.sources || { rows: {} } };
+  const pa = professionCounts(oldData), pb = professionCounts(data);
+  const arrow = (x, y) => (x === y ? n(y) : `${n(x)} → ${n(y)}`);
+  out.push("Gear recipes per profession and required-level bracket:");
+  out.push("");
+  out.push(professionGrid((p, i) => arrow(pa[p][i], pb[p][i])));
+  out.push("");
+  const sa = sourceCounts(oldData).byBracket, sb = sourceCounts(data).byBracket;
+  out.push(table(["Required level", "Curated", "Derived: trainer or reputation", "Derived: source unknown"],
+    BRACKETS.map((b, i) => [b[0] === b[1] ? `${b[0]}` : `${b[0]}–${b[1]}`, arrow(sa[i].curated, sb[i].curated), arrow(sa[i].derivedKnown, sb[i].derivedKnown), arrow(sa[i].unknown, sb[i].unknown)])));
+
+  out.push("");
+  out.push("### 8.5 New content (R1, R3)");
+  out.push("");
+  let r1;
+  if (oldBuild === data.meta.build) r1 = `- R1: same build as the baseline, not checked.`;
+  else {
+    try {
+      const sparse = new Set(db2.loadBuild({ repo: o.repo, cache: o.cache, build: oldBuild, tables: ["ItemSparse"], verify: o.verify !== false }).tables.ItemSparse.map((r) => r.ID));
+      const gained = Object.keys(B.items).filter((k) => !sparse.has(k));
+      r1 = `- Items without an ItemSparse row in ${oldBuild} that have one now (R1 becoming real): ${gained.map((k) => itLabel(B.items[k], k)).join(", ") || "none"}.`;
+    } catch (e) {
+      r1 = `- R1: not checked, the baseline build's ItemSparse is not readable (${esc(e.message.split(";")[0])}).`;
+    }
+  }
+  out.push(r1);
+  const stub = (r) => !!(r && r.pattern && r.pattern.stub);
+  const both = Object.keys(B.recipes).filter((k) => k in A.recipes);
+  const real = both.filter((k) => stub(A.recipes[k]) && B.recipes[k].pattern && !stub(B.recipes[k]));
+  const lost = both.filter((k) => !stub(A.recipes[k]) && stub(B.recipes[k]));
+  out.push(`- Stub patterns that became real (R3): ${real.map((k) => `${recLabel(B, k)} → ${esc(B.recipes[k].pattern.name)} (${B.recipes[k].pattern.id})`).join(", ") || "none"}.`);
+  out.push(`- Real patterns that became stubs: ${lost.map((k) => recLabel(B, k)).join(", ") || "none"}.`);
+  const avail = Object.keys(B.items).filter((k) => k in A.items && A.items[k].avail !== B.items[k].avail);
+  out.push(`- Item availability changed: ${avail.map((k) => `${itLabel(B.items[k], k)} ${A.items[k].avail} → ${B.items[k].avail}`).join(", ") || "none"}.`);
+  return out.join("\n");
 }
 
 function report(g, o) {
@@ -243,7 +409,9 @@ function report(g, o) {
     `Data hash \`${meta.dataHash.slice(0, 16)}\`. Inputs: \`${meta.inputs.db2.manifest}\`, reference build \`${meta.inputs.reference.manifest}\`, ` +
     `curation (${meta.inputs.curation.files.length} files, \`${meta.inputs.curation.sha256.slice(0, 16)}\`), listfile ${meta.inputs.listfile.tag} (\`${meta.inputs.listfile.sha256.slice(0, 16)}\`).`);
   out.push("");
-  out.push("Review order: blocking issues, counts, the needs-in-game-check list, then the ranking review per role.");
+  out.push(o && o.diffAgainst
+    ? "Review order (game-data-pipeline §14 step 3): blocking issues (§1), the diff against the baseline (§8: removed, changed, added, counts, new content), then counts, the needs-in-game-check list and the ranking review per role."
+    : "Review order: blocking issues, counts, the needs-in-game-check list, then the ranking review per role.");
   out.push("");
   out.push("## 1. Blocking");
   out.push("");
@@ -251,7 +419,7 @@ function report(g, o) {
   out.push("");
   out.push("## 2. Counts");
   out.push("");
-  out.push(funnel(g, meta.build));
+  out.push(funnel(g, meta.build, o && o.diffAgainst ? readBaseline(o.repo, o.diffAgainst, ["meta"]).meta : null));
   out.push("");
   out.push("Gear recipes per profession and required-level bracket (shipped rows, after the cosmetic drop):");
   out.push("");
@@ -292,9 +460,9 @@ function report(g, o) {
   }
   if (o && o.diffAgainst) {
     out.push("");
-    out.push(`## 8. Diff against ${o.diffAgainst}`);
+    out.push(`## 8. Diff against ${baselineLabel(o.diffAgainst)}`);
     out.push("");
-    out.push(diffAgainst(o.repo, o.diffAgainst, data));
+    out.push(diffAgainst(o, data));
   }
   out.push("");
   return out.join("\n");

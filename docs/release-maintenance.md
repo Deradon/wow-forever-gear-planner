@@ -480,6 +480,25 @@ Day 2–7
 - [ ] Triage data-error issues daily. Fix by pipeline rule where possible, by override otherwise.
 - [ ] Watch wago.tools for hotfix builds. Regenerate when `report` shows relevant changes.
 
+**Correction, 2026-10-08 (T-7 rehearsal done early, on beta build 1.60.1.70245; details in game-data-pipeline §14).**
+
+- **Commands.** `python3 -m pipeline`, `pipeline/config.json` and `prices-default.mjs` do not exist; there is no
+  `report` step. Use:
+  - `node pipeline/main.js fetch --build <b>`;
+  - `node pipeline/main.js build --build <b> --date <YYYY-MM-DD> --diff-against data-beta-1.60.1.70205`, which
+    writes the data and `reports/<b>.md`;
+  - `tools/check.sh`.
+
+  The build number is a CLI argument and is recorded in `meta.build`, not in a config file. There is no default
+  price list yet (M2).
+- **Product.** The 1.60 builds are listed under both `wow_classic_beta` and `wow_cn_beta` on wago.tools. The 5.5.0
+  rows hide them at the top of `wow_classic_beta`. The live product is still unknown (S5).
+- **Timing.** Fetch 12–13 s, build 2 s, `tools/check.sh` 4 s. The review is the long part.
+- **Rehearsal outcome.** 70245 is byte-identical to the shipped 70205, so nothing was released or tagged. The
+  report is committed as the record, and the diff section was proven on 70124 → 70245 instead.
+- **Release-day change.** `meta.status` is set in `pipeline/main.js`, so going live is a code change in that file,
+  not a config edit.
+
 ## 9. Licensing options (the user decides)
 
 **Code** (`site/`, `pipeline/`, `tools/`, tests):

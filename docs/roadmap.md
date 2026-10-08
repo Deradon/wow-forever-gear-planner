@@ -36,7 +36,7 @@ Pipeline (Node ≥ 20, CommonJS, zero dependencies; D1, D11):
 
 | File | Purpose | Ported from (prototype generator) |
 |---|---|---|
-| `pipeline/main.js` | CLI: `node pipeline/main.js build --build <b> --date <YYYY-MM-DD> [--cache <dir>] [--diff-against <tag>]` | — |
+| `pipeline/main.js` | CLI: `node pipeline/main.js build --build <b> --date <YYYY-MM-DD> [--cache <dir>] [--diff-against <tag\|dir>]` | — |
 | `pipeline/csv.js` | RFC 4180 CSV reader (~40 lines) | — |
 | `pipeline/db2.js` | fetch tables from wago.tools with a project User-Agent, cache under `$FGP_CACHE` or the user cache dir, write/verify `build-inputs/db2-<build>.sha256` | the table loader |
 | `pipeline/constants.js` | `STAT`, `SLOTIDX`, `QUALITY`, `SLOT`, `ARMOR`, `WEAPON`, `BIND`, `ARMOR_COL`, profession IDs | constants block |
@@ -46,7 +46,7 @@ Pipeline (Node ≥ 20, CommonJS, zero dependencies; D1, D11):
 | `pipeline/sources.js` | derived sources (trainer / tradeable pattern / BoP pattern / reputation from pattern columns) merged with `curation/sources.json`; `side`, `certainty` | `source` (with the BoE-pattern bug fixed) |
 | `pipeline/curation.js` | load + validate `curation/*.json` (hand-rolled schema check; `why`/`cite`/`checked`/`names`, D6) | — |
 | `pipeline/emit.js` | deterministic writer for `site/data/forever/*.js`: `window.FGP_DATA.<section> = …`, one record per line, fixed key order, `dataHash` | `fmt` |
-| `pipeline/report.js` | `reports/<build>.md`: counts funnel, blocking issues, unknown stats, top 3 picks per role × 10-level bracket (runs `site/lib/rank.js`), diff vs a tag | — |
+| `pipeline/report.js` | `reports/<build>.md`: counts funnel, blocking issues, unknown stats, top 3 picks per role × 10-level bracket (runs `site/lib/rank.js`), diff vs a tag or directory | — |
 
 Curation (JSON, hand-maintained, D5):
 
@@ -142,7 +142,9 @@ Target 2026-10-27, latest 2026-11-03.
 
 Follow game-data-pipeline §14 with the D7 change (no Wowhead snapshot in the repo; the local cross-check only).
 
-- Rehearse the procedure on any newer beta build by 2026-11-01 (tag the beta data `data-beta-1.60.1.70205`).
+- [x] Rehearse the procedure on any newer beta build by 2026-11-01 (tag the beta data `data-beta-1.60.1.70205`).
+  Done 2026-10-08 on 1.60.1.70245, which is byte-identical to 70205 and was not shipped; the diff was proven on
+  70124 → 70245 (game-data-pipeline §14 correction, `reports/1.60.1.70245.md`).
 - Find the live product code and build (S5); fetch; generate with `--diff-against`; work the report until the
   blocking section is empty; review top picks; `meta.status = "live"`; tag `data-<build>` and `v0.2.0`.
 - Update the import help with the live install folder name (S5).

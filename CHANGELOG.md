@@ -5,6 +5,17 @@ versions follow semver, and data-only releases are patch releases (see docs/rele
 
 ## [Unreleased]
 
+### Changed
+- Build report diff section (`--diff-against`, game-data-pipeline §14 step 3): DB2 tables that changed; removed,
+  changed field by field, and added items, recipes and mats (added ones grouped by profession and derived source);
+  counts per profession and bracket old → new; R1 items that gained an ItemSparse row and stub patterns that became
+  real. It also accepts a directory of generated data; the funnel compares against the baseline's counts.
+
+### Data
+- Release-day rehearsal on beta build 1.60.1.70245: its DB2 tables are byte-identical to 1.60.1.70205 (0 items or
+  recipes added, removed or changed; no curation changes), so the shipped data stays at 1.60.1.70205. Record:
+  `reports/1.60.1.70245.md`, `build-inputs/db2-1.60.1.70245.sha256`.
+
 ## [0.1.1] - 2026-10-08
 
 ### Fixed
