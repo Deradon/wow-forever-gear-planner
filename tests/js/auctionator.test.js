@@ -110,6 +110,7 @@ test("import: two realms (CBOR and plain Lua table), skipped keys, version ignor
   assert.deepStrictEqual(a.skipped, { nonNumeric: 2, invalid: 1 });
   assert.strictEqual(a.newestDay, 2471);
   assert.deepStrictEqual(b.rows, { 2589: [60, 2460, 1] });
+  assert.deepStrictEqual([a.format, b.format], ["cbor", "table"], "storage format per realm, for the diagnostic");
   assert.strictEqual(atr.defaultRealm(res.realms).label, "Realm Ünïcode", "newest scan preselected");
   assert.strictEqual(atr.defaultRealm(res.realms, b.key).label, "Other Realm", "remembered key wins");
 });
@@ -146,6 +147,7 @@ test("import: a damaged realm is skipped, the others stay usable", () => {
   assert.ok(res.ok);
   assert.ok(res.warnings.some((w) => w.code === "realm-damaged" && /truncated at byte/.test(w.text)));
   assert.strictEqual(res.realms.find((r) => r.label === "Bad").usable, false);
+  assert.strictEqual(res.realms.find((r) => r.label === "Bad").format, "cbor");
   assert.strictEqual(res.realms.find((r) => r.label === "Good").usable, true);
 });
 

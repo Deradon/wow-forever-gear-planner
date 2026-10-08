@@ -82,7 +82,8 @@
     return { rows: rows, entries: entries, skipped: { nonNumeric: nonNumeric, invalid: invalid }, known: known, newestDay: newest, oldestDay: oldest };
   }
 
-  // Read an Auctionator.lua file. opts: {today (day number), isKnown(id) → bool, fileName}.
+  // Read an Auctionator.lua file. opts: {today (day number), isKnown(id) → bool, fileName}. Each realm carries
+  // `format`: "cbor" (C_EncodingUtil blob) or "table" (plain Lua table), for the redacted diagnostic.
   // Returns {ok: false, error} or {ok: true, realms, warnings, dbVersion}.
   function readFile(bytes, opts) {
     opts = opts || {};
@@ -98,17 +99,17 @@
     var realms = [];
     db.forEach(function (v, key) {
       if (key === "__dbversion") return;
-      var label = utf8Label(key), data = v, r;
+      var label = utf8Label(key), data = v, r, format = v instanceof Uint8Array ? "cbor" : v instanceof Map ? "table" : typeof v;
       try {
         if (v instanceof Uint8Array) data = d.cbor.decode(v);
         if (!(data instanceof Map)) throw new Error("not a table");
         r = realmRows(data, opts.isKnown);
       } catch (e) {
         warnings.push(msg("realm-damaged", { realm: label, detail: e.message }));
-        realms.push({ key: key, label: label, error: e.message, rows: {}, entries: 0, usable: false });
+        realms.push({ key: key, label: label, format: format, error: e.message, rows: {}, entries: 0, usable: false });
         return;
       }
-      r.key = key; r.label = label; r.usable = r.entries > 0;
+      r.key = key; r.label = label; r.format = format; r.usable = r.entries > 0;
       realms.push(r);
     });
     if (!realms.length) return { ok: false, error: msg("no-realms"), warnings: warnings };

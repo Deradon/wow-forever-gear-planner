@@ -32,7 +32,7 @@ mac-home	/User[s]/[A-Za-z0-9_]
 windows-user-path	[a-z]:[\\/]+user[s][\\/]
 wsl-drive-mount	/mn[t]/[a-z]/
 client-account-folder	accoun[t][\\/][0-9]{4,}(#[0-9]+)?
-saved-variables-folder	savedvariable[s]
+saved-variables-account-path	accoun[t][\\/][^[:space:]<>\\/]+[\\/]savedvariable[s]
 email-address	[a-z0-9._%+-]+@[a-z0-9-]+\.[a-z0-9.-]*[a-z]{2,}'
 
 denylist=${FGP_PRIVATE_DENYLIST:-${XDG_CONFIG_HOME:-$HOME/.config}/forever-gear-planner/privacy-denylist.txt}

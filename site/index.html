@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forever Gear Planner</title>
+<meta name="description" content="Crafted gear for WoW: Forever, levels 1–60: a ranked path per character, who in your roster crafts it, and prices from your own Auctionator file.">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Apply the saved theme before first paint (no flash). Same storage key as site/lib/state.js (D35).
+  try {
+    var s = JSON.parse(localStorage.getItem("forever-gear-planner.state") || "null");
+    var t = s && s.prefs && s.prefs.theme;
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <h1 class="brand"><span class="brand-mark" aria-hidden="true"></span>Forever Gear Planner</h1>
+    <nav class="tabs" id="tabs" aria-label="Views"></nav>
+    <div class="tools">
+      <label class="search">
+        <span class="sr">Search items</span>
+        <input id="search" type="search" placeholder="Search items, slots, stats…  ( / )" autocomplete="off" spellcheck="false">
+      </label>
+      <button type="button" class="btn btn-quiet" id="btn-theme" data-act="theme" title="Theme: follow system / light / dark (t)">Theme</button>
+      <button type="button" class="btn btn-quiet" id="btn-keys" data-act="keys" title="Keyboard shortcuts (?)">Keys</button>
+    </div>
+  </div>
+</header>
+<div id="banner" class="banner-wrap"></div>
+<main id="view" class="wrap" tabindex="-1">
+  <noscript><div class="panel"><h2>This page needs JavaScript</h2><p>Everything runs in your browser; nothing is uploaded.</p></div></noscript>
+</main>
+<footer class="wrap foot" id="foot"></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="wtt" class="wtt" role="tooltip" hidden></div>
+<dialog id="dlg" aria-labelledby="dlg-title"></dialog>
+
+<script src="data/forever/meta.js"></script>
+<script src="data/forever/rules.js"></script>
+<script src="data/forever/roles.js"></script>
+<script src="data/forever/items.js"></script>
+<script src="data/forever/recipes.js"></script>
+<script src="data/forever/mats.js"></script>
+<script src="data/forever/sources.js"></script>
+<script src="data/forever/reference.js"></script>
+<script src="lib/version.js"></script>
+<script src="lib/lua-literal.js"></script>
+<script src="lib/cbor.js"></script>
+<script src="lib/auctionator.js"></script>
+<script src="lib/pricing.js"></script>
+<script src="lib/state.js"></script>
+<script src="lib/rank.js"></script>
+<script src="app/main.js"></script>
+<script src="app/tooltip.js"></script>
+<script src="app/onboarding.js"></script>
+<script src="app/gear.js"></script>
+<script src="app/prices.js"></script>
+<script src="app/about.js"></script>
+</body>
+</html>
