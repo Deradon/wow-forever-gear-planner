@@ -454,6 +454,10 @@
       var tier = tierOf(worth, setCost(s.set, opts), s.from);
       if (kept < worth.keepMin[tier]) {
         if (contiguous(s, next) && !next.pinned) {
+          // The successor that makes this step short-lived goes first when it is shorter-lived itself: banning this
+          // step for it would be permanent even after the successor is dropped in a later round.
+          var after0 = steps[i + 2], nextKept = contiguous(next, after0) ? after0.from - next.from : (next.to >= worth.planEnd ? Infinity : next.to - next.from + 1);
+          if (nextKept < kept && nextKept < worth.keepMin[tierOf(worth, setCost(next.set, opts), next.from)]) return i + 1;
           var after = steps[i + 2], end = contiguous(next, after) ? after.from : next.to + 1;
           var base = contiguous(prev, s) ? prev.score : s.par;
           var dropS = base * (next.from - s.from) + next.score * (end - next.from);

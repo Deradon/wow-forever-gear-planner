@@ -5,6 +5,12 @@ versions follow semver, and data-only releases are patch releases (see docs/rele
 
 ## [Unreleased]
 
+### Fixed
+- Upgrade path: a piece was dropped as "worn too briefly" because of a successor that was itself dropped later, so
+  hiding an earlier piece could make it reappear (e.g. White Leather Jerkin for a feral Druid after hiding the
+  Handstitched Leather Vest). The shorter-lived successor now goes first; 9 of 252 class/role/slot paths gain the
+  piece they had lost, and the ranking oracle is unchanged (56/68).
+
 ## [0.1.0] - 2026-10-08
 
 First public release, on WoW: Forever beta data, with a "Beta data" banner until the live refresh after the

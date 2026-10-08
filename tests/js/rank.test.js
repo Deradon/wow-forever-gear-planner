@@ -191,3 +191,14 @@ test("the path is deterministic and steps do not overlap", () => {
   assert.strictEqual(a, b);
   for (const g of JSON.parse(a).groups) for (let i = 1; i < g.steps.length; i++) assert.ok(g.steps[i].from > g.steps[i - 1].to);
 });
+
+// Keep-for-N bans are permanent, so a step must not be banned for a successor that is shorter-lived and goes in a
+// later round itself. Seen as: hiding the Handstitched Leather Vest made the White Leather Jerkin appear.
+test("keep-for-N drops the shorter-lived successor first; hiding an earlier piece doesn't reshuffle later ones", () => {
+  const druid = entry("rdrui02", "Druid", "melee", [], { level: 16 });
+  const chest = (hidden) => [...rank.path(data, roster([druid]), druid, { hidden }).groups.find((g) => g.id === "Chest").steps]
+    .map((s) => `${s.from}:${items[s.items[0]].name}`).filter((x) => +x.split(":")[0] < 14);
+  const vest = byName("Handstitched Leather Vest");
+  assert.deepStrictEqual(chest({}), ["3:Handstitched Leather Vest", "8:White Leather Jerkin"]);
+  assert.deepStrictEqual(chest({ [vest]: true }), ["8:White Leather Jerkin"]);
+});
