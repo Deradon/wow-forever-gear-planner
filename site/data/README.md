@@ -24,7 +24,7 @@ text is the internal spell name). Item record, keys in this order, optional ones
 | `bind` | `BoP`, `BoE`, `BoU`, `none` |
 | `armor`? | integer |
 | `stats` | `{key: int}`; keys in `rules.statKeys` (unidentified IDs as `Stat<ID>`) |
-| `weapon`? | `{speed, min, max, dps, basis}`; `basis`: `tables`, `caster` (× 0.743), `ranged` (two-hand table × 0.6) |
+| `weapon`? | `{speed, min, max, dps, basis}`; `basis`: `tables`, `caster` (two-hand × 0.743, one-hand × 2/3), `ranged` (bows, guns, crossbows: two-hand table × 0.6), `thrown` (one-hand table × 0.9), `curated` (from the tooltip, `curation/items.json`) |
 | `classes`? | class names when `AllowableClass` restricts |
 | `equipSkill`? | `{prof, rank}`: needed to wear the item |
 | `effects`? | `[{on: "use"/"equip"/"hit", spell, text}]` (text = spell name; not scored) |

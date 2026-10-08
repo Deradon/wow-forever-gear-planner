@@ -51,5 +51,37 @@
     "reason": "Epic set piece without stats in this build; probably unfinished content",
     "cite": ["DB"],
     "checked": "2026-10-08"
+  },
+  {
+    "why": "Thrown bomb satchel: part of its budget is the equip effect (thrown attacks explode for Fire damage), so no damage table fits; damage from the tooltip (Wowhead and in-game agree)",
+    "items": [285275],
+    "names": ["Satchel of Copper Bombs"],
+    "weapon": {"min": 2, "max": 11, "speed": 2.0, "dps": 3.09},
+    "cite": ["WH", "TOOLTIP"],
+    "checked": "2026-10-08"
+  },
+  {
+    "why": "Thrown bomb satchel: part of its budget is the equip effect (thrown attacks explode for Fire damage), so no damage table fits; damage from Wowhead's Forever tooltip",
+    "items": [285276],
+    "names": ["Satchel of Bronze Bombs"],
+    "weapon": {"min": 2, "max": 20, "speed": 2.0, "dps": 5.45},
+    "cite": ["WH"],
+    "checked": "2026-10-08"
+  },
+  {
+    "why": "Thrown bomb satchel: part of its budget is the equip effect (thrown attacks explode for Fire damage), so no damage table fits; damage from Wowhead's Forever tooltip",
+    "items": [285277],
+    "names": ["Satchel of Iron Bombs"],
+    "weapon": {"min": 2, "max": 31, "speed": 2.0, "dps": 8.34},
+    "cite": ["WH"],
+    "checked": "2026-10-08"
+  },
+  {
+    "why": "Thrown bomb satchel: part of its budget is the equip effect (thrown attacks explode for Fire damage), so no damage table fits; damage from Wowhead's Forever tooltip",
+    "items": [285278],
+    "names": ["Satchel of Dark Iron Bombs"],
+    "weapon": {"min": 2, "max": 39, "speed": 2.0, "dps": 10.35},
+    "cite": ["WH"],
+    "checked": "2026-10-08"
   }
 ]

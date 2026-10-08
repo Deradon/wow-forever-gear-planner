@@ -36,5 +36,5 @@ test("emitted files follow the data-file contract and round-trip through emit.pa
 test("one record per line in row maps", () => {
   const text = generate(opts).files.items;
   const lines = text.split("\n").filter((l) => /^"\d+":\{"name"/.test(l));
-  assert.strictEqual(lines.length, 12);
+  assert.strictEqual(lines.length, 18);
 });

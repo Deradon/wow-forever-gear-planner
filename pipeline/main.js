@@ -158,6 +158,11 @@ function generate(o) {
       if (fam.note) it.note = fam.note;
       for (const f of fam.flags || []) it.flags.add(f);
       if (fam.effectScore !== undefined) it.effectScore = fam.effectScore;
+      if (fam.weapon) {
+        const w = fam.weapon, was = it.weapon;
+        if (was && was.min === w.min && was.max === w.max && was.speed === w.speed) warnings.push(`item ${id} (${it.name}): curated weapon damage equals the computed one (stale override)`);
+        it.weapon = { speed: w.speed, min: w.min, max: w.max, dps: w.dps, basis: "curated" };
+      }
     }
     if (it.flags.has("noStats") && !it.effects && !fam) warnings.push(`item ${id} (${it.name}): quality ${it.quality} without stats or effects needs a curation check (R8)`);
   }

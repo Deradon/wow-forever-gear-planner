@@ -29,6 +29,16 @@ test("weapon damage rules (D14)", () => {
   assert.strictEqual(w(3851).dps, 15.57, "DPS from the range, 2 decimals (D10)");
 });
 
+test("weapon damage corrections from in-game tooltips (game-data-pipeline §6.3, 2026-10-08)", () => {
+  const w = (id) => { const x = item(id).weapon; return [x.min, x.max, x.speed, x.dps, x.basis]; };
+  assert.deepStrictEqual(w(12260), [14, 26, 1.4, 14.29, "caster"], "Searing Golden Blade: one-hand caster × 2/3");
+  assert.deepStrictEqual(w(22383), [39, 73, 1.8, 31.11, "caster"], "Sageblade: one-hand caster × 2/3");
+  assert.deepStrictEqual(w(285279), [15, 29, 2.2, 10, "thrown"], "Cracked Blacksmith Hammer: OneHand × 0.9");
+  assert.deepStrictEqual(w(285280), [28, 53, 2.1, 19.29, "thrown"], "Mithril Blacksmith Hammer");
+  assert.deepStrictEqual(w(285281), [49, 92, 2.2, 32.05, "thrown"], "Arcanite Blacksmith Hammer");
+  assert.deepStrictEqual(w(285275), [2, 11, 2, 3.09, "curated"], "Satchel of Copper Bombs: curated override");
+});
+
 test("equip skill, effects, mirror pair, stub pattern, curated flags, shields", () => {
   assert.deepStrictEqual(item(10501).equipSkill, { prof: "Engineering", rank: 220 });
   assert.strictEqual(item(10501).effects[0].on, "equip");

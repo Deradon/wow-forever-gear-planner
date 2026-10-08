@@ -61,8 +61,10 @@ const HELPER_LINES = [186, 185, 129];
 
 // Weapon damage rules (D14, game-data-pipeline §6.3).
 const CASTER_FLAG = 0x100;          // ItemSparse.Flags_4: caster weapon
-const CASTER_FACTOR = 0.743;        // caster weapons deal ~26% less than the tables
-const RANGED_FACTOR = 0.6;          // bows, guns, crossbows, thrown: TwoHand table × 0.6
+const CASTER_FACTOR = 0.743;        // two-hand caster weapons deal ~26% less than the tables
+const CASTER_FACTOR_ONE_HAND = 2 / 3; // one-hand caster weapons (in-game tooltips, 2026-10-08)
+const RANGED_FACTOR = 0.6;          // bows, guns, crossbows: TwoHand table × 0.6
+const THROWN_FACTOR = 0.9;          // thrown: OneHand table × 0.9 (in-game tooltips, 2026-10-08)
 
 // ID ranges for origin and leftover rules (§5 R4, R4e).
 const SOD_ITEM = [190000, 244999];
@@ -74,6 +76,6 @@ const GENERATOR = "fgp-pipeline 0.1.0";
 
 module.exports = {
   STAT, statKey, SLOTIDX, BUDGET_COL, EQUIP_INV, SLOT, ITEM_CLASS, ARMOR, WEAPON, ARMOR_COL, BIND, QUALITY, STANDING,
-  EFFECT_TRIGGER, PROFESSIONS, GEAR_LINES, HELPER_LINES, CASTER_FLAG, CASTER_FACTOR, RANGED_FACTOR, SOD_ITEM,
+  EFFECT_TRIGGER, PROFESSIONS, GEAR_LINES, HELPER_LINES, CASTER_FLAG, CASTER_FACTOR, CASTER_FACTOR_ONE_HAND, RANGED_FACTOR, THROWN_FACTOR, SOD_ITEM,
   FOREVER_ITEM_MIN, SOD_SPELL, SCHEMA, GENERATOR,
 };

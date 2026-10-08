@@ -26,6 +26,10 @@ const FIXTURE_ITEMS = [
   250488, // Veteran's Chain Shirt: stub pattern on a Forever item (trainer)
   8211,   // Wild Leather Vest: curated unconfirmed
   22198,  // Jagged Obsidian Shield: shield armor, unidentified stat 124
+  12260,  // Searing Golden Blade: one-hand caster weapon, 14–26 (OneHand × 2/3)
+  22383,  // Sageblade: one-hand caster weapon, epic, 39–73
+  285279, 285280, 285281, // Cracked / Mithril / Arcanite Blacksmith Hammer: thrown, OneHand × 0.9
+  285275, // Satchel of Copper Bombs: curated weapon override, 2–11
 ];
 
 const REPO = path.resolve(__dirname, "..");

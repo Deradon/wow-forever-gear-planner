@@ -111,7 +111,8 @@ const npcSchema = {
 
 // --- items.json, mats.json ---
 const itemsSchema = {
-  array: family({ avail: { enum: AVAIL }, reason: "string", flags: strList, effectScore: "number" }, ["avail", "reason", "flags", "effectScore"]),
+  array: family({ avail: { enum: AVAIL }, reason: "string", flags: strList, effectScore: "number", weapon: { object: { min: "int", max: "int", speed: "number", dps: "number" } } },
+    ["avail", "reason", "flags", "effectScore", "weapon"]),
 };
 const matsSchema = {
   object: {

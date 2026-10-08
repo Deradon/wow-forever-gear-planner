@@ -128,13 +128,16 @@ function needsCheck(data, g) {
   const byName = (name) => Object.keys(items).filter((id) => items[id].name === name);
   const w = (id) => { const x = items[id].weapon; return `${x.min}–${x.max}, speed ${x.speed}, ${x.dps} DPS (basis ${x.basis})`; };
   const lines = [];
-  for (const [name, why] of [["Dreamstaff", "Flags_4 0x500 (healer weapon): caster factor 0.743 applied by hypothesis"],
-    ["Searing Golden Blade", "Flags_4 0x100 only: caster factor 0.743 applied by hypothesis"],
-    ["Satchel of Copper Bombs", "thrown weapon: two-hand table × 0.6 applied by hypothesis (no thrown sample)"]]) {
-    for (const id of byName(name)) lines.push(`- [ ] **${name}** (${id}): ${w(id)}. ${why}. Compare with the in-game tooltip.`);
+  // Weapon rules checked against in-game tooltips on 2026-10-08 (game-data-pipeline §6.3): [name, expected range].
+  for (const [name, want] of [["Dreamstaff", "62–93"], ["Searing Golden Blade", "14–26"], ["Sageblade", "39–73"],
+    ["Cracked Blacksmith Hammer", "15–29"], ["Satchel of Copper Bombs", "2–11"]]) {
+    for (const id of byName(name)) {
+      const x = items[id].weapon, ok = `${x.min}–${x.max}` === want;
+      lines.push(`- [${ok ? "x" : " "}] **${name}** (${id}): ${w(id)}. ${ok ? "Matches" : `Differs from`} the in-game tooltip (${want}, checked 2026-10-08).`);
+    }
   }
-  const thrown = Object.keys(items).filter((id) => items[id].type === "Thrown" && items[id].name !== "Satchel of Copper Bombs");
-  lines.push(`- Other thrown weapons on the same rule: ${thrown.map((id) => `${esc(items[id].name)} (${id}) ${items[id].weapon.dps} DPS`).join(", ")}.`);
+  const thrown = Object.keys(items).filter((id) => items[id].type === "Thrown");
+  lines.push(`- Thrown weapons: ${thrown.map((id) => `${esc(items[id].name)} (${id}) ${items[id].weapon.dps} DPS, ${items[id].weapon.basis}`).join(", ")}.`);
   lines.push("- [ ] **Mail and plate at level 40** (S2): `curation/rules.json` gates Mail for Hunter and Shaman and Plate for Warrior and Paladin at 40, as in vanilla. Check a level-39 Hunter or Warrior, or the trainer.");
   const qm = Object.keys(items).filter((id) => (items[id].flags || []).includes("qualityModifier"));
   lines.push(`- [ ] **QualityModifier** set on ${qm.length} items; whether it scales armor is unverified: ${qm.map((id) => `${esc(items[id].name)} (${id}${items[id].armor ? `, armor ${items[id].armor}` : ""})`).join(", ")}.`);

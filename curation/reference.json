@@ -12,7 +12,7 @@
   },
   "notes": [
     "Stats are RandPropPoints[item level][quality][slot] x stat share / 10000, the game's own budget formula.",
-    "Weapon damage follows the damage tables; caster weapons (a flag in the item data) deal about 26% less, ranged weapons use the two-hand table x 0.6. Three cases are not yet checked against tooltips.",
+    "Weapon damage follows the damage tables, checked against in-game tooltips: caster weapons (a flag in the item data) deal 2/3 of the one-hand table or about 26% less than the two-hand table; bows, guns and crossbows use the two-hand table x 0.6, thrown weapons the one-hand table x 0.9. The bomb satchels carry part of their damage in an explosion effect; their damage is taken from the tooltip.",
     "Mail and plate are assumed to become wearable at level 40, as in vanilla. This is not yet verified for Forever.",
     "Trainer recipe skill is approximate (~): the game data gives only the rank where a recipe turns yellow."
   ],
@@ -22,6 +22,7 @@
     "CWF": {"label": "classicwowforever.com", "url": "https://classicwowforever.com/"},
     "DB": {"label": "Game data tables of the Forever beta client (wago.tools DB2 exports)", "url": "https://wago.tools/db2"},
     "FC": {"label": "foreverchanges.pro", "url": "https://foreverchanges.pro/"},
+    "TOOLTIP": {"label": "In-game tooltip on the beta client, checked by the maintainer", "url": null},
     "NOTES": {"label": "The maintainer's beta notes (in-game checks, 2026-10-06/07), summarized in the design documents", "url": null},
     "VAN": {"label": "Vanilla knowledge, assumed unchanged in Forever until checked", "url": null},
     "W4E": {"label": "wow4evernews.com (profession recipe vendors)", "url": "https://wow4evernews.com/en/articles/wow-forever-profession-recipes-vendors"},

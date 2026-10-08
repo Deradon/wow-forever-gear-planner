@@ -182,7 +182,7 @@ fills in tooltip wording.)
 | `bind` | `"BoP"`/`"BoE"`/`"BoU"`/`"none"` | `Bonding` | 376 BoP, 877 BoE, 25 none, 3 BoU in the 1,281 candidate rows. |
 | `armor` | int or absent | armor tables (pipeline §6.2) | Absent on weapons, trinkets, rings. |
 | `stats` | `{statKey: int}` | budget formula (pipeline §6.1) | Empty object when the item has no budgeted stats. Keys listed in §9.3. |
-| `weapon` | object or absent | damage tables + rules (pipeline §6.3) | `basis`: `"tables"`, `"caster"`, `"ranged"`, `"wowhead"`; `checked`: `"wowhead"` when the build verified it against a tooltip. |
+| `weapon` | object or absent | damage tables + rules (pipeline §6.3) | `basis`: `"tables"`, `"caster"`, `"ranged"`, `"wowhead"`; `checked`: `"wowhead"` when the build verified it against a tooltip. *2026-10-08 (P1):* shipped values are `tables`, `caster`, `ranged`, `thrown`, `curated` (a `curation/items.json` override); no `checked` field, the cross-check lives in the build report. |
 | `classes` | string[] or absent | `AllowableClass` | Only when it actually restricts (11 items: Wolfshead Helm, Robe of the Archmage, Cloak of Earth and Sky, four relics, …). Relic class limits also follow from `type`. |
 | `equipSkill` | `{prof, rank}` or absent | `RequiredSkill`, `RequiredSkillRank` | 57 items; Forever child skill lines (2938, 2941) are mapped to their parent profession. |
 | `effects` | `[{on, text, value?}]` or absent | item effect spells + Wowhead tooltip text | `on`: `use`/`equip`/`hit`. `value` is an optional curated stat map so a proc can be scored (§11). 69 of the stat-less items carry effects. |

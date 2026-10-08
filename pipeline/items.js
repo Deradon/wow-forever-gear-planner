@@ -61,8 +61,9 @@ function armor(type, inv, s, tb) {
   return roundHalf(+tot[cols[0]] * +loc[cols[1]] * +qual[`Qualitymod_${q}`]);
 }
 
-// Weapon damage (D14): table DPS by item level and quality; caster weapons (Flags_4 & 0x100) × 0.743; bows, guns,
-// crossbows and thrown from the TwoHand table × 0.6; wands from the wand table. Displayed range from DPS, speed
+// Weapon damage (D14, corrected 2026-10-08 from in-game tooltips): table DPS by item level and quality; caster
+// weapons (Flags_4 & 0x100) × 0.743 on two-hands and × 2/3 on one-hands; bows, guns and crossbows from the TwoHand
+// table × 0.6; thrown from the OneHand table × 0.9; wands from the wand table. Displayed range from DPS, speed
 // and DmgVariance; DPS reported as (min + max) / 2 / speed, as the game does.
 function weapon(type, inv, s, tb) {
   const ilvl = +s.ItemLevel, q = +s.OverallQualityID;
@@ -70,8 +71,9 @@ function weapon(type, inv, s, tb) {
   if (!speed) return null;
   let table = inv === 17 ? tb.dmg.two : tb.dmg.one, factor = 1, basis = "tables";
   if (type === "Wand") table = tb.dmg.wand;
-  else if (["Bow", "Gun", "Crossbow", "Thrown"].includes(type)) { table = tb.dmg.two; factor = C.RANGED_FACTOR; basis = "ranged"; }
-  else if (+s.Flags_4 & C.CASTER_FLAG) { factor = C.CASTER_FACTOR; basis = "caster"; }
+  else if (type === "Thrown") { table = tb.dmg.one; factor = C.THROWN_FACTOR; basis = "thrown"; }
+  else if (["Bow", "Gun", "Crossbow"].includes(type)) { table = tb.dmg.two; factor = C.RANGED_FACTOR; basis = "ranged"; }
+  else if (+s.Flags_4 & C.CASTER_FLAG) { factor = inv === 17 ? C.CASTER_FACTOR : C.CASTER_FACTOR_ONE_HAND; basis = "caster"; }
   const row = table.get(ilvl);
   if (!row) return null;
   const dps = +row[`Quality_${q}`] * factor, v = +s.DmgVariance;
