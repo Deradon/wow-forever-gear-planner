@@ -96,7 +96,7 @@
 
       var cov = A.coverage(), mine = A.S.roster.faction;
       out.push('<div class="panel"><h2>Recipe sources</h2><p>' + esc(ref.coverage.sources) + "</p><p>" + esc(ref.coverage.unknown) + "</p>" +
-        '<div class="tbl-wrap"><table><caption class="sr">Share of gear recipes with a known source</caption><thead><tr><th>Item level band</th><th class="num">Alliance</th><th class="num">Horde</th></tr></thead><tbody>' +
+        '<div class="tbl-wrap"><table><caption class="sr">Share of gear recipes with a known source</caption><thead><tr><th>Required level</th><th class="num">Alliance</th><th class="num">Horde</th></tr></thead><tbody>' +
         BANDS.map(function (b, i) {
           function cell(f) { var c = cov[f][i]; return '<td class="num' + (f === mine ? " route-bold" : "") + '">' + (c.total ? Math.round(c.known / c.total * 100) + " %" : "—") + ' <span class="faint small">of ' + c.total + "</span></td>"; }
           return "<tr><td>" + b[0] + "–" + b[1] + "</td>" + cell("alliance") + cell("horde") + "</tr>";

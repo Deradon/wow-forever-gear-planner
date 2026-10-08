@@ -62,7 +62,9 @@
   // faction has a source.
   A.sourcesFor = function (spell) {
     var all = D().sources.rows[spell] || [], f = A.S.roster.faction, mine = all.filter(function (e) { return e.side === "both" || e.side === f; });
-    return { list: mine.length ? mine : all, otherSide: !mine.length && all.length > 0 };
+    // Known sources first, so the badge never says "source unknown" when another source is known.
+    var list = (mine.length ? mine : all).slice().sort(function (a, b) { return (a.kind === "unknown") - (b.kind === "unknown"); });
+    return { list: list, otherSide: !mine.length && all.length > 0 };
   };
 
   function npcText(e) {

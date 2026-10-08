@@ -579,7 +579,13 @@
     d.addEventListener("input", onInput);
     d.addEventListener("submit", onSubmit);
     d.addEventListener("keydown", onKey);
-    root.addEventListener("hashchange", function () { A.form = A.form && A.form.inline ? A.form : null; A.render(); var v = $("view"); if (v) v.focus({ preventScroll: true }); });
+    root.addEventListener("hashchange", function () {
+      var planned = !!A.focusNext;
+      A.form = A.form && A.form.inline ? A.form : null;
+      A.render();
+      var v = $("view");
+      if (v && !planned) v.focus({ preventScroll: true });
+    });
     root.addEventListener("storage", onStorage);
     if (A.boots) A.boots.forEach(function (fn) { fn(); });
     if (!A.problems.length) A.save();

@@ -116,7 +116,11 @@ test("step 3: level 45: source-unknown badges, the known-source switch removes t
   // Known sources only.
   A.changes.roster(el({ "data-key": "knownSourceOnly" }, { checked: true }));
   m = A.gearModel(e);
-  for (const r of m.rows.concat(m.alternatives)) assert.ok(!r.route.flags.includes("source unknown"), r.it.name);
+  for (const r of m.rows.concat(m.alternatives)) {
+    assert.ok(!r.route.flags.includes("source unknown"), r.it.name);
+    assert.notStrictEqual(A.sourcesFor(r.route.recipe).list[0].kind, "unknown", `${r.it.name}: badge leads with a known source`);
+  }
+  assert.doesNotMatch(A.viewHtml("gear"), /b-unknown/);
   assert.match(A.viewHtml("gear"), /id="roster-known"[^>]*checked/);
 });
 

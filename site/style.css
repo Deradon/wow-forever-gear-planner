@@ -370,6 +370,13 @@ tr.group.reached td { color: var(--muted); }
 tr.group .now { color: var(--accent); font-weight: 700; margin-left: 8px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; }
 tr.done td { opacity: .6; }
 
+td.c-item { min-width: 210px; }
+table.items { font-size: 13px; }
+table.items th, table.items td { padding: 5px 6px; }
+table.items td.c-via .via { white-space: normal; }
+table.items td.c-stats { min-width: 120px; }
+table.items td.c-skill { min-width: 120px; }
+table.items td.c-skill .badge { white-space: normal; }
 .iname { font-weight: 650; text-decoration: none; }
 .iname:hover { text-decoration: underline; }
 .q1 { color: var(--q1); } .q2 { color: var(--q2); } .q3 { color: var(--q3); } .q4 { color: var(--q4); }

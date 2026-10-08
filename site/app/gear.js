@@ -34,7 +34,7 @@
         var sk = crafterSkill(A.entry(rt.crafter), r.prof, it.req);
         out.push("needs " + r.prof + " " + r.skill.learn + ", " + names[rt.crafter] + " has " + (sk.estimated ? "~" : "") + sk.skill);
       } else if (/^equip /.test(f) && it.equipSkill) out.push("needs " + it.equipSkill.prof + " " + it.equipSkill.rank + " to wear" + (f === "equip ~!" ? " (estimated skill)" : ""));
-      else if (/^needs /.test(f)) out.push(f + (/Favor|reputation|drop only/.test(f) ? " (mark the pattern learned under Alternatives)" : ""));
+      else if (/^needs /.test(f) && !/^needs (Favor|reputation|drop only)$/.test(f)) out.push(f);
     });
     return out;
   }
@@ -42,7 +42,7 @@
   // Get via as HTML (ui.md §4.2): Self · Tailoring 130 / <name> → mail / AH · price.
   A.viaText = function (rt, it, names, id) {
     var r = D().recipes.rows[rt.recipe], flag = rt.flags.filter(function (f) { return f === "!" || f === "~!"; })[0] || "";
-    var fl = flag ? '<span class="flag" title="Crafter skill is below the recipe skill' + (flag === "~!" ? " (estimated)" : "") + '">' + esc(flag) + "</span>" : "";
+    var fl = flag ? ' <span class="flag" title="Crafter skill is below the recipe skill' + (flag === "~!" ? " (estimated)" : "") + '">' + esc(flag) + "</span>" : "";
     if (rt.via === "self") {
       var sk = crafterSkill(A.entry(rt.crafter), r.prof, it.req), p = A.entry(rt.crafter).professions.filter(function (x) { return x.id === r.prof; })[0];
       return '<span class="via">Self · ' + esc(r.prof) + " " + (p && typeof p.skill === "number" ? esc(p.skill) : "~" + esc(sk.skill)) + fl + "</span>";
@@ -250,7 +250,7 @@
     if (r.alt && rt.crafter && /Favor|reputation|drop only/.test(r.why)) {
       var lk = rt.crafter + ":" + rt.recipe;
       learnBox = '<label class="small"><input type="checkbox" id="learn-' + esc(base) + '" data-change="learned" data-key="' + esc(lk) + '"' + (A.S.recipes[lk] ? " checked" : "") +
-        "> " + esc(m.names[rt.crafter]) + " has the pattern</label>";
+        "> " + esc(m.names[rt.crafter]) + " has the pattern (moves it into the plan)</label>";
     }
     var self = rt.via !== "ah";
     return '<tr data-row="' + esc(r.key) + '" class="' + (r.status === "equipped" ? "done" : "") + '">' +
@@ -262,7 +262,7 @@
       '<td class="c-bind">' + A.bindBadge(it) + "</td>" +
       '<td class="c-via">' + A.viaText(rt, it, m.names, r.id) + "</td>" +
       '<td class="c-src">' + A.sourceBadges(rt.recipe) + "</td>" +
-      '<td class="c-skill nowrap">' + A.skillText(rt.recipe) + "</td>" +
+      '<td class="c-skill">' + A.skillText(rt.recipe) + "</td>" +
       '<td class="c-cost num">' + matsCell(r, self) + "</td>" +
       '<td class="c-ah num">' + ahCell(r, !self) + "</td>" +
       '<td class="c-status"><div class="st-wrap"><select class="status st-' + (r.status || "get") + '" id="st-' + esc(base) + '" data-change="status" data-key="' + esc(r.key) + '" aria-label="Status of ' + esc(it.name) + '">' +

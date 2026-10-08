@@ -114,7 +114,7 @@
         if (r.error) parts.push("damaged: " + r.error);
         else {
           parts.push(r.entries + " entries", "skipped " + r.skipped.nonNumeric + " non-numeric, " + r.skipped.invalid + " invalid", r.known + " known to the planner");
-          if (r.newestDay !== null) parts.push("newest scan " + atr().isoDay(r.newestDay) + " (" + (A.today - r.newestDay) + " days)");
+          if (r.newestDay !== null) parts.push("newest scan " + atr().isoDay(r.newestDay) + " (" + A.plural(A.today - r.newestDay, "day") + " old)");
         }
         lines.push(parts.join(" · "));
       });
@@ -132,7 +132,7 @@
     if (s) {
       var age = s.scanDay !== null && s.scanDay !== undefined ? A.today - s.scanDay : null, band = FGP.pricing.band(age);
       out.push("<dt>Imported</dt><dd>Auctionator file" + (s.fileName ? " <code>" + esc(s.fileName) + "</code>" : "") + ", realm " + esc(s.realm) + "</dd>");
-      out.push("<dt>Scanned</dt><dd>" + (age === null ? "unknown" : esc(atr().isoDay(s.scanDay)) + ' <span class="age age-' + esc(band) + '">' + esc(A.ageText(age)) + " old · " + esc(band) + "</span>") + "</dd>");
+      out.push("<dt>Scanned</dt><dd>" + (age === null ? "unknown" : esc(atr().isoDay(s.scanDay)) + ' <span class="age age-' + esc(band) + '">' + esc(age > 0 ? A.ageText(age) + " old" : "today") + " · " + esc(band) + "</span>") + "</dd>");
       out.push("<dt>Prices</dt><dd>" + esc(s.entries) + " items" + (s.filtered ? " (only items the planner knows)" : "") + (s.build && s.build !== D().meta.build ? ' <span class="badge b-warn">imported with data build ' + esc(s.build) + "</span>" : "") + "</dd>");
       out.push("<dt>Imported at</dt><dd>" + esc(s.importedAt || "?") + "</dd>");
     } else {
@@ -152,7 +152,7 @@
       "<li>In game, scan at the Auction House with Auctionator (a full scan, or searches for your mats).</li>" +
       "<li>Type <code>/reload</code> or log out. The file is only written then.</li>" +
       "<li>Open your WoW folder (Battle.net app → WoW: Forever → gear icon → <em>Show in Explorer</em>), then <code>" + esc(folder) +
-      "</code> → <code>WTF</code> → <code>Account</code> → <code>&lt;your account folder&gt;</code> → the saved-variables folder → <code>Auctionator.lua</code>.</li>" +
+      "</code> → <code>WTF</code> → <code>Account</code> → <code>&lt;your account folder&gt;</code> → <code>SavedVariables</code> → <code>Auctionator.lua</code>.</li>" +
       "<li>Pick it below or drop it here. <strong>The file is read in your browser. Nothing is uploaded.</strong></li></ol>");
     out.push('<div class="drop" id="price-drop" data-drop="prices"><p>Drop <code>Auctionator.lua</code> here, or</p>' +
       '<button type="button" class="btn btn-primary" id="price-pick" data-act="price-pick">Choose Auctionator file…</button></div>');
