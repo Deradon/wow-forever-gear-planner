@@ -1,7 +1,19 @@
 {
+  "alexandra-bolero": {
+    "name": "Alexandra Bolero",
+    "zone": "Stormwind City",
+    "side": "alliance",
+    "role": "vendor"
+  },
   "amy-davenport": {
     "name": "Amy Davenport",
     "zone": "Lakeshire, Redridge Mountains",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "androd-fadran": {
+    "name": "Androd Fadran",
+    "zone": "Arathi Highlands",
     "side": "alliance",
     "role": "vendor"
   },
@@ -50,21 +62,21 @@
     "zone": "Durotar supply post",
     "side": "horde",
     "role": "favor",
-    "note": "Horde Favor vendor for Blacksmithing, assumed to mirror the Alliance one; not verified."
+    "note": "Durotar Supply and Logistics, west of the Crossroads (Jim'bek, Pawani or Gor'mak; which sells what is unverified)."
   },
   "durotar-favor-leatherworking": {
     "name": "Horde Favor vendor, Leatherworking (unverified)",
     "zone": "Durotar supply post",
     "side": "horde",
     "role": "favor",
-    "note": "Horde Favor vendor for Leatherworking, assumed to mirror the Alliance one; not verified."
+    "note": "Durotar Supply and Logistics, west of the Crossroads (Jim'bek, Pawani or Gor'mak; which sells what is unverified)."
   },
   "durotar-favor-tailoring": {
     "name": "Horde Favor vendor, Tailoring (unverified)",
     "zone": "Durotar supply post",
     "side": "horde",
     "role": "favor",
-    "note": "Horde Favor vendor for Tailoring, assumed to mirror the Alliance one; not verified."
+    "note": "Durotar Supply and Logistics, west of the Crossroads (Jim'bek, Pawani or Gor'mak; which sells what is unverified)."
   },
   "gina-macgregor": {
     "name": "Gina MacGregor",
@@ -89,6 +101,12 @@
     "side": "alliance",
     "role": "vendor"
   },
+  "harlown-darkweave": {
+    "name": "Harlown Darkweave",
+    "zone": "Ashenvale",
+    "side": "alliance",
+    "role": "vendor"
+  },
   "jannos-ironwill": {
     "name": "Jannos Ironwill",
     "zone": "Arathi Highlands",
@@ -99,6 +117,12 @@
     "name": "Jazzrik",
     "zone": "Badlands",
     "side": "neutral",
+    "role": "vendor"
+  },
+  "jennabink-powerseam": {
+    "name": "Jennabink Powerseam",
+    "zone": "Wetlands",
+    "side": "alliance",
     "role": "vendor"
   },
   "kaita-deepforge": {
@@ -130,6 +154,12 @@
     "role": "favor",
     "note": "Azeroth Commerce Authority Favor vendor, Tailoring patterns (BoP, no reputation needed)."
   },
+  "rann-flamespinner": {
+    "name": "Rann Flamespinner",
+    "zone": "Loch Modan",
+    "side": "alliance",
+    "role": "vendor"
+  },
   "saenorion": {
     "name": "Saenorion",
     "zone": "Darnassus",
@@ -147,10 +177,23 @@
     "role": "favor",
     "note": "Azeroth Commerce Authority Favor vendor, Blacksmithing plans."
   },
+  "sutara-plainstalker": {
+    "name": "Sutara Plainstalker",
+    "zone": "Mulgore",
+    "side": "horde",
+    "role": "quartermaster",
+    "note": "Earthen Ring quartermaster; sells the Cloudy level-30 patterns."
+  },
   "tharynn-bouden": {
     "name": "Tharynn Bouden",
     "zone": "Elwynn Forest",
     "side": "alliance",
+    "role": "vendor"
+  },
+  "tunkk": {
+    "name": "Tunkk",
+    "zone": "Hammerfall, Arathi Highlands",
+    "side": "horde",
     "role": "vendor"
   },
   "vayn-moongaze": {
@@ -164,9 +207,21 @@
     "role": "quartermaster",
     "note": "Nightclaw Druids quartermaster. Whether non-Skyborne characters can reach the isle is disputed."
   },
+  "wenna-silkbeard": {
+    "name": "Wenna Silkbeard",
+    "zone": "Wetlands",
+    "side": "alliance",
+    "role": "vendor"
+  },
   "xizk-goodstitch": {
     "name": "Xizk Goodstitch",
     "zone": "Booty Bay, Stranglethorn Vale",
+    "side": "neutral",
+    "role": "vendor"
+  },
+  "zixil": {
+    "name": "Zixil",
+    "zone": "Hillsbrad Foothills (roaming)",
     "side": "neutral",
     "role": "vendor"
   }

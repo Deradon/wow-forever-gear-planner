@@ -36,8 +36,8 @@ All from `https://wago.tools/db2/<Table>/csv?build=<build>`.
 | `SpellEffect` | Effect 24 (create item: `EffectItemType`, count `EffectBasePointsF`) is the only create-item effect on profession spells in this build; effect 53 (enchant item); auras of equip/proc spells. |
 | `SpellReagents` | Mats (up to 8 per spell). Every gear recipe has a row. |
 | `SpellName` | Enchant names, effect names. |
-| `Item` | `ClassID`/`SubclassID` (armor or weapon type), `InventoryType`, `IconFileDataID`. 31,822 rows. |
-| `ItemSparse` | Name, quality, item level, required level, bind, stat IDs and shares, `ItemDelay`, `DmgVariance`, `Flags_4`, `RequiredSkill(Rank)`, `AllowableClass`, `ItemSet`, `QualityModifier`; on patterns `RequiredSkillRank` (learn skill), `MinFactionID`/`MinReputation`, `Bonding`, `BuyPrice`/`VendorStackCount`. Only 19,226 rows: **an item without an ItemSparse row is not in the game.** |
+| `Item` | `ClassID`/`SubclassID` (armor or weapon type), `InventoryType`, `IconFileDataID`. 31,821 records (31,822 was the CSV line count; corrected 2026-10-08). |
+| `ItemSparse` | Name, quality, item level, required level, bind, stat IDs and shares, `ItemDelay`, `DmgVariance`, `Flags_4`, `RequiredSkill(Rank)`, `AllowableClass`, `ItemSet`, `QualityModifier`; on patterns `RequiredSkillRank` (learn skill), `MinFactionID`/`MinReputation`, `Bonding`, `BuyPrice`/`VendorStackCount`. Only 19,224 records (19,226 was the CSV line count; corrected 2026-10-08): **an item without an ItemSparse row is not in the game.** |
 | `ItemEffect` + `ItemXItemEffect` | Pattern → craft spell (`TriggerType` 6 on a `ClassID` 9 item); use (0), equip (1) and on-hit (2) spells; kit/scope use spells. |
 | `RandPropPoints` | Stat budget per item level, quality and slot group. |
 | `ItemArmorTotal`, `ArmorLocation`, `ItemArmorQuality`, `ItemArmorShield` | Armor. The prototype does not use `ItemArmorShield`; 3 crafted shields need it. |
@@ -69,7 +69,7 @@ drops or who sells it (§9).
 7. **Pattern choice.** Per spell, the linked recipe items with an ItemSparse row; drop names ending in " OLD"; prefer
    IDs outside the SoD range; then the lowest ID. 20 spells have more than one linked pattern.
 8. **Intermediates.** Close over reagents that are themselves crafted (profession spells preferred, as the
-   prototype's `makes` sorting does): 131 intermediates, 356 mats in total.
+   prototype's `makes` sorting does): 131 intermediates, 356 mats in total (M1 ships 118 intermediate recipes for them, 2026-10-08).
 9. **Classify** each item and recipe (`origin`, `avail`, `flags`, derived sources) with the rules of §5 and §9, then
    merge curation (§11) and compute stats, armor and weapon damage (§6).
 10. **Derived links.** Pattern `RequiredAbility` → `pattern.spec` (86 gear recipes need a specialisation); `mirror`
@@ -184,7 +184,7 @@ Changes when porting:
 
 `round(ItemArmorTotal[ilvl][type] × ArmorLocation[inv][typeModifier] × ItemArmorQuality[ilvl].Qualitymod_<q>)`,
 robes as chest. Checked: **132 of 132** cached armor values match. Additions: shields from `ItemArmorShield` (3
-crafted shields); `QualityModifier` is set on 23 crafted items (Dark Iron Mail 130, Onyxia Scale Breastplate 150,
+crafted shields); `QualityModifier` is set on 23 crafted items (M1 measured 37 shipped items, 4 of them negative; the report lists them under "needs in-game check", 2026-10-08) (Dark Iron Mail 130, Onyxia Scale Breastplate 150,
 Heavy Mithril Gauntlet 80, …) and none of them is in the tooltip cache, so whether and how it scales armor is
 unverified: these 23 are in the Wowhead check set and flagged `qualityModifier` until it passes.
 

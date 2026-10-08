@@ -666,6 +666,19 @@ items:
 
 All thresholds live in `worth` in the JSON, so tuning needs no code change.
 
+**M1 implementation notes (2026-10-08, `site/lib/rank.js`), where this section left a choice open:**
+
+- When keep-for-N fails, the step or its successor is dropped, whichever keeps more score × levels; banning is by
+  the failing step's new items.
+- The par item includes armor (heaviest wearable type) and weapon DPS: `baseline.dpsEfficiency` (0.9) and par speeds
+  in `roles.json`.
+- Core thresholds are `worth.coreGain`, `worth.coreKeep` and `worth.coreAlone`.
+- Rule 5 drops A when `B.score × (horizon − d) > A.score × horizon`.
+- Gadgets (no stats, an unscored use or equip effect, no weapon) are alternatives ("effect not scored"), never a
+  step; a curated `effectScore` in `curation/items.json` puts one back.
+- New parameter `dualWieldHit` (0.8): dual-wield white hits are scaled by the vanilla miss penalty. Without it
+  Warriors levelled with two one-hand maces. Owner: theorycraft; tune with the rest of §4.5.
+
 ### 6.5 Things weights cannot see
 
 - **Effects** (relic procs and %-effects, trinket uses, Engineering gadgets, "chance on hit" weapons): default 0, a
