@@ -11,5 +11,6 @@ Read [synthesis.md](synthesis.md) first: it lists every decision and wins where 
 - [pricing-import.md](pricing-import.md): Auctionator import in the browser, price model, storage
 - [release-maintenance.md](release-maintenance.md): repo layout, GitHub Pages, tests, regeneration, license, privacy check
 - [critique.md](critique.md): the critic's review of all drafts
+- [briefs/](briefs/README.md): session briefs for the implementation sessions
 
 Every document ends with its open questions and the small decisions it took itself.
