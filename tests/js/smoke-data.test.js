@@ -98,7 +98,7 @@ test("every class and role has a candidate for every armor slot somewhere in 1â€
 });
 
 test("site/lib: each module loads as a classic script and under require(), with the same API, no DOM or storage", () => {
-  const names = { "version.js": "version", "lua-literal.js": "luaLiteral", "cbor.js": "cbor", "auctionator.js": "auctionator", "pricing.js": "pricing", "state.js": "state", "rank.js": "rank" };
+  const names = { "version.js": "version", "lua-literal.js": "luaLiteral", "cbor.js": "cbor", "auctionator.js": "auctionator", "pricing.js": "pricing", "state.js": "state", "rank.js": "rank", "queue.js": "queue" };
   const dir = path.join(SITE, "lib");
   assert.deepStrictEqual(fs.readdirSync(dir).sort(), Object.keys(names).sort());
   for (const [file, name] of Object.entries(names)) {
