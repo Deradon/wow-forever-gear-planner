@@ -496,8 +496,8 @@ Day 2–7
 - **Timing.** Fetch 12–13 s, build 2 s, `tools/check.sh` 4 s. The review is the long part.
 - **Rehearsal outcome.** 70245 is byte-identical to the shipped 70205, so nothing was released or tagged. The
   report is committed as the record, and the diff section was proven on 70124 → 70245 instead.
-- **Release-day change.** `meta.status` is set in `pipeline/main.js`, so going live is a code change in that file,
-  not a config edit.
+- **Release-day command.** Going live is `build ... --status live --product <S5 code>`; both flags are written into
+  `meta` and validated.
 
 ## 9. Licensing options (the user decides)
 

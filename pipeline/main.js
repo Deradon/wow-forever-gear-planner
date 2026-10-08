@@ -6,6 +6,7 @@
 //       download missing DB2 tables (the only network step) and record their hashes in build-inputs/
 //   node pipeline/main.js build --build <b> --date <YYYY-MM-DD> [--cache <dir>] [--out <dir>]
 //                               [--report <file>] [--diff-against <git tag|dir>] [--accept-new-hashes]
+//                               [--status beta|live] [--product <code>]
 //       generate site/data/forever/*.js and reports/<b>.md from the cache and curation/ (offline)
 
 const fs = require("fs");
@@ -23,7 +24,8 @@ const icons = require("./icons");
 
 const REPO = path.resolve(__dirname, "..");
 const DATASET = "forever";
-const PRODUCT = "wow_classic_beta";
+const PRODUCT = "wow_classic_beta"; // default --product: the beta client's .build.info product
+const STATUSES = ["beta", "live"];
 
 const ITEM_KEYS = ["name", "icon", "quality", "ilvl", "req", "inv", "slot", "itemClass", "type", "bind", "armor", "stats", "weapon",
   "classes", "equipSkill", "effects", "set", "mirror", "recipes", "origin", "avail", "reason", "flags", "note", "effectScore"];
@@ -43,6 +45,9 @@ function sha256Files(dir, names) {
 
 // Generate every data section in memory. Pure function of the cached CSVs, curation/ and the date.
 function generate(o) {
+  const status = o.status || "beta", product = o.product || PRODUCT;
+  if (!STATUSES.includes(status)) throw new Error(`--status must be one of ${STATUSES.join(", ")}, not "${status}"`);
+  if (!/^[a-z][a-z0-9_]*$/.test(product)) throw new Error(`--product must be a product code like ${PRODUCT}, not "${product}"`);
   const blocking = [], warnings = [];
   const curDir = o.curationDir || path.join(o.repo, "curation");
   const cur = curation.load(curDir);
@@ -329,8 +334,8 @@ function generate(o) {
   const curFiles = fs.readdirSync(curDir).filter((f) => f.endsWith(".json")).sort();
   const manifest = (b) => { const p = db2.manifestPath(o.repo, b); return fs.existsSync(p) ? crypto.createHash("sha256").update(fs.readFileSync(p)).digest("hex") : null; };
   const meta = {
-    dataset: DATASET, flavor: "forever", product: PRODUCT, build: o.build, levels: [1, 60], skillCap: 300, locale: "enUS",
-    status: "beta", generated: o.date, generator: C.GENERATOR, schema: C.SCHEMA,
+    dataset: DATASET, flavor: "forever", product, build: o.build, levels: [1, 60], skillCap: 300, locale: "enUS",
+    status, generated: o.date, generator: C.GENERATOR, schema: C.SCHEMA,
     inputs: {
       db2: { manifest: `build-inputs/db2-${o.build}.sha256`, sha256: manifest(o.build) },
       reference: { manifest: `build-inputs/db2-${db2.REFERENCE_BUILD}.sha256`, sha256: manifest(db2.REFERENCE_BUILD) },
@@ -400,7 +405,7 @@ async function main(argv) {
     const res = build({
       repo: REPO, cache, build: args.build, date: args.date, acceptNewHashes: !!args["accept-new-hashes"],
       out: args.out ? path.resolve(args.out) : null, report: args.report ? path.resolve(args.report) : null,
-      diffAgainst: args["diff-against"] || null, log,
+      diffAgainst: args["diff-against"] || null, status: args.status, product: args.product, log,
     });
     log(res.summary);
     if (res.blocking.length) { process.exitCode = 1; }

@@ -10,6 +10,8 @@ versions follow semver, and data-only releases are patch releases (see docs/rele
   changed field by field, and added items, recipes and mats (added ones grouped by profession and derived source);
   counts per profession and bracket old → new; R1 items that gained an ItemSparse row and stub patterns that became
   real. It also accepts a directory of generated data; the funnel compares against the baseline's counts.
+- Generator: `build --status beta|live` and `--product <code>` set `meta.status` and `meta.product` (defaults `beta`,
+  `wow_classic_beta`), so the live refresh needs no code edit.
 
 ### Data
 - Release-day rehearsal on beta build 1.60.1.70245: its DB2 tables are byte-identical to 1.60.1.70205 (0 items or

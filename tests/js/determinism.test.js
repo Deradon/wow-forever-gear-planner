@@ -20,6 +20,15 @@ test("the date is the only clock: another --date changes meta only", () => {
   assert.notStrictEqual(a.meta, b.meta);
 });
 
+test("--status and --product: defaults beta and wow_classic_beta, validated, written into meta only", () => {
+  const a = generate(opts), b = generate({ ...opts, status: "live", product: "wow_classic" });
+  assert.deepStrictEqual([a.sections.meta.status, a.sections.meta.product], ["beta", "wow_classic_beta"]);
+  assert.deepStrictEqual([b.sections.meta.status, b.sections.meta.product], ["live", "wow_classic"]);
+  for (const k of Object.keys(a.files)) if (k !== "meta") assert.strictEqual(a.files[k], b.files[k], `${k}.js depends on status or product`);
+  assert.throws(() => generate({ ...opts, status: "release" }), /--status must be one of beta, live/);
+  assert.throws(() => generate({ ...opts, product: "wow classic" }), /--product must be a product code/);
+});
+
 test("emitted files follow the data-file contract and round-trip through emit.parse", () => {
   const g = generate(opts);
   for (const [name, text] of Object.entries(g.files)) {

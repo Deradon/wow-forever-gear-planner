@@ -505,10 +505,11 @@ procedure above was planned before the pipeline existed. What holds now:
   - `--diff-against` accepted only a git tag, and `git show` errors leaked to the terminal.
 
   Fetch and build were not flaky.
-- **Still open for 2026-11-05:**
-  - S5 (the live product and build);
-  - `meta.status` and `meta.product` are constants in `pipeline/main.js` (`status: "beta"`, `PRODUCT`), so going
-    live needs that code change plus the `data-<build>` and `v0.2.0` tags (roadmap M1.1).
+- **Release-day command.** `build` takes `--status beta|live` (default `beta`) and `--product <code>` (default
+  `wow_classic_beta`); both are validated and written into `meta` only. So step 7 is a command line:
+  `node pipeline/main.js build --build <live> --date 2026-11-05 --status live --product <S5 code> --diff-against
+  data-beta-1.60.1.70205`, then the `data-<build>` and `v0.2.0` tags (roadmap M1.1).
+- **Still open for 2026-11-05:** S5, the live product code and build.
 
 ## 15. Tests the pipeline needs
 
