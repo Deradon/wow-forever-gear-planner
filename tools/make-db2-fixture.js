@@ -6,11 +6,14 @@
 //   node tools/make-db2-fixture.js [--cache <dir>]
 //
 // The item list is FIXTURE_ITEMS below; the output is deterministic. Re-run after changing the list.
+// Also writes the icon rows of those items and their mats from the cached community listfile to
+// tests/fixtures/listfile/<tag>/ (the fixture cache root is tests/fixtures).
 
 const fs = require("fs");
 const path = require("path");
 const db2 = require("../pipeline/db2");
 const { parseCsv } = require("../pipeline/csv");
+const icons = require("../pipeline/icons");
 
 const BUILD = "1.60.1.70205";
 // Formula fixtures (game-data-pipeline §15) plus one example per rule the tests touch.
@@ -81,6 +84,8 @@ for (const r of sparse) if (+v("ItemSparse", r, "RequiredAbility") > 0) spellNam
 const factions = new Set(sparse.map((r) => +v("ItemSparse", r, "MinFactionID")).filter((x) => x > 0));
 for (const f of [2740, 2758, 2787]) factions.add(f);
 
+const appearances = new Set(T.ItemModifiedAppearance.rows.filter((r) => allItems.has(+v("ItemModifiedAppearance", r, "ItemID"))).map((r) => +v("ItemModifiedAppearance", r, "ItemAppearanceID")));
+
 const id = (r, col) => +r[col("ID")];
 const keepers = {
   SkillLine: (r, col) => lines.has(id(r, col)) || lines.has(+r[col("ParentSkillLineID")]),
@@ -89,6 +94,8 @@ const keepers = {
   SpellReagents: (r, col) => spells.has(+r[col("SpellID")]),
   SpellName: (r, col) => spellNames.has(id(r, col)),
   Item: (r, col) => allItems.has(id(r, col)),
+  ItemModifiedAppearance: (r, col) => allItems.has(+r[col("ItemID")]),
+  ItemAppearance: (r, col) => appearances.has(id(r, col)),
   ItemSparse: (r, col) => allItems.has(id(r, col)),
   ItemEffect: (r, col) => effects.has(id(r, col)),
   ItemXItemEffect: (r, col) => effects.has(+r[col("ItemEffectID")]),
@@ -108,4 +115,11 @@ for (const t of db2.REFERENCE_TABLES) {
   const e = load(db2.REFERENCE_BUILD, t);
   write(db2.REFERENCE_BUILD, t, e, t === "SkillLineAbility" ? (r, col) => spells.has(+r[col("Spell")]) : (r, col) => allItems.has(id(r, col)));
 }
+const iconIds = new Set([...T.Item.rows.filter((r) => allItems.has(+v("Item", r, "ID"))).map((r) => +v("Item", r, "IconFileDataID")),
+  ...T.ItemAppearance.rows.filter((r) => appearances.has(+v("ItemAppearance", r, "ID"))).map((r) => +v("ItemAppearance", r, "DefaultIconFileDataID"))].filter((x) => x > 0));
+const { names } = icons.iconNames({ repo: REPO, cache, ids: iconIds });
+const lf = icons.listfilePath(path.join(REPO, "tests", "fixtures"), icons.LISTFILE_TAG);
+fs.mkdirSync(path.dirname(lf), { recursive: true });
+fs.writeFileSync(lf, [...names].sort((a, b) => a[0] - b[0]).map(([fid, n]) => `${fid};interface/icons/${n}.blp
+`).join(""));
 process.stderr.write(`fixture: ${items.size} items, ${spells.size} spells, ${mats.size} mats, ${patterns.size} patterns → ${path.relative(REPO, OUT)}\n`);

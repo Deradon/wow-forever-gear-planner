@@ -17,8 +17,8 @@ const USER_AGENT = "forever-gear-planner/0.1 (+github)";
 // Tables of the dataset build (game-data-pipeline §2).
 const TABLES = [
   "ArmorLocation", "CharBaseInfo", "ChrClasses", "ChrRaces", "Faction", "Item", "ItemArmorQuality",
-  "ItemArmorShield", "ItemArmorTotal", "ItemDamageOneHand", "ItemDamageTwoHand", "ItemDamageWand", "ItemEffect",
-  "ItemSet", "ItemSetSpell", "ItemSparse", "ItemXItemEffect", "RandPropPoints", "SkillLine", "SkillLineAbility",
+  "ItemAppearance", "ItemArmorShield", "ItemArmorTotal", "ItemDamageOneHand", "ItemDamageTwoHand", "ItemDamageWand",
+  "ItemEffect", "ItemModifiedAppearance", "ItemSet", "ItemSetSpell", "ItemSparse", "ItemXItemEffect", "RandPropPoints", "SkillLine", "SkillLineAbility",
   "SpellEffect", "SpellName", "SpellReagents",
 ];
 // Pinned Era/SoD reference build for origin checks; never refreshed.

@@ -19,6 +19,7 @@ text is the internal spell name). Item record, keys in this order, optional ones
 | Key | Value |
 |---|---|
 | `name`, `quality` (1–4), `ilvl`, `req` (0–60) | ItemSparse |
+| `icon`? | icon file stem (`inv_boots_06`): `Item.IconFileDataID`, else the default appearance's icon, named by the community listfile; shown only when the visitor switches icons on |
 | `inv`, `slot` | InventoryType and the planner slot: `Head Neck Shoulder Back Chest Wrist Hands Waist Legs Feet Finger Trinket One-Hand "Main Hand" Off-hand Two-Hand Ranged Relic` |
 | `itemClass`, `type` | `armor`/`weapon`; `Cloth Leather Mail Plate Misc Shield Idol Libram Totem` or the weapon type (`Sword`, `2H Mace`, `Wand`, `Gun`, `Thrown`, …) |
 | `bind` | `BoP`, `BoE`, `BoU`, `none` |
@@ -41,7 +42,7 @@ mats: [[itemId, count]], pattern, origin, avail}`). `pattern` is `null` (trainer
 {faction, standing}|null, spec}`; a stub pattern (not in the game data) is `{id, name: null, bind: null, rep: null,
 spec: null, stub: true}`. `avail` is `unconfirmed` for a stub pattern on a vanilla item.
 
-**`mats`**: `rows` (item ID → `{name, quality, bind, madeBy: [spell IDs], vendor: {copper, stack}|null, gathered:
+**`mats`**: `rows` (item ID → `{name, icon?, quality, bind, madeBy: [spell IDs], vendor: {copper, stack}|null, gathered:
 profession|null}`). A vendor unit costs `copper / stack`.
 
 **`sources`**: `factions` (ID → `{name, side}`), `npcs` (slug → curated NPC record), `rows` (recipe spell ID → source

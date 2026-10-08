@@ -97,6 +97,7 @@ function overview(data) {
     `- Flags: ${tally(flags) || "none"}`,
     `- Item class: ${tally(items.map((i) => i.itemClass))}; armor types: ${tally(items.filter((i) => i.itemClass === "armor").map((i) => i.type))}`,
     `- Weapon damage basis: ${tally(items.filter((i) => i.weapon).map((i) => i.weapon.basis))}`,
+    `- Icons (community listfile): items ${n(items.filter((i) => i.icon).length)} of ${n(items.length)}, mats ${n(Object.values(data.mats.rows).filter((m) => m.icon).length)} of ${n(Object.keys(data.mats.rows).length)}`,
     `- Class-restricted items: ${n(items.filter((i) => i.classes).length)}; items with an equip skill: ${n(items.filter((i) => i.equipSkill).length)}; in item sets: ${n(items.filter((i) => i.set).length)} (${n(Object.keys(data.items.sets).length)} sets)`,
   ].join("\n");
 }
@@ -240,7 +241,7 @@ function report(g, o) {
   out.push("");
   out.push(`Dataset \`${meta.dataset}\` (${meta.product}, ${meta.status}), generated ${meta.generated} by ${meta.generator}, schema ${meta.schema}. ` +
     `Data hash \`${meta.dataHash.slice(0, 16)}\`. Inputs: \`${meta.inputs.db2.manifest}\`, reference build \`${meta.inputs.reference.manifest}\`, ` +
-    `curation (${meta.inputs.curation.files.length} files, \`${meta.inputs.curation.sha256.slice(0, 16)}\`).`);
+    `curation (${meta.inputs.curation.files.length} files, \`${meta.inputs.curation.sha256.slice(0, 16)}\`), listfile ${meta.inputs.listfile.tag} (\`${meta.inputs.listfile.sha256.slice(0, 16)}\`).`);
   out.push("");
   out.push("Review order: blocking issues, counts, the needs-in-game-check list, then the ranking review per role.");
   out.push("");

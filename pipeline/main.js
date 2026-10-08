@@ -19,12 +19,13 @@ const { enumerate, itemOrigin, spellOrigin, byId } = require("./enumerate");
 const itemsLib = require("./items");
 const { buildRecipes, reagents } = require("./recipes");
 const sourcesLib = require("./sources");
+const icons = require("./icons");
 
 const REPO = path.resolve(__dirname, "..");
 const DATASET = "forever";
 const PRODUCT = "wow_classic_beta";
 
-const ITEM_KEYS = ["name", "quality", "ilvl", "req", "inv", "slot", "itemClass", "type", "bind", "armor", "stats", "weapon",
+const ITEM_KEYS = ["name", "icon", "quality", "ilvl", "req", "inv", "slot", "itemClass", "type", "bind", "armor", "stats", "weapon",
   "classes", "equipSkill", "effects", "set", "mirror", "recipes", "origin", "avail", "reason", "flags", "note", "effectScore"];
 const FLAG_ORDER = ["sodSuspect", "noStats", "randomStats", "unknownStat", "negativeStat", "qualityModifier"];
 
@@ -224,6 +225,31 @@ function generate(o) {
     };
   }
 
+  // Icon names (D7 as amended): Item.IconFileDataID → community listfile stem, on items and mats. Where the Item
+  // row has none (522 crafted items in 1.60.1), the default appearance carries it: ItemModifiedAppearance with the
+  // lowest OrderIndex → ItemAppearance.DefaultIconFileDataID.
+  const appearance = new Map();
+  for (const r of T.ItemModifiedAppearance) {
+    const k = +r.ItemID, cur = appearance.get(k);
+    if (!cur || +r.OrderIndex < cur.order) appearance.set(k, { order: +r.OrderIndex, id: +r.ItemAppearanceID });
+  }
+  const appearanceIcon = byId(T.ItemAppearance);
+  const iconOf = (id) => {
+    const r = en.item.get(id), a = appearance.get(id), ia = a && appearanceIcon.get(a.id);
+    return (r && +r.IconFileDataID) || (ia && +ia.DefaultIconFileDataID) || 0;
+  };
+  const iconIds = new Set([...items.keys(), ...Object.keys(mats).map(Number)].map(iconOf).filter((x) => x > 0));
+  const listfile = icons.iconNames({ repo: o.repo, cache: o.cache, ids: iconIds, verify: o.verify !== false });
+  const iconCount = { items: 0, mats: 0 };
+  for (const [id, it] of items) { const n = listfile.names.get(iconOf(id)); if (n) { it.icon = n; iconCount.items++; } }
+  for (const id of Object.keys(mats)) {
+    const n = listfile.names.get(iconOf(+id));
+    if (!n) continue;
+    const { name, ...rest } = mats[id];
+    mats[id] = { name, icon: n, ...rest };
+    iconCount.mats++;
+  }
+
   // Curation references against the built data.
   const known = {
     items: new Map([...items].map(([id, it]) => [id, it.name])),
@@ -309,6 +335,7 @@ function generate(o) {
       db2: { manifest: `build-inputs/db2-${o.build}.sha256`, sha256: manifest(o.build) },
       reference: { manifest: `build-inputs/db2-${db2.REFERENCE_BUILD}.sha256`, sha256: manifest(db2.REFERENCE_BUILD) },
       curation: { files: curFiles, sha256: sha256Files(curDir, curFiles) },
+      listfile: { tag: icons.LISTFILE_TAG, manifest: `build-inputs/listfile-${icons.LISTFILE_TAG}.sha256`, sha256: listfile.sha256 },
     },
     counts,
     notes: (cd.reference && cd.reference.notes) || [],
@@ -319,7 +346,7 @@ function generate(o) {
 
   return {
     sections, files, blocking, warnings,
-    info: { funnel: en.funnel, halves: tally.halves, hashes: main.hashes, curation: cd, interRows: interRows.length },
+    info: { funnel: en.funnel, halves: tally.halves, icons: iconCount, hashes: main.hashes, curation: cd, interRows: interRows.length },
   };
 }
 
@@ -365,6 +392,7 @@ async function main(argv) {
     const b = await db2.fetchBuild({ ...opts, build: db2.REFERENCE_BUILD, tables: db2.REFERENCE_TABLES });
     for (const c of a) log(`${args.build} ${c}`);
     for (const c of b) log(`${db2.REFERENCE_BUILD} ${c}`);
+    for (const c of await icons.fetchListfile(opts)) log(c);
     return;
   }
   if (cmd === "build") {

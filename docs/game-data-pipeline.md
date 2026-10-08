@@ -42,6 +42,7 @@ All from `https://wago.tools/db2/<Table>/csv?build=<build>`.
 | `RandPropPoints` | Stat budget per item level, quality and slot group. |
 | `ItemArmorTotal`, `ArmorLocation`, `ItemArmorQuality`, `ItemArmorShield` | Armor. The prototype does not use `ItemArmorShield`; 3 crafted shields need it. |
 | `ItemDamageOneHand`, `ItemDamageTwoHand`, `ItemDamageWand` | Weapon DPS by item level and quality. The `…Caster` variants are cached too but identical to the plain tables in this build, so they are not used. |
+| `ItemModifiedAppearance`, `ItemAppearance` (new, 2026-10-08, P1) | Icon fallback: 522 of the 1,274 shipped items have `Item.IconFileDataID` 0; their icon is the default appearance's `DefaultIconFileDataID` (`ItemModifiedAppearance` row with the lowest `OrderIndex`). File names come from the community listfile (D7 as amended). |
 | `ItemSet` (+ `ItemSetSpell`, new) | Set names and bonus spells (60 crafted items in 16 sets). |
 | `SpellItemEnchantment`, `SpellEquippedItems` | Enchant effects and what an enchant fits (prototype `Enchants`). |
 | `Faction` (new) | Reputation names and side, for the 9 factions on gear patterns. |

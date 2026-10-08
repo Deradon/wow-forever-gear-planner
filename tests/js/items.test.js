@@ -39,6 +39,15 @@ test("weapon damage corrections from in-game tooltips (game-data-pipeline §6.3,
   assert.deepStrictEqual(w(285275), [2, 11, 2, 3.09, "curated"], "Satchel of Copper Bombs: curated override");
 });
 
+test("icons: listfile stem from Item.IconFileDataID, else the default appearance; mats too; listfile in meta.inputs", () => {
+  assert.strictEqual(item(2307).icon, "inv_boots_06", "Item.IconFileDataID 132540");
+  assert.strictEqual(item(250488).icon, "inv_chest_chain_07", "IconFileDataID 0: ItemModifiedAppearance → ItemAppearance");
+  assert.strictEqual(fixture.sections.mats.rows[2318].icon, "inv_misc_leatherscrap_03", "Light Leather");
+  assert.deepStrictEqual(Object.keys(fixture.sections.items.rows[2307]).slice(0, 2), ["name", "icon"]);
+  assert.strictEqual(fixture.sections.meta.inputs.listfile.tag, "202610080338");
+  assert.match(fixture.sections.meta.inputs.listfile.sha256, /^[0-9a-f]{64}$/);
+});
+
 test("equip skill, effects, mirror pair, stub pattern, curated flags, shields", () => {
   assert.deepStrictEqual(item(10501).equipSkill, { prof: "Engineering", rank: 220 });
   assert.strictEqual(item(10501).effects[0].on, "equip");
