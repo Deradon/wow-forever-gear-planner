@@ -65,5 +65,9 @@ carry `pattern` (the pattern item they come from). Curated families replace the 
 - `FGP.rank.path(FGP_DATA, roster, entry, opts)` → `{entry, weights, groups: [{id, steps, alternatives}]}`; a step is
   `{from, to, items, score, par, gain, kept, tier, core, pinned, routes: {itemId: {via, crafter, recipe, flags}}}`.
   `opts`: `hidden`, `inHand`, `learned` (`{"<entryId>:<spell>": true}`), `costOf(itemId)`, `fromLevel`.
+  `opts.via` (`{itemId: "ah" | entryId}`) is the user's crafter choice; `FGP.rank.routeOptions(...)` lists the routes.
+- `FGP.queue.build(FGP_DATA, roster, paths, {items, recipes}, {core, within, showHidden, pricer, via, learned})` → queue
+  rows per crafter and recipe spell (or `"ah"` and item); `select`, `pace`, `shoppingList(data, pricer, rows, roster, owned)`.
 - `FGP.pricing.createPricer(FGP_DATA, {overrides, imported, defaultSet}, {today})` → `price`, `craftCost`, `costOf`.
+  `defaultSet` is `FGP_DATA.pricesDefault` from `tools/prices-default.js` once one ships (U3).
 - `FGP.auctionator.readFile(bytes, {today, isKnown, fileName})`, `FGP.state.load/normalize/exportState/…`.

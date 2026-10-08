@@ -157,6 +157,8 @@ Follow game-data-pipeline §14 with the D7 change (no Wowhead snapshot in the re
 - Default price list from a live scan (U3): `tools/prices-default.js` reusing `site/lib/auctionator.js`, refuses a
   build mismatch, metadata scan date + build only.
 - Decide: weights editor (D29) only if users ask.
+- **Done in v0.2.0 (2026-10-08)**, except the shipped default list: the tool exists and is tested, the list waits for
+  a live scan (U3). Brief: docs/briefs/2026-10-08-m2-queue.md; implementation notes in ui.md §5.
 
 ## M3 — Merchant's Favor and enchants
 

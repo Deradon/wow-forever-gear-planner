@@ -93,8 +93,11 @@
         "<dt>Build</dt><dd>" + esc(meta.build) + " (" + esc(meta.status) + ", " + esc(meta.product) + ")</dd>" +
         "<dt>Generated</dt><dd>" + esc(meta.generated) + " by " + esc(meta.generator) + "</dd>" +
         "<dt>Contents</dt><dd>" + esc(meta.counts.items) + " items, " + esc(meta.counts.recipes) + " recipes, " + esc(meta.counts.mats) + " materials, levels " + esc(meta.levels.join("–")) + "</dd>" +
-        "<dt>Prices</dt><dd>" + (A.prices.imported ? "Auctionator file, scan " + esc(A.prices.imported.scanDay !== null ? FGP.auctionator.isoDay(A.prices.imported.scanDay) : "?") : "none imported") + "</dd>" +
-        "<dt>Page</dt><dd>version " + esc(FGP.version.APP_VERSION) + ", state schema " + esc(FGP.state.SCHEMA) + "</dd></dl>" +
+        "<dt>Prices</dt><dd>" + (A.prices.imported ? "Auctionator file, scan " + esc(A.prices.imported.scanDay !== null ? FGP.auctionator.isoDay(A.prices.imported.scanDay) : "?") :
+          A.defaultSet() ? "default list, scan " + esc(A.defaultSet().scanDate) : "none imported") + "</dd>" +
+        "<dt>Page</dt><dd>version " + esc(FGP.version.APP_VERSION) + ", state schema " + esc(FGP.state.SCHEMA) + "</dd>" +
+        "<dt>Views</dt><dd><strong>Gear</strong>: what each character wears, level by level, and who makes it. <strong>Queue</strong>: what each crafter makes, " +
+        "for whom and in which order, what the Auction House has to supply, and the shopping list with the mats you already have.</dd></dl>" +
         '<p style="margin-top:8px">' + esc(ref.notice.beta.replace("{build}", meta.build)) + "</p><p>" + esc(ref.notice.derived) + "</p>" +
         '<h3 style="margin-top:10px">Data notes</h3><ul>' + ref.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul></div>");
 

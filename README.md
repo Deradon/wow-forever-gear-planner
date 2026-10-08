@@ -4,9 +4,9 @@ A planner for **crafted gear in WoW: Forever, levels 1–60**. Tell it which cha
 up to two professions), and it shows for each one which crafted pieces to make or buy at which level, who in your
 roster can craft them, where the patterns come from, and what the materials cost at your Auction House.
 
-**Status: beta data (build 1.60.1.70205), v0.1.0.** The page works today: build a roster and get a ranked
-crafted-gear path for levels 1–60 per character, with recipe source badges and prices from your own Auctionator
-file. The data comes from the WoW: Forever beta client. Forever launches on 2026-11-05; the data will be refreshed
+**Status: beta data (build 1.60.1.70205), v0.2.0.** The page works today: build a roster and get a ranked
+crafted-gear path for levels 1–60 per character, a crafting queue and shopping list per crafter, with recipe source
+badges and prices from your own Auctionator file. The data comes from the WoW: Forever beta client. Forever launches on 2026-11-05; the data will be refreshed
 for the live game right after launch (roadmap M1.1), and the page says "Beta data" until then.
 
 ## Who it is for
@@ -22,8 +22,16 @@ for the live game right after launch (roadmap M1.1), and the page says "Beta dat
   unpack it anywhere and open `index.html`. No server and no network needed.
 - **From a clone:** open `site/index.html` in the browser.
 
-Start with "I play one character", "I play several" or the example roster. Your roster, progress and prices stay
-in this browser; use **About → Export planner file** to move them to another browser or keep a backup.
+Start with "I play one character", "I play several" or the example roster. The **Gear** tab tells each character what
+to wear at which level and who makes it. The **Queue** tab tells each crafter what to make, for whom and in which
+order: tick the recipes a crafter has learned, mark a piece "in bags" with one click on the character's name, and see
+how far ahead of the others its skill has to stay. The **Auction House** list there is what nobody in the roster
+crafts, and the shopping list adds up the mats (through bolts, bars and leather the crafter makes) with "Value of mats
+used" and "To buy" once you enter the mats you already have. Pick another crafter for a piece where several can make
+it, and set a Blacksmith's, Leatherworker's or Engineer's specialisation from level 40 in the character form.
+
+Your roster, progress and prices stay in this browser; use **About → Export planner file** to move them to another
+browser or keep a backup.
 
 ## Import your Auction House prices
 

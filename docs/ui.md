@@ -257,6 +257,26 @@ Total 4g52s · 1 material without a price
   stay.
 - Kits and consumables the crafter makes stay as a section, resolved by profession instead of a named crafter.
 
+**M2 implementation notes (2026-10-08, `site/lib/queue.js`, `site/app/queue.js`), where this section left a choice
+open:**
+
+- Rows come from the main path steps of every entry (not the alternatives), one need per entry and item from the
+  earliest stretch the entry has not outgrown (`to ≥ level`); pieces in bags or equipped leave the queue. A
+  dual-wielded weapon counts twice. "Core only" is the Gear view's filter (one pref for both views).
+- "Within N levels" (default 5, empty = every level) decides what the shopping list counts; names outside the window
+  are dimmed in the To craft table, as in the prototype.
+- Skill column: the recipe's skill with `!` (entered skill below) or `~!` (estimated below), estimated as the Gear
+  view does (pace at the piece's required level). The skill inputs edit the roster entry's profession skill.
+- Crafter pace: for each profession, the needs sorted by how soon the character reaches the level, then the
+  running maximum of the recipe skill; the first three steps above the crafter's skill (entered, else `roles.pace`
+  at the crafter's level) are shown, with "has S".
+- Shopping list: an intermediate is expanded into its mats when the row's crafter has the intermediate's
+  profession and crafting it is the cheaper (or only) price; otherwise the intermediate is bought as a line. Crafts
+  round up to whole recipe outputs. "Value of mats used" and "To buy" per pricing §5.2.
+- The crafter choice on a queue row applies to every character of that row; on a Gear row it applies to that
+  character. Marking a piece in bags from the Queue stores `via` = the row's crafter (or `"ah"`).
+- Kits, enchants and consumables are left out until their data exists (M3, M4); the view says so in one line.
+
 ## 6. Merchant's Favor view
 
 It generalises cleanly: Favor patterns are recipes with a Favor cost, BoP to the buyer, and the buyer is a roster

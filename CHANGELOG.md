@@ -5,6 +5,35 @@ versions follow semver, and data-only releases are patch releases (see docs/rele
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-08
+
+The crafting queue (roadmap M2): the Gear view tells each character what to wear, the Queue tells each crafter what
+to make, in what order, and what to buy for it.
+
+### Added
+- **Queue** view (tab and key `2`; Prices and About move to `3` and `4`): crafter buttons for every roster entry with a
+  crafting profession, then **Auction House** and **All**; `[` and `]` switch crafters. Skill inputs per profession
+  (estimate shown as `~`), Core only, Show hidden.
+- To craft: learned box per crafter and recipe spell, recipe skill with `!`/`~!`, item and slot, "for whom at which
+  level" buttons that mark the piece in bags for that character (with Undo), quantity across the roster, source,
+  cost each and total. BoP pieces appear only under their own crafter. The Auction House list shows the BoE pieces
+  nobody in the roster crafts with price, source and scan date.
+- Crafter pace: per profession the next three points "character X reaches level N → needs skill S".
+- Shopping list per crafter and for All: mats through the intermediates the crafter makes, unit price with source and
+  age, a **Have** column (owned mats), Need, the totals **Value of mats used** and **To buy** (owned mats lower only
+  the cash), gathering roster members, a count of mats without a price; "only needed within N levels" (default 5).
+- Per-item crafter choice on Gear and Queue rows that have more than one route (a roster crafter or the Auction
+  House); it survives reloads and export/import, and is dropped when that crafter is deleted.
+- Specialisations: a select in the character form for Blacksmithing, Leatherworking and Engineering from level 40 or
+  skill 200. With a specialisation set, a recipe for another one is not made by that crafter (BoE pieces fall to
+  another crafter or the Auction House) and its badge stays "needs <spec>"; Master specs count as Weaponsmith. With
+  none set, nothing changes (D28).
+- `tools/prices-default.js`: builds a default price list from one Auctionator scan for the game data's build (refuses
+  another build and scans older than 14 days). No list ships until a live scan exists (U3); the page uses one when
+  `index.html` loads it.
+- `site/lib/queue.js` (pure queue model), `rank.routeOptions`, state prefs `queueSel`, `within`, `showHidden.queue`;
+  the state stays at schema 1 and exports from v0.1.x import unchanged.
+
 ### Changed
 - Build report diff section (`--diff-against`, game-data-pipeline §14 step 3): DB2 tables that changed; removed,
   changed field by field, and added items, recipes and mats (added ones grouped by profession and derived source);

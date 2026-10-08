@@ -8,9 +8,9 @@ The published page: plain static files served as-is by GitHub Pages and usable f
 - `lib/`: pure modules (no DOM, no storage), loadable by `<script>` and by `require()` in tests; globals under `window.FGP`
 - `app/`: DOM code under `window.FGP.app`: `main.js` (boot, data and schema check, storage, render loop with focus
   restore, toasts, dialogs, keyboard shortcuts), `onboarding.js` (empty state, entry form, example roster),
-  `gear.js` (Gear view; `gearModel` is pure), `prices.js` (Auctionator import, your prices, diagnostic), `about.js`
+  `gear.js` (Gear view; `gearModel` is pure), `queue.js` (Queue view over `lib/queue.js`), `prices.js` (Auctionator import, your prices, diagnostic), `about.js`
   (data, coverage, export/import/reset), `tooltip.js` (offline tooltips, source badges, Wowhead links).
 - `data/`: generated game data
 
 Views return HTML strings and actions are plain functions on `FGP.app`, so `tests/js/site-app.test.js` runs them in
-Node without a DOM; the browser adds only event wiring, focus and drag-and-drop. See docs/ui.md and docs/roadmap.md §M1.
+Node without a DOM; the browser adds only event wiring, focus and drag-and-drop. See docs/ui.md and docs/roadmap.md §M1, §M2.
