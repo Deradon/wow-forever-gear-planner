@@ -251,17 +251,36 @@
   function doc() { return root.document || null; }
   function $(id) { var d = doc(); return d ? d.getElementById(id) : null; }
 
+  function isView(v) { return VIEWS.some(function (x) { return x[0] === v; }); }
+  // From file:// the URL hash is never touched: Chrome treats a hash change on a host-bearing file URL
+  // (file://wsl.localhost/...) as a cross-origin load and logs an error. The view lives in prefs.view there;
+  // over http(s) the hash routes as usual (bookmarkable) and prefs.view follows it.
+  A.fileMode = function () { return !root.location || root.location.protocol === "file:"; };
   A.currentView = function () {
-    var h = (root.location && root.location.hash || "").replace(/^#/, "");
-    for (var i = 0; i < VIEWS.length; i++) if (VIEWS[i][0] === h) return h;
-    return "gear";
+    if (!A.fileMode()) {
+      var h = (root.location.hash || "").replace(/^#/, "");
+      if (isView(h)) return h;
+    }
+    return A.S && isView(A.S.prefs.view) ? A.S.prefs.view : "gear";
   };
   A.go = function (view) {
-    if (root.location) {
-      if (root.location.hash === "#" + view) A.render();
-      else root.location.hash = view;
-    }
+    if (!isView(view)) return;
+    A.S.prefs.view = view;
+    A.save();
+    if (A.fileMode()) { A.showView(); return; }
+    if (root.location.hash === "#" + view) A.showView();
+    else root.location.hash = view;
   };
+  // Render after a view switch; focus the view unless a control was planned.
+  A.showView = function () {
+    var planned = !!A.focusNext;
+    A.form = A.form && A.form.inline ? A.form : null;
+    A.render();
+    var v = $("view");
+    if (v && !planned && v.focus) v.focus({ preventScroll: true });
+  };
+  A.acts.view = function (el) { A.go(el.getAttribute("data-key")); };
+  A.acts.skip = function () { var v = $("view"); if (v) v.focus(); };
 
   A.viewHtml = function (view) {
     if (A.problems.length) {
@@ -274,7 +293,7 @@
 
   function navHtml(v) {
     return VIEWS.map(function (x, i) {
-      return '<a href="#' + x[0] + '" id="tab-' + x[0] + '"' + (x[0] === v ? ' aria-current="page"' : "") + ">" + esc(x[1]) + "<kbd>" + (i + 1) + "</kbd></a>";
+      return '<a href="#' + x[0] + '" id="tab-' + x[0] + '" data-act="view" data-key="' + x[0] + '"' + (x[0] === v ? ' aria-current="page"' : "") + ">" + esc(x[1]) + "<kbd>" + (i + 1) + "</kbd></a>";
     }).join("");
   }
 
@@ -579,8 +598,13 @@
       var u = storageGet(FGP.state.KEYS.pricesUndo);
       A.prices.undo = u !== null; A.prices.undoSet = parseSet(u);
       A.setImported(parseSet(storageGet(FGP.state.KEYS.prices)));
+    } else {
+      // Another tab's view choice must not switch this tab.
+      var view = A.currentView();
+      A.loadState();
+      A.S.prefs.view = view;
+      if (A.form && A.form.mode === "edit" && !A.entry(A.form.id)) A.form = null;
     }
-    else { A.loadState(); if (A.form && A.form.mode === "edit" && !A.entry(A.form.id)) A.form = null; }
     A.render();
     A.toast("Updated from another tab");
   }
@@ -594,11 +618,10 @@
     d.addEventListener("submit", onSubmit);
     d.addEventListener("keydown", onKey);
     root.addEventListener("hashchange", function () {
-      var planned = !!A.focusNext;
-      A.form = A.form && A.form.inline ? A.form : null;
-      A.render();
-      var v = $("view");
-      if (v && !planned) v.focus({ preventScroll: true });
+      if (A.fileMode()) return;
+      var v = A.currentView();
+      if (A.S.prefs.view !== v) { A.S.prefs.view = v; A.save(); }
+      A.showView();
     });
     root.addEventListener("storage", onStorage);
     if (A.boots) A.boots.forEach(function (fn) { fn(); });

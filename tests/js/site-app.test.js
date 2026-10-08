@@ -395,3 +395,54 @@ test("review fixes: escaped labels, undo expires with its toast, no save on a br
   b.importBytes(auctionatorFile({ Empty: [] , Empty2: [] }), "Auctionator.lua");
   assert.doesNotMatch(b.viewHtml("prices"), /id="realm-use"/);
 });
+
+// A location stub that records hash writes (Chrome logs a cross-origin error for them on file://host/ URLs).
+function fakeLocation(protocol, hash) {
+  const loc = { protocol, writes: [], _hash: hash || "" };
+  Object.defineProperty(loc, "hash", { get: () => loc._hash, set: (v) => { loc.writes.push(v); loc._hash = "#" + String(v).replace(/^#/, ""); } });
+  return loc;
+}
+
+test("views from file:// never touch location.hash; the view is kept in prefs and survives a reload", () => {
+  const { A, ctx, storage } = loadApp();
+  ctx.location = fakeLocation("file:", "");
+  A.acts.start(el({ "data-key": "example" }));
+  assert.strictEqual(A.currentView(), "gear");
+  A.go("prices");
+  assert.strictEqual(A.currentView(), "prices");
+  A.acts.view(el({ "data-key": "about" }));
+  assert.strictEqual(A.currentView(), "about");
+  assert.deepStrictEqual(ctx.location.writes, [], "no hash writes on file://");
+  assert.match(A.viewHtml(A.currentView()), /Your data/);
+  // A stale or hand-typed hash is ignored on file://.
+  ctx.location._hash = "#prices";
+  assert.strictEqual(A.currentView(), "about");
+  // Reset from About stays on About.
+  A.resetState();
+  assert.strictEqual(A.currentView(), "about");
+  A.acts.start(el({ "data-key": "example" }));
+  // Reload: the stored prefs bring the same view back.
+  const next = loadApp({ storage });
+  next.ctx.location = fakeLocation("file:", "");
+  assert.strictEqual(next.A.currentView(), "about");
+  // Saving a new entry from another view goes to Gear, still without a hash write.
+  addEntry(next.A, { cls: "Rogue", level: "3" });
+  assert.strictEqual(next.A.currentView(), "gear");
+  assert.deepStrictEqual(next.ctx.location.writes, []);
+});
+
+test("views over http(s) route through the hash, and prefs.view follows it", () => {
+  const { A, ctx } = loadApp();
+  ctx.location = fakeLocation("https:", "#gear");
+  A.acts.start(el({ "data-key": "example" }));
+  A.go("prices");
+  assert.deepStrictEqual(ctx.location.writes, ["prices"]);
+  assert.strictEqual(A.currentView(), "prices");
+  assert.strictEqual(A.S.prefs.view, "prices");
+  ctx.location._hash = "#about";
+  assert.strictEqual(A.currentView(), "about", "the URL wins over http(s), so links and bookmarks work");
+  A.go("about");
+  assert.deepStrictEqual(ctx.location.writes, ["prices"], "same hash: render, no second write");
+  ctx.location._hash = "";
+  assert.strictEqual(A.currentView(), "about", "no hash: the stored view");
+});

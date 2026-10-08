@@ -69,7 +69,9 @@
 
   A.resetState = function () {
     A.undoAction = null;
+    var view = A.S.prefs.view;
     A.S = FGP.state.reset(A.S);
+    A.S.prefs.view = view;
     A.S.seen = { build: D().meta.build, generated: D().meta.generated };
     A.dataUpdate = null;
     A.form = null;

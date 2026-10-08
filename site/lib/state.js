@@ -15,6 +15,7 @@
   var PAIR_KEY = /^(r[0-9a-z]{6}):(\d+)$/;
   var DATE = /^\d{4}-\d{2}-\d{2}$/;
   var LEVELS = [1, 60];
+  var VIEWS = ["gear", "prices", "about"];
 
   function own(o, k) { return o && Object.prototype.hasOwnProperty.call(o, k); }
   function isObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
@@ -33,7 +34,7 @@
       recipes: {},
       prices: { overrides: {}, owned: {} },
       prefs: {
-        selected: null, theme: "auto", tooltips: "planner", icons: false,
+        selected: null, view: "gear", theme: "auto", tooltips: "planner", icons: false,
         filters: { core: false, hideDone: false, hideUnob: true },
         showHidden: { gear: false }, slot: "", upTo: {},
         dismissed: { freshness: null, example: false },
@@ -142,6 +143,8 @@
     }
     var pr = isObj(raw.prefs) ? raw.prefs : {};
     d.prefs.selected = typeof pr.selected === "string" && seen[pr.selected] ? pr.selected : (d.roster.entries[0] ? d.roster.entries[0].id : null);
+    // The open view: from file:// the page can't use the URL hash (a host-bearing file URL makes it a cross-origin load).
+    if (VIEWS.indexOf(pr.view) >= 0) d.prefs.view = pr.view;
     if (["auto", "light", "dark"].indexOf(pr.theme) >= 0) d.prefs.theme = pr.theme;
     if (["planner", "off"].indexOf(pr.tooltips) >= 0) d.prefs.tooltips = pr.tooltips;
     d.prefs.icons = pr.icons === true;

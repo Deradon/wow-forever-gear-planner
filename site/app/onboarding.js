@@ -279,7 +279,7 @@
       return;
     }
     A.form = null;
-    if (A.currentView() !== "gear") { A.save(); A.go("gear"); A.focusNext = ["card-" + id]; return; }
+    if (A.currentView() !== "gear") { A.focusNext = ["card-" + id]; A.go("gear"); return; }
     A.commit(["card-" + id]);
   };
   A.acts["form-cancel"] = function () {

@@ -220,7 +220,7 @@
   A.views.prices = {
     html: function () {
       var out = [];
-      if (!A.S.roster.entries.length) out.push('<p class="muted">No characters yet: <a href="#gear">set up your roster</a> to see prices in a plan.</p>');
+      if (!A.S.roster.entries.length) out.push('<p class="muted">No characters yet: <a href="#gear" id="goto-gear" data-act="view" data-key="gear">set up your roster</a> to see prices in a plan.</p>');
       out.push('<div class="cols">' + statusHtml() + importHtml() + "</div>");
       out.push('<div class="section">' + overridesHtml() + "</div>");
       return out.join("");

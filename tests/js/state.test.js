@@ -42,6 +42,9 @@ test("a valid state survives normalize unchanged in substance", () => {
   assert.deepStrictEqual(n.prices.overrides["4339"], { c: 3200, set: "2026-10-08" });
   assert.strictEqual(n.prefs.theme, "dark");
   assert.strictEqual(n.prefs.filters.hideUnob, true);
+  assert.strictEqual(n.prefs.view, "gear", "default view");
+  assert.strictEqual(S.normalize({ prefs: { view: "prices" } }, ctx).prefs.view, "prices");
+  assert.strictEqual(S.normalize({ prefs: { view: "queue" } }, ctx).prefs.view, "gear", "unknown views fall back");
   assert.deepStrictEqual(S.normalize(n, ctx), n, "idempotent");
 });
 
