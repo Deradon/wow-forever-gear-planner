@@ -221,6 +221,19 @@ falls back to the Wowhead numbers with `basis: "wowhead"` and a report line, so 
 wrong number silently. With only two samples per rule this is the honest middle: no 1,274 tooltip dependency, but no
 blind trust either.
 
+**D14 cross-check against Wowhead's Forever tooltips (2026-10-08, local check, nothing committed from Wowhead):**
+
+| Item | Generated | Wowhead | Verdict |
+|---|---|---|---|
+| Dreamstaff (249454, `Flags_4` 0x500, two-hand) | 62–93, 2.40, 32.29 DPS | 62–93, 2.40, 32.29 DPS | caster factor 0.743 on the two-hand table confirmed |
+| Searing Golden Blade (12260, `Flags_4` 0x100, one-hand) | 15–29, 1.40, 15.71 DPS | 14–26, 1.40, 14.29 DPS | mismatch (×0.91); the one-hand caster factor or table differs |
+| Satchel of Copper Bombs (285275, thrown) | 10–19, 2.00, 7.25 DPS | 2–10, 2.00, 3.09 DPS | mismatch (×0.43); the "two-hand table × 0.6" rule is wrong for thrown |
+
+Wowhead derives its numbers from the same tables, so a mismatch is not proof either way; the in-game tooltip decides
+(`/run C_Item.RequestLoadItemDataByID(id)` then `GameTooltip:SetItemByID(id)`, any character level). Until then the
+rules stand and the three items stay in the report's check list; a confirmed correction becomes a curated
+override or a rule change in `pipeline/items.js` for the next data release (M1.1).
+
 ### 6.4 Effects and sets
 
 Use/equip/on-hit spells (`ItemEffect` trigger 0/1/2): 54 candidates have a use effect, 50 an equip effect, 25 an
