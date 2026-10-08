@@ -436,6 +436,33 @@ img.icon.icon-missing { visibility: hidden; }
 
 .via { white-space: nowrap; }
 .via .flag { color: var(--warn); font-weight: 700; margin-left: 3px; }
+select.via-sel { display: block; margin-top: 3px; font: inherit; font-size: 12px; max-width: 160px; padding: 1px 4px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text); }
+
+/* ---------- queue ---------- */
+.seg > button {
+  border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text); border-radius: var(--radius-sm);
+  padding: 3px 9px; font: inherit; font-size: 13px; cursor: pointer;
+}
+.seg > button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+table.qtable, table.shop { font-size: 13px; }
+table.qtable th, table.qtable td, table.shop th, table.shop td { padding: 5px 6px; vertical-align: top; }
+table.qtable td .flag { color: var(--warn); font-weight: 700; margin-left: 3px; }
+table.qtable tr.dim td { opacity: .6; }
+.who-list { display: flex; flex-wrap: wrap; gap: 4px; }
+button.who {
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text); border-radius: 4px; padding: 0 6px;
+  font: inherit; font-size: 12px; cursor: pointer; line-height: 19px; white-space: nowrap;
+}
+button.who:hover { border-color: var(--ok); }
+button.who .muted { font-size: 11px; }
+button.who.out { opacity: .55; }
+button.who.hid { opacity: .55; border-style: dashed; }
+table.shop input.inp-num { width: 5.5em; }
+.pace { margin: 0; padding-left: 18px; font-size: 13px; }
+.pace li { margin: 2px 0; }
+.totals { display: flex; gap: 6px 18px; flex-wrap: wrap; align-items: baseline; padding: 8px 2px 0; font-size: 13px; }
+.totals strong { font-size: 15px; }
 
 select.status {
   padding: 2px 4px; border-radius: 4px; border: 1px solid var(--border-strong); background: var(--surface-2);

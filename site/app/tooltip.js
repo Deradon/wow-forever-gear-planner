@@ -135,11 +135,13 @@
     return out;
   };
 
-  A.skillText = function (spell) {
+  // With a route, a specialisation its crafter has reads as the spec name, not "needs <spec>" (D28).
+  A.skillText = function (spell, rt) {
     var r = D().recipes.rows[spell];
     if (!r) return "";
+    var spec = r.pattern && r.pattern.spec, needs = spec && (!rt || rt.via === "ah" || rt.flags.indexOf("needs " + spec) >= 0);
     return esc(r.prof) + " " + (r.skill.approx ? '<span title="Approximate: the skill where the recipe turns yellow">~</span>' : "") + esc(r.skill.learn) +
-      (r.pattern && r.pattern.spec ? ' <span class="badge b-warn" title="Specialisation recipe">needs ' + esc(r.pattern.spec) + "</span>" : "");
+      (spec ? ' <span class="badge ' + (needs ? "b-warn" : "b-info") + '" title="Specialisation recipe' + (needs ? "" : ": the crafter has it") + '">' + (needs ? "needs " : "") + esc(spec) + "</span>" : "");
   };
 
   // --- tooltip content -------------------------------------------------------------------------------------------

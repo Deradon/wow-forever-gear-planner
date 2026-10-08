@@ -7,7 +7,7 @@
   var FGP = root.FGP = root.FGP || {};
   var A = FGP.app = FGP.app || {};
   var SECTIONS = ["meta", "items", "recipes", "mats", "sources", "rules", "roles", "reference"];
-  var VIEWS = [["gear", "Gear"], ["prices", "Prices"], ["about", "About"]];
+  var VIEWS = [["gear", "Gear"], ["queue", "Queue"], ["prices", "Prices"], ["about", "About"]];
   var THEMES = ["auto", "light", "dark"];
 
   A.views = A.views || {};
@@ -193,25 +193,29 @@
     for (p in patch) if (own(patch, p)) { if (patch[p] === null || patch[p] === undefined || patch[p] === false) delete v[p]; else v[p] = patch[p]; }
     if (Object.keys(v).length) A.S.items[k] = v; else delete A.S.items[k];
   };
-  // Hidden and in-hand item maps of one entry, and the roster's learned recipes, as rank.path wants them.
+  // Hidden and in-hand item maps of one entry, its crafter choices, and the roster's learned recipes, as rank.path
+  // wants them.
   A.entryMaps = function (eid) {
-    var hidden = {}, inHand = {}, learned = {}, k, pre = eid + ":";
+    var hidden = {}, inHand = {}, learned = {}, via = {}, k, pre = eid + ":";
     for (k in A.S.items) {
       if (!own(A.S.items, k) || k.indexOf(pre) !== 0) continue;
       var v = A.S.items[k], id = k.slice(pre.length);
       if (v.hidden) hidden[id] = true;
       if (v.status === "have" || v.status === "equipped") inHand[id] = true;
+      if (v.via) via[id] = v.via;
     }
     for (k in A.S.recipes) if (own(A.S.recipes, k)) learned[k] = true;
-    return { hidden: hidden, inHand: inHand, learned: learned };
+    return { hidden: hidden, inHand: inHand, learned: learned, via: via };
   };
 
-  // One pricer per price state (overrides + imported set); one path per entry and inputs.
+  // One pricer per price state (overrides + imported set + the default list when one ships, U3); one path per entry
+  // and inputs, shared by the Gear and Queue views.
+  A.defaultSet = function () { var d = A.D && A.D.pricesDefault; return d && d.rows && d.build === A.D.meta.build ? d : null; };
   A.pricer = function () {
     var key = A.priceVersion + ":" + JSON.stringify(A.S.prices.overrides);
     if (A.memo.pricerKey !== key) {
       A.memo.pricerKey = key;
-      A.memo.pricer = FGP.pricing.createPricer(A.D, { overrides: A.S.prices.overrides, imported: A.prices.imported, defaultSet: null }, { today: A.today });
+      A.memo.pricer = FGP.pricing.createPricer(A.D, { overrides: A.S.prices.overrides, imported: A.prices.imported, defaultSet: A.defaultSet() }, { today: A.today });
       A.memo.paths = {};
     }
     return A.memo.pricer;
@@ -223,7 +227,7 @@
     if (!paths[entry.id] || paths[entry.id].key !== key) {
       paths[entry.id] = {
         key: key,
-        value: FGP.rank.path(A.D, A.S.roster, entry, { hidden: maps.hidden, inHand: maps.inHand, learned: maps.learned, costOf: pr.costOf }),
+        value: FGP.rank.path(A.D, A.S.roster, entry, { hidden: maps.hidden, inHand: maps.inHand, learned: maps.learned, via: maps.via, costOf: pr.costOf }),
       };
     }
     return paths[entry.id].value;
@@ -329,8 +333,9 @@
     var parts = ["Forever Gear Planner " + esc(v)];
     if (meta) parts.push("build " + esc(meta.build) + " (" + esc(meta.status) + ") · data " + esc(meta.generated));
     if (imp) parts.push("prices: Auctionator " + (imp.scanDay !== null && imp.scanDay !== undefined ? "scan " + esc(FGP.auctionator.isoDay(imp.scanDay)) : "file"));
+    else if (A.defaultSet && A.defaultSet()) parts.push("prices: default list " + esc(A.defaultSet().scanDate));
     else if (meta) parts.push("prices: none imported");
-    return parts.join(" · ") + " · Keys: <kbd>1</kbd>–<kbd>3</kbd> views, <kbd>/</kbd> search, <kbd>[</kbd> <kbd>]</kbd> previous/next character, " +
+    return parts.join(" · ") + " · Keys: <kbd>1</kbd>–<kbd>" + VIEWS.length + "</kbd> views, <kbd>/</kbd> search, <kbd>[</kbd> <kbd>]</kbd> previous/next character, " +
       "<kbd>h</kbd> hide the focused row, <kbd>u</kbd> undo, <kbd>t</kbd> theme, <kbd>?</kbd> all keys.";
   }
 
@@ -494,9 +499,9 @@
     A.commit(["search"]);
   };
   A.acts.keys = function () {
-    var rows = [["1", "Gear"], ["2", "Prices"], ["3", "About"], ["/", "Search"], ["[ and ]", "Previous / next character"],
+    var rows = VIEWS.map(function (v, i) { return [String(i + 1), v[1]]; }).concat([["/", "Search"], ["[ and ]", "Previous / next character (Queue: crafter)"],
       ["h", "Hide the focused item row for this character"], ["u", "Undo the last hide or delete"], ["t", "Theme: system, light, dark"],
-      ["Esc", "Clear the search, then the slot filter"], ["?", "This list"]];
+      ["Esc", "Clear the search, then the slot filter"], ["?", "This list"]]);
     A.dialog({ title: "Keyboard shortcuts", body: '<dl class="kv">' + rows.map(function (r) { return "<dt><kbd>" + esc(r[0]) + "</kbd></dt><dd>" + esc(r[1]) + "</dd>"; }).join("") +
       '</dl><p class="muted small" style="margin-top:8px">Single keys work outside text fields. Tab moves through every control.</p>',
       buttons: [{ label: "Close", id: "dlg-close" }], focus: "dlg-close" });
@@ -510,6 +515,7 @@
     A.commit(focus ? ["card-" + id] : null);
   };
   A.cycleEntry = function (step) {
+    if (A.currentView() === "queue" && A.cycleQueue) { A.cycleQueue(step); return; }
     var es = A.S.roster.entries;
     if (es.length < 2) return;
     var cur = A.selected(), i = es.indexOf(cur);

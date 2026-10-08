@@ -13,7 +13,7 @@ const LINEN = 2589, WOOL = 2592;
 function addEntry(A, v, go) {
   A.acts.start(el({ "data-key": v.start || "one" }));
   const vals = {};
-  for (const k of ["cls", "role", "level", "label", "prof0", "skill0", "prof1", "skill1"]) {
+  for (const k of ["cls", "role", "level", "label", "prof0", "skill0", "spec0", "prof1", "skill1", "spec1"]) {
     if (v[k] === undefined) continue;
     vals[k] = v[k];
     A.changes.form({ name: k, form: form(vals) });
@@ -451,7 +451,7 @@ test("icons: off by default with no image anywhere; the About switch turns them 
   const { A } = loadApp();
   A.acts.start(el({ "data-key": "example" }));
   const id = String(A.gearModel(A.selected()).rows[0].id);
-  const pages = () => ["gear", "prices", "about"].map((v) => A.viewHtml(v)).join("") + A.tipHtml("item", id) + A.tipHtml("mat", String(LINEN));
+  const pages = () => ["gear", "queue", "prices", "about"].map((v) => A.viewHtml(v)).join("") + A.tipHtml("item", id) + A.tipHtml("mat", String(LINEN));
   assert.strictEqual(A.S.prefs.icons, false);
   assert.doesNotMatch(pages(), /<img\b|zamimg\.com\/images/, "icons off: no image markup, so no image request");
   const about = A.viewHtml("about");
@@ -467,4 +467,155 @@ test("icons: off by default with no image anywhere; the About switch turns them 
   assert.strictEqual(A.S.prefs.icons, true, "Reset keeps the icon pref");
   A.changes["pref-icons"]({ checked: false });
   assert.doesNotMatch(pages(), /<img\b/);
+});
+
+// M2 acceptance (docs/briefs/2026-10-08-m2-queue.md, definition of done 9) as far as Node runs it.
+test("M2 queue: crafters, Auction House, prices and owned mats, crafter choice, specialisation, export round trip", () => {
+  const { A, FGP } = loadApp();
+  assert.match(A.viewHtml("queue"), /id="q-to-gear"/, "no roster: a pointer to the Gear tab");
+  A.acts.start(el({ "data-key": "example" }));
+  const [mage, warrior, rogue] = A.entries();
+  A.go("queue");
+  assert.strictEqual(A.S.prefs.view, "queue");
+  let h = A.viewHtml("queue");
+  for (const id of [`qsel-${mage.id}`, `qsel-${warrior.id}`, "qsel-ah", "qsel-all"]) assert.match(h, new RegExp(`id="${id}"`));
+  assert.doesNotMatch(h, new RegExp(`id="qsel-${rogue.id}"`), "no crafting profession, no crafter button");
+  assert.match(h, new RegExp(`id="qsel-${mage.id}"[^>]*aria-pressed="true"`), "the first crafter is preselected");
+  assert.strictEqual(A.currentView(), "queue");
+  // Mage: Tailoring and Enchanting pieces with quantities, skill inputs with the estimate, pace and shopping list.
+  const q = A.queueModel();
+  const mageRows = FGP.queue.select(q, mage.id);
+  assert.deepStrictEqual([...new Set(mageRows.map((r) => r.prof))].sort(), ["Enchanting", "Tailoring"]);
+  for (const r of mageRows) assert.match(h, new RegExp(`id="qlrn-${mage.id}-${r.recipe}"`));
+  assert.match(h, new RegExp(`id="qskill-${mage.id}-tailoring"[^>]*placeholder="~${FGP.rank.pace(A.D.roles, 20)}"`));
+  assert.match(h, /<h2>Crafter pace<\/h2>[\s\S]*Tailoring:<\/strong> Example Mage reaches \d+ → needs \d+/);
+  assert.match(h, /<h2>Shopping list<\/h2>[\s\S]*id="q-within"[^>]*value="5"/);
+  assert.match(h, /Value of mats used[\s\S]*To buy/);
+  assert.match(h, /Kits, enchants and consumables are not in the queue yet/);
+  // Warrior: Blacksmithing, including the Rogue's weapons.
+  A.acts.qsel(el({ "data-key": warrior.id, id: `qsel-${warrior.id}` }));
+  h = A.viewHtml("queue");
+  const war = FGP.queue.select(A.queueModel(), warrior.id);
+  assert.ok(war.every((r) => r.prof === "Blacksmithing"));
+  const rogueWeapon = war.find((r) => r.needs.some((n) => n.entry === rogue.id) && /One-Hand|Main Hand/.test(r.item.slot));
+  assert.ok(rogueWeapon);
+  assert.match(h, new RegExp(`id="qneed-${rogue.id}-${rogueWeapon.itemId}"`));
+  // [ and ] cycle the crafter buttons in the Queue.
+  A.cycleEntry(1);
+  assert.strictEqual(A.S.prefs.queueSel, "ah");
+  A.cycleEntry(1); A.cycleEntry(1);
+  assert.strictEqual(A.S.prefs.queueSel, mage.id);
+  // Auction House: the Rogue's BoE leather, no price before an import, "mark in bags" buttons, no learned boxes.
+  A.acts.qsel(el({ "data-key": "ah", id: "qsel-ah" }));
+  h = A.viewHtml("queue");
+  const ah = FGP.queue.select(A.queueModel(), "ah"), leather = ah.find((r) => r.prof === "Leatherworking" && r.item.bind === "BoE" && r.needs.some((n) => n.entry === rogue.id));
+  assert.ok(leather);
+  assert.match(h, /<h2>Auction House<\/h2>/);
+  assert.doesNotMatch(h, /id="qlrn-/);
+  assert.match(h, new RegExp(`id="qneed-${rogue.id}-${leather.itemId}"[^>]*data-act="qmark"[^>]*data-via="ah"`));
+  const leatherRow = h.slice(h.indexOf(`data-row="ah:${leather.itemId}"`));
+  assert.match(leatherRow.slice(0, leatherRow.indexOf("</tr>")), />no price</);
+  // Import the synthetic Auctionator file: the leather and the Mage's mats get prices.
+  A.acts.qsel(el({ "data-key": mage.id, id: `qsel-${mage.id}` }));
+  const before = FGP.queue.shoppingList(A.D, A.pricer(), FGP.queue.select(A.queueModel(), mage.id), A.S.roster, A.S.prices.owned);
+  assert.ok(before.lines.length && before.unknown.length);
+  const rows = before.lines.map((l) => [l.id, 100 + (l.id % 50), A.today, 12]).concat([[leather.itemId, 23456, A.today - 1, 3]]);
+  A.importBytes(auctionatorFile({ "Realm Test": rows }), "Auctionator.lua");
+  const priced = FGP.queue.shoppingList(A.D, A.pricer(), FGP.queue.select(A.queueModel(), mage.id), A.S.roster, A.S.prices.owned);
+  assert.ok(priced.unknown.length < before.unknown.length);
+  assert.ok(priced.value > 0 && priced.toBuy === priced.value);
+  h = A.viewHtml("queue");
+  assert.match(h, new RegExp(`id="q-value"><span class="coin`));
+  const lAh = FGP.queue.select(A.queueModel(), "ah").find((r) => r.itemId === leather.itemId);
+  assert.deepStrictEqual(plain([lAh.each.copper, lAh.each.source, lAh.each.age]), [23456, "ah", 1]);
+  // Owned mats lower "To buy", not "Value of mats used".
+  const mat = priced.lines.find((l) => l.unit && l.unit.source === "ah" && l.count > 1);
+  A.changes.qown(el({ "data-key": String(mat.id) }, { value: String(mat.count - 1) }));
+  assert.strictEqual(A.S.prices.owned[mat.id], mat.count - 1);
+  const owned = FGP.queue.shoppingList(A.D, A.pricer(), FGP.queue.select(A.queueModel(), mage.id), A.S.roster, A.S.prices.owned);
+  assert.strictEqual(owned.value, priced.value);
+  assert.strictEqual(owned.toBuy, priced.toBuy - mat.unit.copper * (mat.count - 1));
+  assert.match(A.viewHtml("queue"), new RegExp(`id="qown-${mat.id}"[^>]*value="${mat.count - 1}"`));
+  // Within N levels: empty means every level.
+  A.changes.qwithin(el({}, { value: "" }));
+  assert.strictEqual(A.S.prefs.within, null);
+  A.changes.qwithin(el({}, { value: "5" }));
+  // Mark in bags from the Queue: status "have" via the crafter; the Gear view shows it and the need leaves the queue.
+  const mr = FGP.queue.select(A.queueModel(), mage.id).find((r) => r.needs.some((n) => n.entry === mage.id));
+  A.acts.qmark(el({ "data-key": `${mage.id}:${mr.itemId}`, "data-via": mage.id, id: `qneed-${mage.id}-${mr.itemId}` }));
+  assert.deepStrictEqual(plain(A.itemState(mage.id, mr.itemId)), { status: "have", via: mage.id });
+  assert.ok(!FGP.queue.select(A.queueModel(), mage.id).some((r) => r.itemId === mr.itemId && r.needs.some((n) => n.entry === mage.id)));
+  A.runUndo();
+  assert.deepStrictEqual(plain(A.itemState(mage.id, mr.itemId)), {});
+  A.acts.qmark(el({ "data-key": `${mage.id}:${mr.itemId}`, "data-via": mage.id }));
+  A.selectEntry(mage.id);
+  assert.match(A.viewHtml("gear"), new RegExp(`id="st-[a-z]+-${mage.id}-${mr.itemId}"[^>]*>(?:(?!</select>).)*value="have" selected`));
+  // Crafter choice: a BoE piece the Mage makes for the Rogue moves to the Auction House and back (Queue and Gear).
+  const forRogue = FGP.queue.select(A.queueModel(), mage.id).find((r) => r.item.bind === "BoE" && r.needs.some((n) => n.entry === rogue.id));
+  assert.ok(forRogue);
+  assert.match(A.viewHtml("queue"), new RegExp(`id="qvia-${mage.id}-${forRogue.recipe}"`));
+  A.changes.qvia(el({ "data-key": forRogue.key }, { value: "ah" }));
+  assert.strictEqual(A.itemState(rogue.id, forRogue.itemId).via, "ah");
+  assert.ok(FGP.queue.select(A.queueModel(), "ah").some((r) => r.itemId === forRogue.itemId && r.needs.some((n) => n.entry === rogue.id)));
+  assert.ok(!FGP.queue.select(A.queueModel(), mage.id).some((r) => r.itemId === forRogue.itemId && r.needs.some((n) => n.entry === rogue.id)));
+  A.selectEntry(rogue.id);
+  const gh = A.viewHtml("gear");
+  assert.match(gh, new RegExp(`id="via-[a-z]+-${rogue.id}-${forRogue.itemId}"[^>]*data-change="via"`));
+  A.changes.via(el({ "data-key": `${rogue.id}:${forRogue.itemId}`, id: "x" }, { value: "" }));
+  assert.strictEqual(A.itemState(rogue.id, forRogue.itemId).via, undefined, "back to recommended");
+  assert.ok(FGP.queue.select(A.queueModel(), mage.id).some((r) => r.itemId === forRogue.itemId));
+  A.changes.via(el({ "data-key": `${rogue.id}:${forRogue.itemId}`, id: "x" }, { value: "ah" }));
+  // Export → reset → import restores the queue state (choice, owned, within, selection, marks).
+  A.go("queue");
+  const queueBefore = A.viewHtml("queue");
+  const file = JSON.stringify(A.exportObject(false));
+  A.resetState();
+  assert.match(A.viewHtml("queue"), /id="q-to-gear"/);
+  A.applyImport(A.readExport(file).obj);
+  assert.strictEqual(A.viewHtml("queue"), queueBefore);
+});
+
+test("M2 specialisation: the select appears at level 40 or skill 200; an Armorsmith hides Weaponsmith recipes from its queue", () => {
+  const { A, FGP } = loadApp();
+  A.acts.start(el({ "data-key": "example" }));
+  const warrior = A.entries()[1];
+  A.editEntry(warrior.id);
+  assert.doesNotMatch(A.formHtml(), /id="f-spec1"/, "level 14, no skill: no specialisation yet");
+  const vals = { cls: "Warrior", role: "melee", level: "14", label: "Example Warrior", prof0: "Mining", skill0: "", prof1: "Blacksmithing", skill1: "" };
+  vals.skill1 = "200";
+  A.changes.form({ name: "skill1", form: form(vals) });
+  assert.match(A.formHtml(), /id="f-spec1"/, "skill 200 shows it");
+  assert.doesNotMatch(A.formHtml(), /id="f-spec0"/, "Mining has none");
+  vals.skill1 = "";
+  A.changes.form({ name: "skill1", form: form(vals) });
+  assert.doesNotMatch(A.formHtml(), /id="f-spec1"/);
+  vals.level = "45";
+  A.changes.form({ name: "level", form: form(vals) });
+  const fh = A.formHtml();
+  assert.match(fh, /id="f-spec1"/, "level 45 shows it");
+  for (const s of ["Armorsmith", "Weaponsmith", "Master Swordsmith"]) assert.match(fh, new RegExp(`<option value="${s}"`));
+  vals.spec1 = "Armorsmith";
+  A.changes.form({ name: "spec1", form: form(vals) });
+  A.submits.entry(form(vals), { value: "save" });
+  const w = A.entry(warrior.id);
+  assert.deepStrictEqual(plain(w.professions[1]), { id: "Blacksmithing", skill: null, spec: "Armorsmith" });
+  A.editEntry(warrior.id);
+  assert.match(A.formHtml(), /<option value="Armorsmith" selected>/, "edit shows the stored spec");
+  A.form = null;
+  const rows = FGP.queue.select(A.queueModel(), warrior.id);
+  const specOf = (r) => (A.D.recipes.rows[r.recipe].pattern || {}).spec;
+  assert.ok(rows.some((r) => specOf(r) === "Armorsmith"), "Armorsmith recipes stay");
+  for (const r of rows) {
+    assert.ok(!["Weaponsmith", "Master Axesmith", "Master Hammersmith", "Master Swordsmith"].includes(specOf(r)), `${r.item.name} needs ${specOf(r)}`);
+    if (specOf(r) === "Armorsmith") assert.ok(!r.flags.includes("needs Armorsmith"));
+  }
+  // The Weaponsmith pieces still reach their wearers through the Auction House, badged.
+  const ahRows = FGP.queue.select(A.queueModel(), "ah").filter((r) => ["Weaponsmith", "Master Axesmith", "Master Hammersmith", "Master Swordsmith"].includes(specOf(r)));
+  assert.ok(ahRows.length && ahRows.every((r) => r.flags.some((f) => /^needs (Weaponsmith|Master)/.test(f))));
+  // Below 40 and below 200 the spec is not kept when the form is saved again.
+  A.editEntry(warrior.id);
+  const v2 = Object.assign({}, vals, { level: "30" });
+  A.changes.form({ name: "level", form: form(v2) });
+  A.submits.entry(form(v2), { value: "save" });
+  assert.strictEqual(A.entry(warrior.id).professions[1].spec, null);
 });

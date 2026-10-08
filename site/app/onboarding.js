@@ -27,14 +27,14 @@
 
   function newForm(start, inline) {
     return { mode: "add", start: start, inline: inline, id: null, cls: null, role: null, school: null, twoHand: null, level: "",
-      label: "", profs: [{ id: "", skill: "" }, { id: "", skill: "" }], showProfs: start === "several", errors: {}, added: 0 };
+      label: "", profs: [{ id: "", skill: "", spec: "" }, { id: "", skill: "", spec: "" }], showProfs: start === "several", errors: {}, added: 0 };
   }
   function formFromEntry(e) {
     var f = newForm("edit", false);
     f.mode = "edit"; f.id = e.id; f.cls = e.cls; f.role = e.role; f.level = String(e.level); f.label = e.label;
     f.school = e.options.school || null;
     f.twoHand = e.options.twoHand === undefined ? null : e.options.twoHand;
-    e.professions.forEach(function (p, i) { f.profs[i] = { id: p.id, skill: p.skill === null ? "" : String(p.skill) }; });
+    e.professions.forEach(function (p, i) { f.profs[i] = { id: p.id, skill: p.skill === null ? "" : String(p.skill), spec: p.spec || "" }; });
     f.showProfs = e.professions.length > 0;
     return f;
   }
@@ -60,14 +60,23 @@
     if ((r = el.namedItem("level"))) F.level = r.value;
     if ((r = el.namedItem("label"))) F.label = r.value;
     [0, 1].forEach(function (i) {
-      var p = el.namedItem("prof" + i), s = el.namedItem("skill" + i);
-      if (p) F.profs[i].id = p.value;
+      var p = el.namedItem("prof" + i), s = el.namedItem("skill" + i), sp = el.namedItem("spec" + i);
+      if (p && p.value !== F.profs[i].id) { F.profs[i].id = p.value; F.profs[i].spec = ""; }
       if (s) F.profs[i].skill = s.value;
+      if (sp) F.profs[i].spec = sp.value;
     });
     var det = f.querySelector && f.querySelector("details.profs");
     if (det) F.showProfs = det.open;
   }
   A.syncForm = syncForm;
+
+  // Specialisation select (roles §5.3, D28): for a profession with specialisations, once the level is 40 or more or
+  // the entered skill 200 or more.
+  function specShown(F, i) {
+    var p = F.profs[i], specs = p.id && A.ctx.professions[p.id] || [];
+    return specs.length > 0 && (Number(F.level) >= 40 || (String(p.skill).trim() !== "" && Number(p.skill) >= 200));
+  }
+  A.specShown = specShown;
 
   // Validate A.form; returns {errors, entry} with the entry shape of D24.
   A.formEntry = function (F) {
@@ -82,7 +91,8 @@
       picked.push(p.id);
       var sk = String(p.skill).trim(), n = sk === "" ? null : Number(sk);
       if (n !== null && (!Number.isInteger(n) || n < 0 || n > cap)) { errors["skill" + i] = "Skill is 0 to " + cap + ", or empty to estimate it from the level."; return; }
-      profs.push({ id: p.id, skill: n, spec: null });
+      var specs = A.ctx.professions[p.id] || [];
+      profs.push({ id: p.id, skill: n, spec: specShown(F, i) && specs.indexOf(p.spec) >= 0 ? p.spec : null });
     });
     if (String(F.label).length > LABEL_MAX) errors.label = "At most " + LABEL_MAX + " characters.";
     if (Object.keys(errors).length) return { errors: errors, entry: null };
@@ -194,7 +204,15 @@
       });
       return '<div class="frow"><label for="f-prof' + i + '">' + (i + 1) + '</label><select id="f-prof' + i + '" name="prof' + i + '" data-change="form"' + described("prof" + i) + ">" + opts.join("") + "</select>" +
         '<label for="f-skill' + i + '">skill</label><input type="number" id="f-skill' + i + '" name="skill' + i + '" min="0" max="' + D().meta.skillCap + '" class="inp-num" placeholder="~" value="' +
-        esc(F.profs[i].skill) + '" data-change="form"' + described("skill" + i) + "></div>" + fieldErr("prof" + i) + fieldErr("skill" + i);
+        esc(F.profs[i].skill) + '" data-change="form"' + described("skill" + i) + "></div>" + fieldErr("prof" + i) + fieldErr("skill" + i) + specSelect(i);
+    }
+    function specSelect(i) {
+      if (!specShown(F, i)) return "";
+      var p = F.profs[i];
+      return '<div class="frow"><label for="f-spec' + i + '">' + esc(p.id) + ' specialisation</label><select id="f-spec' + i + '" name="spec' + i + '" data-change="form">' +
+        '<option value="">None yet</option>' + A.ctx.professions[p.id].map(function (sp) {
+          return '<option value="' + esc(sp) + '"' + (sp === p.spec ? " selected" : "") + ">" + esc(sp) + "</option>";
+        }).join("") + '</select><span class="hint-line">Decides which specialisation recipes this character can make; until one is chosen they count as makeable, marked "needs …".</span></div>';
     }
     out.push('<details class="profs" id="f-profs"' + (F.showProfs || F.profs[0].id || F.profs[1].id ? " open" : "") + "><summary>" +
       (F.start === "one" ? "This character has professions (optional)" : "Professions (optional, up to two)") + "</summary>" +
@@ -255,9 +273,9 @@
     A.openForm(k, true);
   };
   A.changes.form = function (el) {
-    var name = el.name;
+    var name = el.name, shown = A.form ? [specShown(A.form, 0), specShown(A.form, 1)].join() : "";
     syncForm(el.form);
-    if (name === "cls" || name === "role") A.commit();
+    if (name === "cls" || name === "role" || (A.form && [specShown(A.form, 0), specShown(A.form, 1)].join() !== shown)) A.commit();
   };
   A.submits.entry = function (f, submitter) {
     syncForm(f);

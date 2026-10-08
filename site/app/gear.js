@@ -260,15 +260,27 @@
       '<td class="c-slot nowrap">' + esc(it.slot) + ' <span class="faint">' + esc(A.typeText(it)) + "</span></td>" +
       '<td class="c-stats">' + A.statChips(it) + "</td>" +
       '<td class="c-bind">' + A.bindBadge(it) + "</td>" +
-      '<td class="c-via">' + A.viaText(rt, it, m.names, r.id) + "</td>" +
+      '<td class="c-via">' + A.viaText(rt, it, m.names, r.id) + viaSelect(m, r, base) + "</td>" +
       '<td class="c-src">' + A.sourceBadges(rt.recipe) + "</td>" +
-      '<td class="c-skill">' + A.skillText(rt.recipe) + "</td>" +
+      '<td class="c-skill">' + A.skillText(rt.recipe, rt) + "</td>" +
       '<td class="c-cost num">' + matsCell(r, self) + "</td>" +
       '<td class="c-ah num">' + ahCell(r, !self) + "</td>" +
       '<td class="c-status"><div class="st-wrap"><select class="status st-' + (r.status || "get") + '" id="st-' + esc(base) + '" data-change="status" data-key="' + esc(r.key) + '" aria-label="Status of ' + esc(it.name) + '">' +
       STATUS.map(function (s) { return '<option value="' + s[0] + '"' + (s[0] === r.status ? " selected" : "") + ">" + s[1] + "</option>"; }).join("") + "</select>" +
       '<button type="button" class="hide-btn" id="hb-' + esc(base) + '" data-act="hide" data-key="' + esc(r.key) + '" aria-label="Hide ' + esc(it.name) + " for " + esc(m.name) +
       '" title="Not for ' + esc(m.name) + ': hide it, the next-best piece takes its place (h)">✕</button></div></td></tr>';
+  }
+
+  // Crafter choice (ui.md §4.2): when more than one roster crafter (or the AH) can supply the piece; stored as `via`.
+  function viaSelect(m, r, base) {
+    var opts = FGP.rank.routeOptions(r.id, r.it, m.entry, A.S.roster, D());
+    if (opts.length < 2) return "";
+    var cur = A.itemState(m.entry.id, r.id).via || "";
+    return '<select class="via-sel" id="via-' + esc(base) + '" data-change="via" data-key="' + esc(r.key) + '" aria-label="Who makes ' + esc(r.it.name) + " for " + esc(m.name) + '">' +
+      '<option value=""' + (cur ? "" : " selected") + ">Recommended</option>" + opts.map(function (o) {
+        var v = o.via === "ah" ? "ah" : o.crafter;
+        return '<option value="' + esc(v) + '"' + (v === cur ? " selected" : "") + ">" + (o.via === "ah" ? "Auction House" : o.via === "self" ? "Self" : esc(m.names[o.crafter])) + "</option>";
+      }).join("") + "</select>";
   }
 
   var HEAD = "<thead><tr><th>Lvl</th><th>Item</th><th>Slot</th><th>Stats</th><th>Bind</th><th>Get via</th><th>Source</th><th>Recipe</th>" +
@@ -365,6 +377,11 @@
     var k = el.getAttribute("data-key").split(":");
     A.setItem(k[0], k[1], { status: el.value || null });
     A.commit();
+  };
+  A.changes.via = function (el) {
+    var k = el.getAttribute("data-key").split(":");
+    A.setItem(k[0], k[1], { via: el.value || null });
+    A.commit([el.id]);
   };
   A.changes.learned = function (el) {
     var k = el.getAttribute("data-key");
