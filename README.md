@@ -4,8 +4,8 @@ A planner for **crafted gear in WoW: Forever, levels 1–60**. Tell it which cha
 up to two professions), and it shows for each one which crafted pieces to make or buy at which level, who in your
 roster can craft them, where the patterns come from, and what the materials cost at your Auction House.
 
-**Status: planning.** No app yet. This repository holds the design documents and the roadmap; the first usable
-page is milestone M1 in [docs/roadmap.md](docs/roadmap.md). The plan is to go public during the Forever beta,
+**Status: M1 in progress: data and ranking library.** The generated beta data, the build report and the browser
+libraries exist; the page itself is the next step of milestone M1 in [docs/roadmap.md](docs/roadmap.md). The plan is to go public during the Forever beta,
 before the game launches on 2026-11-05, and to refresh the data for the live game right after launch.
 
 ## Who it is for
@@ -41,13 +41,13 @@ your Auctionator file ──(file picker, stays in your browser)──▶ site/ 
 | Path | What | Status |
 |---|---|---|
 | `docs/` | design documents, synthesis of decisions, roadmap | written |
-| `site/` | the published page | empty (M1) |
-| `site/data/` | generated game data, never hand-edited | empty (M1) |
-| `pipeline/` | the data generator (Node, no dependencies) | empty (M1) |
-| `curation/` | hand-maintained inputs (JSON) | empty (M1) |
-| `tests/` | `node --test` suites and synthetic fixtures | empty (M1) |
-| `tools/` | maintenance scripts; `privacy-check.sh` | privacy check only |
-| `reports/`, `build-inputs/` | generator build reports and DB2 hash manifests | empty (M1) |
+| `site/` | the published page | `lib/` written; page in progress (M1) |
+| `site/data/` | generated game data, never hand-edited | beta build 1.60.1.70205 |
+| `pipeline/` | the data generator (Node, no dependencies) | written |
+| `curation/` | hand-maintained inputs (JSON) | first version |
+| `tests/` | `node --test` suites and synthetic fixtures | written |
+| `tools/` | `check.sh`, `privacy-check.sh`, DB2 fixture cutter | written |
+| `reports/`, `build-inputs/` | generator build reports and DB2 hash manifests | beta build 1.60.1.70205 |
 
 Start with [docs/synthesis.md](docs/synthesis.md) for the decisions and [docs/roadmap.md](docs/roadmap.md) for
 what comes next.
