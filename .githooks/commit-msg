@@ -1,0 +1,3 @@
+#!/bin/sh
+# Commit messages are public once pushed: check this one before the commit is made.
+exec node tools/privacy-check.js --message "$1"
