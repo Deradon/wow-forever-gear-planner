@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "why": "Who can use what, slot groups for the per-slot path, stat labels and professions (docs/roles-stat-weights.md §2, §6.3; docs/data-model.md §9). Numbers in armor, weapons and offHand are the level a proficiency starts; null means never.",
+  "cite": ["DB"],
+  "checked": "2026-10-08",
+  "classes": {
+    "Warrior": {
+      "armor": {"Misc": 1, "Cloth": 1, "Leather": 1, "Mail": 1, "Plate": 40, "Shield": 1},
+      "weapons": {"Axe": 1, "Mace": 1, "Sword": 1, "Dagger": 1, "Fist": 1, "Misc": 1, "2H Axe": 1, "2H Mace": 1, "2H Sword": 1, "Polearm": 1, "Staff": 1, "Bow": 1, "Gun": 1, "Crossbow": 1, "Thrown": 1},
+      "offHand": {"Held": 1, "Shield": 1},
+      "dualWield": 20, "relic": null,
+      "why": "Plate at 40 is the vanilla trainer gate, unverified in Forever (S2); dual wield at 20 is vanilla"
+    },
+    "Paladin": {
+      "armor": {"Misc": 1, "Cloth": 1, "Leather": 1, "Mail": 1, "Plate": 40, "Shield": 1, "Libram": 1},
+      "weapons": {"Axe": 1, "Mace": 1, "Sword": 1, "Misc": 1, "2H Axe": 1, "2H Mace": 1, "2H Sword": 1, "Polearm": 1},
+      "offHand": {"Held": 1, "Shield": 1},
+      "dualWield": null, "relic": "Libram",
+      "why": "Plate at 40 is the vanilla trainer gate, unverified in Forever (S2)"
+    },
+    "Hunter": {
+      "armor": {"Misc": 1, "Cloth": 1, "Leather": 1, "Mail": 40},
+      "weapons": {"Axe": 1, "Sword": 1, "Dagger": 1, "Fist": 1, "Misc": 1, "2H Axe": 1, "2H Sword": 1, "Polearm": 1, "Staff": 1, "Bow": 1, "Gun": 1, "Crossbow": 1, "Thrown": 1},
+      "offHand": {"Held": 1},
+      "dualWield": 20, "relic": null,
+      "why": "Mail at 40 is the vanilla trainer gate, unverified in Forever (S2); dual wield at 20 is vanilla"
+    },
+    "Rogue": {
+      "armor": {"Misc": 1, "Cloth": 1, "Leather": 1},
+      "weapons": {"Axe": 1, "Mace": 1, "Sword": 1, "Dagger": 1, "Fist": 1, "Misc": 1, "Bow": 1, "Gun": 1, "Crossbow": 1, "Thrown": 1},
+      "offHand": {"Held": 1},
+      "dualWield": 10, "relic": null,
+      "why": "One-handed axes are new for Rogues in Forever (SkillLineAbility class mask); dual wield at 10 is vanilla"
+    },
+    "Priest": {
+      "armor": {"Misc": 1, "Cloth": 1},
+      "weapons": {"Mace": 1, "Dagger": 1, "Misc": 1, "Staff": 1, "Wand": 1},
+      "offHand": {"Held": 1},
+      "dualWield": null, "relic": null
+    },
+    "Shaman": {
+      "armor": {"Misc": 1, "Cloth": 1, "Leather": 1, "Mail": 40, "Shield": 1, "Totem": 1},
+      "weapons": {"Axe": 1, "Mace": 1, "Dagger": 1, "Fist": 1, "Misc": 1, "Staff": 1},
+      "offHand": {"Held": 1, "Shield": 1},
+      "dualWield": null, "relic": "Totem",
+      "why": "Mail at 40 is vanilla (S2); no dual wield (Forever data: AcquireMethod 3); 2H axes and maces come from the melee role's twoHand option"
+    },
+    "Mage": {
+      "armor": {"Misc": 1, "Cloth": 1},
+      "weapons": {"Sword": 1, "Dagger": 1, "Misc": 1, "Staff": 1, "Wand": 1},
+      "offHand": {"Held": 1},
+      "dualWield": null, "relic": null
+    },
+    "Warlock": {
+      "armor": {"Misc": 1, "Cloth": 1},
+      "weapons": {"Sword": 1, "Dagger": 1, "Misc": 1, "Staff": 1, "Wand": 1},
+      "offHand": {"Held": 1},
+      "dualWield": null, "relic": null
+    },
+    "Druid": {
+      "armor": {"Misc": 1, "Cloth": 1, "Leather": 1, "Idol": 1},
+      "weapons": {"Mace": 1, "Dagger": 1, "Fist": 1, "Misc": 1, "Staff": 1, "2H Mace": 1, "Polearm": 1},
+      "offHand": {"Held": 1},
+      "dualWield": null, "relic": "Idol",
+      "why": "Polearms are in the Forever and Era class masks although vanilla 1.12 druids could not train them; trust the data"
+    }
+  },
+  "slotGroups": [
+    {"id": "Head", "slots": ["Head"]},
+    {"id": "Neck", "slots": ["Neck"]},
+    {"id": "Shoulder", "slots": ["Shoulder"]},
+    {"id": "Back", "slots": ["Back"]},
+    {"id": "Chest", "slots": ["Chest"]},
+    {"id": "Wrist", "slots": ["Wrist"]},
+    {"id": "Hands", "slots": ["Hands"]},
+    {"id": "Waist", "slots": ["Waist"]},
+    {"id": "Legs", "slots": ["Legs"]},
+    {"id": "Feet", "slots": ["Feet"]},
+    {"id": "Finger", "slots": ["Finger"], "count": 2},
+    {"id": "Trinket", "slots": ["Trinket"], "count": 2},
+    {"id": "Weapons", "slots": ["Two-Hand", "One-Hand", "Main Hand", "Off-hand"]},
+    {"id": "Ranged", "slots": ["Ranged", "Relic"]}
+  ],
+  "statLabels": {
+    "Str": "Strength", "Agi": "Agility", "Sta": "Stamina", "Int": "Intellect", "Spi": "Spirit",
+    "SP": "Spell Power", "Heal": "Healing", "SpellDmg": "Spell Damage",
+    "HolyDmg": "Holy Damage", "FireDmg": "Fire Damage", "NatureDmg": "Nature Damage", "FrostDmg": "Frost Damage", "ShadowDmg": "Shadow Damage", "ArcaneDmg": "Arcane Damage",
+    "AP": "Attack Power", "RAP": "Ranged Attack Power", "Hit": "Hit", "Crit": "Crit", "Haste": "Haste", "Expertise": "Expertise",
+    "MP5": "Mana per 5 sec", "HP5": "Health per 5 sec",
+    "Def": "Defense", "Dodge": "Dodge", "Parry": "Parry", "Block": "Block", "BlockValue": "Block Value",
+    "SpellPen": "Spell Penetration", "Armor": "Armor",
+    "FireRes": "Fire Resistance", "FrostRes": "Frost Resistance", "HolyRes": "Holy Resistance", "ShadowRes": "Shadow Resistance", "NatureRes": "Nature Resistance", "ArcaneRes": "Arcane Resistance"
+  },
+  "statsUnidentified": [
+    {"why": "Probably a profession skill bonus; unidentified, ships as Stat83 with weight 0 (D16)", "id": 83, "items": [249470], "names": ["Molten Heart of the Mountain"], "cite": ["DB"], "checked": "2026-10-08"},
+    {"why": "Unidentified, ships as Stat90 with weight 0 (D16)", "id": 90, "items": [12775], "names": ["Huge Thorium Battleaxe"], "cite": ["DB"], "checked": "2026-10-08"},
+    {"why": "Probably Herbalism skill; unidentified, ships as Stat112 (D16)", "id": 112, "items": [7349], "names": ["Herbalist's Gloves"], "cite": ["DB"], "checked": "2026-10-08"},
+    {"why": "Probably Mining skill; unidentified, ships as Stat113 (D16)", "id": 113, "items": [10542], "names": ["Goblin Mining Helmet"], "cite": ["DB"], "checked": "2026-10-08"},
+    {"why": "Vanilla shows Nature resistance on these items; the prototype's enchant mapping says Spirit. Unresolved until M3 (D16)", "id": 124, "items": [22195, 22197, 22198], "names": ["Light Obsidian Belt", "Heavy Obsidian Belt", "Jagged Obsidian Shield"], "cite": ["DB"], "checked": "2026-10-08"},
+    {"why": "Unidentified, ships as Stat132 with weight 0 (D16)", "id": 132, "items": [7506], "names": ["Gnomish Universal Remote"], "cite": ["DB"], "checked": "2026-10-08"}
+  ],
+  "professions": [
+    {"name": "Alchemy", "line": 171, "kind": "crafting"},
+    {"name": "Blacksmithing", "line": 164, "kind": "crafting", "specs": ["Armorsmith", "Weaponsmith", "Master Axesmith", "Master Hammersmith", "Master Swordsmith"]},
+    {"name": "Enchanting", "line": 333, "kind": "crafting"},
+    {"name": "Engineering", "line": 202, "kind": "crafting", "specs": ["Gnomish Engineer", "Goblin Engineer"]},
+    {"name": "Leatherworking", "line": 165, "kind": "crafting", "specs": ["Dragonscale Leatherworking", "Elemental Leatherworking", "Tribal Leatherworking"]},
+    {"name": "Tailoring", "line": 197, "kind": "crafting"},
+    {"name": "Herbalism", "line": 182, "kind": "gathering"},
+    {"name": "Mining", "line": 186, "kind": "gathering"},
+    {"name": "Skinning", "line": 393, "kind": "gathering"},
+    {"name": "Cooking", "line": 185, "kind": "secondary"},
+    {"name": "First Aid", "line": 129, "kind": "secondary"}
+  ]
+}

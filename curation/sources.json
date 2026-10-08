@@ -1,0 +1,1307 @@
+[
+  {
+    "why": "Vanilla world-drop pattern (tradeable, so the AH works); Forever-consistent per ATT, CWF, FC",
+    "items": [
+      2307,
+      2312,
+      2317,
+      2585,
+      2870,
+      3490,
+      3492,
+      3850,
+      3852,
+      4250,
+      4252,
+      4258,
+      4311,
+      4313,
+      4315,
+      4317,
+      4323,
+      4331,
+      6239,
+      7047,
+      7049,
+      7065,
+      7373,
+      10048
+    ],
+    "names": [
+      "Fine Leather Boots",
+      "Fine Leather Gloves",
+      "Dark Leather Tunic",
+      "Gray Woolen Robe",
+      "Shining Silver Breastplate",
+      "Deadly Bronze Poniard",
+      "Mighty Iron Hammer",
+      "Jade Serpentblade",
+      "Golden Iron Destroyer",
+      "Hillman's Belt",
+      "Dark Leather Shoulders",
+      "Guardian Belt",
+      "Heavy Woolen Cloak",
+      "Red Woolen Boots",
+      "Reinforced Woolen Shoulders",
+      "Phoenix Pants",
+      "Shadow Hood",
+      "Phoenix Gloves",
+      "Red Linen Vest",
+      "Hands of Darkness",
+      "Truefaith Gloves",
+      "Green Silk Armor",
+      "Dusky Leather Leggings",
+      "Colorful Kilt"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "world",
+        "side": "both",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF",
+      "FC"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Quest reward plans (Ironforge) and a world drop",
+    "items": [
+      3471
+    ],
+    "names": [
+      "Copper Chain Vest"
+    ],
+    "sources": [
+      {
+        "kind": "quest",
+        "quest": "Supplying the Front",
+        "side": "alliance",
+        "certainty": "vanilla"
+      },
+      {
+        "kind": "drop",
+        "where": "world",
+        "side": "both",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor plans (Stormwind)",
+    "items": [
+      3849
+    ],
+    "names": [
+      "Hardened Iron Shortsword"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "kaita-deepforge",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 3000
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor plans (Arathi Highlands; Badlands)",
+    "items": [
+      3851
+    ],
+    "names": [
+      "Solid Iron Maul"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "jannos-ironwill",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 3000
+        }
+      },
+      {
+        "kind": "vendor",
+        "npc": "jazzrik",
+        "limited": true,
+        "side": "both",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 3000
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Trainer-taught; the linked recipe item is an unused client stub or absent",
+    "items": [
+      4308,
+      250488,
+      250493,
+      250498,
+      250620,
+      252491,
+      252501,
+      252512
+    ],
+    "names": [
+      "Green Linen Bracers",
+      "Veteran's Chain Shirt",
+      "Veteran's Chain Leggings",
+      "Veteran's Chain Helm",
+      "Gemmed Copper Boots",
+      "Trapper's Leather Armor",
+      "Trapper's Leather Pants",
+      "Brawler's Leather Helm"
+    ],
+    "sources": [
+      {
+        "kind": "trainer",
+        "side": "both",
+        "certainty": "forever"
+      }
+    ],
+    "cite": [
+      "ATT",
+      "FC"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (neutral goblin, Stranglethorn Vale)",
+    "items": [
+      4322
+    ],
+    "names": [
+      "Enchanter's Cowl"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "xizk-goodstitch",
+        "limited": true,
+        "side": "both",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 1000
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Trainer schematic (vanilla); the gun needs no Engineering to use",
+    "items": [
+      4369,
+      4379
+    ],
+    "names": [
+      "Deadly Blunderbuss",
+      "Silver-plated Shotgun"
+    ],
+    "sources": [
+      {
+        "kind": "trainer",
+        "side": "both",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Schematic source not checked for Forever",
+    "items": [
+      4383
+    ],
+    "names": [
+      "Moonsight Rifle"
+    ],
+    "sources": [
+      {
+        "kind": "unknown",
+        "text": "Schematic source not checked",
+        "side": "both",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Zone drop pattern in Darkshore (ATT)",
+    "items": [
+      5770
+    ],
+    "names": [
+      "Robes of Arcana"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "zone",
+        "zone": "Darkshore",
+        "side": "both",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [
+      "ATT"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Westfall and Darkshore); CWF says drop",
+    "items": [
+      5780
+    ],
+    "names": [
+      "Murloc Scale Belt"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "gina-macgregor",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 500
+        }
+      },
+      {
+        "kind": "vendor",
+        "npc": "mavralyn",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 500
+        }
+      }
+    ],
+    "cite": [
+      "ATT"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Westfall and Darkshore); CWF says drop",
+    "items": [
+      5781
+    ],
+    "names": [
+      "Murloc Scale Breastplate"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "gina-macgregor",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 600
+        }
+      },
+      {
+        "kind": "vendor",
+        "npc": "mavralyn",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 600
+        }
+      }
+    ],
+    "cite": [
+      "ATT"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Arathi Highlands)",
+    "items": [
+      5963
+    ],
+    "names": [
+      "Barbaric Leggings"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "hammon-karwn",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 650
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Elwynn Forest)",
+    "items": [
+      6240
+    ],
+    "names": [
+      "Blue Linen Vest"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "tharynn-bouden",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 200
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Elwynn Forest)",
+    "items": [
+      6242
+    ],
+    "names": [
+      "Blue Linen Robe"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "drake-lindgren",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 300
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor inside Wailing Caverns",
+    "items": [
+      6466
+    ],
+    "names": [
+      "Deviate Scale Cloak"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "kalldan-felmoon",
+        "limited": true,
+        "side": "both",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 550
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor inside Wailing Caverns",
+    "items": [
+      6467
+    ],
+    "names": [
+      "Deviate Scale Gloves"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "kalldan-felmoon",
+        "limited": true,
+        "side": "both",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 1500
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Quest reward pattern (Wailing Caverns)",
+    "items": [
+      6468
+    ],
+    "names": [
+      "Deviate Scale Belt"
+    ],
+    "sources": [
+      {
+        "kind": "quest",
+        "quest": "Deviate Eradication",
+        "side": "both",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [
+      "ATT"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Quest reward pattern (Darnassus)",
+    "items": [
+      6709
+    ],
+    "names": [
+      "Moonglow Vest"
+    ],
+    "sources": [
+      {
+        "kind": "quest",
+        "quest": "Moonglow Vest",
+        "side": "alliance",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [
+      "ATT"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "BoP pattern from a Feralas vendor per CWF; ATT lists only the Horde vendor",
+    "items": [
+      7053
+    ],
+    "names": [
+      "Azure Silk Cloak"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "brienna-starglow",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "unknown",
+        "cost": {
+          "copper": 1500
+        }
+      }
+    ],
+    "cite": [
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Redridge)",
+    "items": [
+      7283
+    ],
+    "names": [
+      "Black Whelp Cloak"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "clyde-ranthal",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 600
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Quest plans per CWF; quest and location not verified",
+    "items": [
+      7913
+    ],
+    "names": [
+      "Barbaric Iron Shoulders"
+    ],
+    "sources": [
+      {
+        "kind": "unknown",
+        "text": "Quest plans per CWF; quest not identified",
+        "side": "both",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Darnassus)",
+    "items": [
+      18948
+    ],
+    "names": [
+      "Barbaric Bracers"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "saenorion",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 2000
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Limited-supply vendor pattern (Lakeshire, Redridge)",
+    "items": [
+      20575
+    ],
+    "names": [
+      "Black Whelp Tunic"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "amy-davenport",
+        "limited": true,
+        "side": "alliance",
+        "certainty": "vanilla",
+        "cost": {
+          "copper": 1400
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "World-drop pattern (Shadowhide Darkweaver, Skeletal Fiend); patterns were listed on the beta AH",
+    "items": [
+      215365,
+      215366
+    ],
+    "names": [
+      "Invoker's Mantle",
+      "Invoker's Cord"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "world",
+        "side": "both",
+        "certainty": "forever"
+      }
+    ],
+    "cite": [
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "BoP formula with a 35s vendor price in the data; the seller is not identified",
+    "items": [
+      249392,
+      249394
+    ],
+    "names": [
+      "Glimmering Staff",
+      "Orb of Mystic Insight"
+    ],
+    "sources": [
+      {
+        "kind": "unknown",
+        "text": "BoP formula; seller not identified",
+        "side": "both",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever Favor pattern, Blacksmithing, 30 Merchant's Favor, no reputation needed",
+    "items": [
+      250503,
+      250513,
+      250518
+    ],
+    "names": [
+      "Veteran's Boots",
+      "Veteran's Chain Belt",
+      "Veteran's Silvered Chain Shirt"
+    ],
+    "sources": [
+      {
+        "kind": "favor",
+        "npc": "stondry-darkhammer",
+        "cost": {
+          "favor": 30
+        },
+        "side": "alliance",
+        "certainty": "forever"
+      },
+      {
+        "kind": "favor",
+        "npc": "durotar-favor-blacksmithing",
+        "cost": {
+          "favor": 30
+        },
+        "side": "horde",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF",
+      "ZK",
+      "WFT",
+      "W4E"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever Favor pattern, Blacksmithing, 30 Merchant's Favor, no reputation needed; also a low-dungeon drop",
+    "items": [
+      250508,
+      250523,
+      250528
+    ],
+    "names": [
+      "Veteran's Gloves",
+      "Veteran's Silvered Chain Leggings",
+      "Veteran's Silvered Chain Helm"
+    ],
+    "sources": [
+      {
+        "kind": "favor",
+        "npc": "stondry-darkhammer",
+        "cost": {
+          "favor": 30
+        },
+        "side": "alliance",
+        "certainty": "forever"
+      },
+      {
+        "kind": "favor",
+        "npc": "durotar-favor-blacksmithing",
+        "cost": {
+          "favor": 30
+        },
+        "side": "horde",
+        "certainty": "unknown"
+      },
+      {
+        "kind": "drop",
+        "where": "dungeon",
+        "side": "both",
+        "certainty": "vanilla",
+        "note": "Also listed as a low-dungeon boss drop (Deadmines, Ragefire Chasm, Shadowfang Keep, The Stockade, Blackfathom Deeps)."
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF",
+      "ZK",
+      "WFT",
+      "W4E",
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Trainer-taught (CWF 42s50c, FC 'no plans needed'); ATT unknown",
+    "items": [
+      250556
+    ],
+    "names": [
+      "Officer's Belt"
+    ],
+    "sources": [
+      {
+        "kind": "trainer",
+        "side": "both",
+        "certainty": "forever",
+        "cost": {
+          "copper": 4250
+        }
+      }
+    ],
+    "cite": [
+      "CWF",
+      "FC"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Rare BoP plans, world drop (Gogger Rock Keeper, Stonetalon Mountains)",
+    "items": [
+      250602
+    ],
+    "names": [
+      "Brass Knuckles"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "world",
+        "side": "both",
+        "certainty": "vanilla",
+        "note": "BoP plans, about 0.05 % from Gogger Rock Keeper."
+      }
+    ],
+    "cite": [
+      "ATT",
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Rare BoP plans, world drop (Dark Strand Enforcer per Wowhead)",
+    "items": [
+      250603
+    ],
+    "names": [
+      "Bronze Dory"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "world",
+        "side": "both",
+        "certainty": "vanilla",
+        "note": "BoP plans, about 0.1 % from Dark Strand Enforcer."
+      }
+    ],
+    "cite": [
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Rare BoP plans, world drop (Bleakheart Hellcaller per Wowhead)",
+    "items": [
+      250604
+    ],
+    "names": [
+      "Iron Fists"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "world",
+        "side": "both",
+        "certainty": "vanilla",
+        "note": "BoP plans, about 0.01 % from Bleakheart Hellcaller."
+      }
+    ],
+    "cite": [
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "New Forever vendor pattern in Ironforge, 5s; CWF and ZK say trainer instead",
+    "items": [
+      252425
+    ],
+    "names": [
+      "Dark Leather Boots"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "granny-finespindle",
+        "limited": false,
+        "side": "alliance",
+        "certainty": "forever",
+        "cost": {
+          "copper": 500
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "FC"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever Favor pattern, Leatherworking, 30 Merchant's Favor, no reputation needed",
+    "items": [
+      252429,
+      252440,
+      252509
+    ],
+    "names": [
+      "Trapper's Leather Belt",
+      "Trapper's Leather Boots",
+      "Trapper's Leather Tunic"
+    ],
+    "sources": [
+      {
+        "kind": "favor",
+        "npc": "daniel-stitchsong",
+        "cost": {
+          "favor": 30
+        },
+        "side": "alliance",
+        "certainty": "forever"
+      },
+      {
+        "kind": "favor",
+        "npc": "durotar-favor-leatherworking",
+        "cost": {
+          "favor": 30
+        },
+        "side": "horde",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF",
+      "ZK",
+      "WFT",
+      "W4E"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "World drop from Shadowhorn Stag in Ashenvale (Wowhead); CWF and FC list it as unknown",
+    "items": [
+      252449
+    ],
+    "names": [
+      "Hillman's Leather Boots"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "zone",
+        "zone": "Ashenvale",
+        "side": "both",
+        "certainty": "vanilla"
+      }
+    ],
+    "cite": [
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever Favor pattern, Leatherworking, 30 Merchant's Favor, no reputation needed; also a low-dungeon drop",
+    "items": [
+      252495,
+      252504,
+      252517
+    ],
+    "names": [
+      "Trapper's Leather Gloves",
+      "Brawler's Leather Hood",
+      "Trapper's Leather Legguards"
+    ],
+    "sources": [
+      {
+        "kind": "favor",
+        "npc": "daniel-stitchsong",
+        "cost": {
+          "favor": 30
+        },
+        "side": "alliance",
+        "certainty": "forever"
+      },
+      {
+        "kind": "favor",
+        "npc": "durotar-favor-leatherworking",
+        "cost": {
+          "favor": 30
+        },
+        "side": "horde",
+        "certainty": "unknown"
+      },
+      {
+        "kind": "drop",
+        "where": "dungeon",
+        "side": "both",
+        "certainty": "vanilla",
+        "note": "Also listed as a low-dungeon boss drop (Deadmines, Ragefire Chasm, Shadowfang Keep, The Stockade, Blackfathom Deeps)."
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF",
+      "ZK",
+      "WFT",
+      "W4E",
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "New Forever vendor pattern in Ironforge, 20s",
+    "items": [
+      252521
+    ],
+    "names": [
+      "Stalker's Leather Belt"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "granny-finespindle",
+        "limited": false,
+        "side": "alliance",
+        "certainty": "forever",
+        "cost": {
+          "copper": 2000
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "FC",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Trainer per CWF only; FC, ZK and ATT list it as unknown",
+    "items": [
+      253885
+    ],
+    "names": [
+      "Novice Arcanist's Sash"
+    ],
+    "sources": [
+      {
+        "kind": "trainer",
+        "side": "both",
+        "certainty": "unknown",
+        "note": "Only one site lists the trainer; check in game."
+      }
+    ],
+    "cite": [
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever Favor pattern, Tailoring, 30 Merchant's Favor, no reputation needed",
+    "items": [
+      253891,
+      253893,
+      253915,
+      253917,
+      253927,
+      253929,
+      253951,
+      253953,
+      253963,
+      253965,
+      253989,
+      253991
+    ],
+    "names": [
+      "Silky Boots",
+      "Flame Boots",
+      "Silky Gloves",
+      "Flame Gloves",
+      "Silky Sash",
+      "Flame Sash",
+      "Silky Circlet",
+      "Flame Circlet",
+      "Silky Gown",
+      "Flame Gown",
+      "Silky Leggings",
+      "Flame Leggings"
+    ],
+    "sources": [
+      {
+        "kind": "favor",
+        "npc": "mivin-shadowweave",
+        "cost": {
+          "favor": 30
+        },
+        "side": "alliance",
+        "certainty": "forever"
+      },
+      {
+        "kind": "favor",
+        "npc": "durotar-favor-tailoring",
+        "cost": {
+          "favor": 30
+        },
+        "side": "horde",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [
+      "ATT",
+      "CWF",
+      "ZK",
+      "WFT",
+      "W4E"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever dungeon-drop pattern, random colour; Shadowfang Keep, Deadmines, Ragefire Chasm, Wailing Caverns bosses",
+    "items": [
+      253903
+    ],
+    "names": [
+      "Filigreed Silky Gown"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "dungeon",
+        "side": "both",
+        "certainty": "forever",
+        "note": "Shadowfang Keep, Deadmines, Ragefire Chasm, Wailing Caverns bosses; colour is random."
+      }
+    ],
+    "cite": [
+      "ZK",
+      "WH",
+      "FC"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever dungeon-drop pattern, random colour; Deadmines, Shadowfang Keep, Stockade, Blackfathom Deeps bosses",
+    "items": [
+      253939
+    ],
+    "names": [
+      "Filigreed Silky Leggings"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "dungeon",
+        "side": "both",
+        "certainty": "forever",
+        "note": "Deadmines, Shadowfang Keep, The Stockade, Blackfathom Deeps bosses; colour is random."
+      }
+    ],
+    "cite": [
+      "ZK",
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Forever dungeon-drop pattern, random colour; Stockade and Blackfathom Deeps bosses",
+    "items": [
+      253977
+    ],
+    "names": [
+      "Filigreed Silky Circlet"
+    ],
+    "sources": [
+      {
+        "kind": "drop",
+        "where": "dungeon",
+        "side": "both",
+        "certainty": "forever",
+        "note": "The Stockade and Blackfathom Deeps bosses; colour is random."
+      }
+    ],
+    "cite": [
+      "ZK",
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Trainer-taught (CWF 14s50c, FC 'no pattern needed'); the recipe item is redundant",
+    "items": [
+      254003,
+      254005
+    ],
+    "names": [
+      "Frothing Slippers",
+      "Fiery Slippers"
+    ],
+    "sources": [
+      {
+        "kind": "trainer",
+        "side": "both",
+        "certainty": "forever",
+        "cost": {
+          "copper": 1450
+        }
+      }
+    ],
+    "cite": [
+      "CWF",
+      "FC"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Nightclaw Druids quartermaster at Friendly (BoP pattern)",
+    "items": [
+      277029,
+      277035,
+      277037
+    ],
+    "names": [
+      "Azure Windraveled Armguards",
+      "Azure Stormsewn Cuffs",
+      "Azure Stormsewn Cord"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "vayn-moongaze",
+        "limited": false,
+        "side": "both",
+        "certainty": "forever",
+        "cost": {
+          "copper": 950
+        },
+        "rep": {
+          "faction": 2758,
+          "standing": "Friendly"
+        },
+        "note": "Nightclaw Druids Friendly. Whether non-Skyborne characters can reach Zephras Isle is disputed."
+      }
+    ],
+    "cite": [
+      "ATT",
+      "WT",
+      "CWF",
+      "WH"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Kirin Tor quartermaster at Friendly, 10g; the Horde counterpart is an Earthen Ring pattern",
+    "items": [
+      277050,
+      277055
+    ],
+    "names": [
+      "Azure Gustwoven Hood",
+      "Azure Stormsewn Epaulets"
+    ],
+    "sources": [
+      {
+        "kind": "vendor",
+        "npc": "archmage-alvareaux",
+        "limited": false,
+        "side": "alliance",
+        "certainty": "forever",
+        "cost": {
+          "copper": 100000
+        },
+        "rep": {
+          "faction": 2740,
+          "standing": "Friendly"
+        }
+      }
+    ],
+    "cite": [
+      "ATT",
+      "WFT",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  },
+  {
+    "why": "Quest reward plans per ZK and CWF; quest location not verified",
+    "items": [
+      277672
+    ],
+    "names": [
+      "Rough Copper Chain Boots"
+    ],
+    "sources": [
+      {
+        "kind": "quest",
+        "quest": "The Quarry's Smith",
+        "side": "both",
+        "certainty": "unknown"
+      }
+    ],
+    "cite": [
+      "ZK",
+      "CWF"
+    ],
+    "checked": "2026-10-06"
+  }
+]

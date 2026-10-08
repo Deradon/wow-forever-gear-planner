@@ -1,0 +1,2983 @@
+{
+  "dataset": "forever",
+  "build": "1.60.1.70205",
+  "faction": "alliance",
+  "checked": "2026-10-06",
+  "note": "Derived from a privately curated level 1-30 plan (synthesis D30). core rows are the quality gate; the others are optional picks and are reported only.",
+  "rows": [
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 5,
+      "slot": "Wrist",
+      "item": 277029,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 10,
+      "slot": "Hands",
+      "item": 2312,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 11,
+      "slot": "Waist",
+      "item": 4246,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 13,
+      "slot": "Chest",
+      "item": 6709,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 15,
+      "slot": "Chest",
+      "item": 20575,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 20,
+      "slot": "Waist",
+      "item": 4250,
+      "core": true
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 22,
+      "slot": "Feet",
+      "item": 252449,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 24,
+      "slot": "Hands",
+      "item": 4247,
+      "core": false
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 27,
+      "slot": "Legs",
+      "item": 5962,
+      "core": true
+    },
+    {
+      "cls": "Druid",
+      "role": "caster",
+      "level": 29,
+      "slot": "Waist",
+      "item": 4258,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 5,
+      "slot": "Legs",
+      "item": 2303,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 7,
+      "slot": "Chest",
+      "item": 2300,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 8,
+      "slot": "Hands",
+      "item": 4239,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 9,
+      "slot": "Wrist",
+      "item": 7281,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 10,
+      "slot": "Back",
+      "item": 2308,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 10,
+      "slot": "Feet",
+      "item": 252425,
+      "core": true,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 11,
+      "slot": "Waist",
+      "item": 4246,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 12,
+      "slot": "Chest",
+      "item": 4243,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 12,
+      "slot": "Waist",
+      "item": 252429,
+      "core": true,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 13,
+      "slot": "Back",
+      "item": 6466,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 14,
+      "slot": "Legs",
+      "item": 7282,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 14,
+      "slot": "Two-Hand",
+      "item": 3487,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 15,
+      "slot": "Chest",
+      "item": 252491,
+      "core": true,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 15,
+      "slot": "Hands",
+      "item": 252495,
+      "core": true,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 16,
+      "slot": "Ranged",
+      "item": 4369,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 17,
+      "slot": "Back",
+      "item": 2316,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 17,
+      "slot": "Feet",
+      "item": 252440,
+      "core": false,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 4314,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 20,
+      "slot": "Head",
+      "item": 252504,
+      "core": false,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 20,
+      "slot": "Legs",
+      "item": 252501,
+      "core": true,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 20,
+      "slot": "Two-Hand",
+      "item": 250603,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 21,
+      "slot": "Ranged",
+      "item": 4379,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 22,
+      "slot": "Chest",
+      "item": 252509,
+      "core": false,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 23,
+      "slot": "Shoulder",
+      "item": 4252,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 24,
+      "slot": "Ranged",
+      "item": 4383,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 25,
+      "slot": "Head",
+      "item": 252512,
+      "core": true,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 25,
+      "slot": "Legs",
+      "item": 252517,
+      "core": false,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 27,
+      "slot": "Waist",
+      "item": 4257,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 27,
+      "slot": "Wrist",
+      "item": 18948,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 5964,
+      "core": false
+    },
+    {
+      "cls": "Hunter",
+      "role": "ranged",
+      "level": 30,
+      "slot": "Waist",
+      "item": 252521,
+      "core": false,
+      "profs": [
+        "Skinning",
+        "Leatherworking"
+      ]
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 5,
+      "slot": "Hands",
+      "item": 4307,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 5,
+      "slot": "Legs",
+      "item": 4343,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 5,
+      "slot": "Ranged",
+      "item": 11287,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 5,
+      "slot": "Wrist",
+      "item": 277035,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 7,
+      "slot": "Back",
+      "item": 2580,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 7,
+      "slot": "Chest",
+      "item": 6239,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 7,
+      "slot": "Chest",
+      "item": 6240,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 7,
+      "slot": "Wrist",
+      "item": 4308,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 8,
+      "slot": "Feet",
+      "item": 2569,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 9,
+      "slot": "Chest",
+      "item": 2578,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 9,
+      "slot": "Chest",
+      "item": 6242,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 9,
+      "slot": "Legs",
+      "item": 4309,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 10,
+      "slot": "Legs",
+      "item": 10047,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 10,
+      "slot": "Waist",
+      "item": 253885,
+      "core": true,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 11,
+      "slot": "Feet",
+      "item": 4312,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 12,
+      "slot": "Chest",
+      "item": 2582,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 12,
+      "slot": "Feet",
+      "item": 253891,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 12,
+      "slot": "Feet",
+      "item": 253893,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 12,
+      "slot": "Hands",
+      "item": 4310,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 13,
+      "slot": "Ranged",
+      "item": 11288,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 14,
+      "slot": "Back",
+      "item": 5542,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 14,
+      "slot": "Feet",
+      "item": 2583,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 14,
+      "slot": "Legs",
+      "item": 10048,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 15,
+      "slot": "Back",
+      "item": 7283,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 15,
+      "slot": "Chest",
+      "item": 253903,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 15,
+      "slot": "Feet",
+      "item": 4313,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 15,
+      "slot": "Hands",
+      "item": 253915,
+      "core": true,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 15,
+      "slot": "Hands",
+      "item": 253917,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 16,
+      "slot": "Back",
+      "item": 4311,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 16,
+      "slot": "Chest",
+      "item": 2585,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 4314,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 17,
+      "slot": "Waist",
+      "item": 253927,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 17,
+      "slot": "Waist",
+      "item": 253929,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 19,
+      "slot": "Shoulder",
+      "item": 4315,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 20,
+      "slot": "Feet",
+      "item": 4320,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 20,
+      "slot": "Hands",
+      "item": 4331,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 20,
+      "slot": "Head",
+      "item": 253951,
+      "core": true,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 20,
+      "slot": "Head",
+      "item": 253953,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 20,
+      "slot": "Legs",
+      "item": 4317,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 20,
+      "slot": "Legs",
+      "item": 253939,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 21,
+      "slot": "Hands",
+      "item": 4318,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 22,
+      "slot": "Chest",
+      "item": 5766,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 22,
+      "slot": "Chest",
+      "item": 253963,
+      "core": true,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 22,
+      "slot": "Chest",
+      "item": 253965,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 24,
+      "slot": "Head",
+      "item": 7048,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Back",
+      "item": 3719,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Chest",
+      "item": 5770,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Head",
+      "item": 253977,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Legs",
+      "item": 253989,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Legs",
+      "item": 253991,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Off-hand",
+      "item": 249394,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Shoulder",
+      "item": 215365,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Two-Hand",
+      "item": 249392,
+      "core": true,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 25,
+      "slot": "Waist",
+      "item": 215366,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 26,
+      "slot": "Ranged",
+      "item": 11289,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 27,
+      "slot": "Head",
+      "item": 7050,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 28,
+      "slot": "Chest",
+      "item": 7065,
+      "core": true
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 28,
+      "slot": "Head",
+      "item": 4322,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 30,
+      "slot": "Back",
+      "item": 7053,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 30,
+      "slot": "Feet",
+      "item": 254003,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "frost"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 30,
+      "slot": "Feet",
+      "item": 254005,
+      "core": false,
+      "profs": [
+        "Tailoring",
+        "Enchanting"
+      ],
+      "options": {
+        "school": "fire"
+      }
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 30,
+      "slot": "Ranged",
+      "item": 217287,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 277055,
+      "core": false
+    },
+    {
+      "cls": "Mage",
+      "role": "caster",
+      "level": 30,
+      "slot": "Waist",
+      "item": 7055,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 4,
+      "slot": "Feet",
+      "item": 277672,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 5,
+      "slot": "Chest",
+      "item": 3471,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 6,
+      "slot": "Two-Hand",
+      "item": 7955,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 7,
+      "slot": "Hands",
+      "item": 3472,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 8,
+      "slot": "Legs",
+      "item": 3473,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 8,
+      "slot": "Two-Hand",
+      "item": 3488,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 9,
+      "slot": "Wrist",
+      "item": 7281,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 10,
+      "slot": "Back",
+      "item": 2308,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 10,
+      "slot": "Feet",
+      "item": 250620,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 11,
+      "slot": "Two-Hand",
+      "item": 6214,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 12,
+      "slot": "Chest",
+      "item": 4243,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 12,
+      "slot": "Waist",
+      "item": 250513,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 13,
+      "slot": "Back",
+      "item": 6466,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 13,
+      "slot": "Waist",
+      "item": 2857,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 14,
+      "slot": "Legs",
+      "item": 7282,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 14,
+      "slot": "Two-Hand",
+      "item": 3487,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 14,
+      "slot": "Wrist",
+      "item": 2854,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 15,
+      "slot": "Chest",
+      "item": 250488,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 15,
+      "slot": "Hands",
+      "item": 250508,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 17,
+      "slot": "Back",
+      "item": 2316,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 17,
+      "slot": "Feet",
+      "item": 250503,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 3480,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 18,
+      "slot": "Waist",
+      "item": 6468,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 20,
+      "slot": "Head",
+      "item": 250528,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 20,
+      "slot": "Legs",
+      "item": 250493,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 20,
+      "slot": "Two-Hand",
+      "item": 7956,
+      "core": true
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 20,
+      "slot": "Two-Hand",
+      "item": 250603,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 20,
+      "slot": "Wrist",
+      "item": 2868,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 22,
+      "slot": "Chest",
+      "item": 250518,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 22,
+      "slot": "Hands",
+      "item": 4253,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 22,
+      "slot": "Two-Hand",
+      "item": 7958,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 24,
+      "slot": "Chest",
+      "item": 2870,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 25,
+      "slot": "Head",
+      "item": 250498,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 25,
+      "slot": "Legs",
+      "item": 250523,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 26,
+      "slot": "Two-Hand",
+      "item": 3851,
+      "core": false
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 27,
+      "slot": "Shoulder",
+      "item": 7913,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 27,
+      "slot": "Wrist",
+      "item": 18948,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 29,
+      "slot": "Two-Hand",
+      "item": 3852,
+      "core": true
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 5964,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Paladin",
+      "role": "melee",
+      "level": 30,
+      "slot": "Waist",
+      "item": 250556,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 5,
+      "slot": "Hands",
+      "item": 4307,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 5,
+      "slot": "Legs",
+      "item": 4343,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 5,
+      "slot": "Ranged",
+      "item": 11287,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 5,
+      "slot": "Waist",
+      "item": 277037,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 5,
+      "slot": "Wrist",
+      "item": 277035,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 7,
+      "slot": "Back",
+      "item": 2580,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 7,
+      "slot": "Chest",
+      "item": 6239,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 7,
+      "slot": "Chest",
+      "item": 6240,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 7,
+      "slot": "Wrist",
+      "item": 4308,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 8,
+      "slot": "Feet",
+      "item": 2569,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 9,
+      "slot": "Chest",
+      "item": 2578,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 9,
+      "slot": "Chest",
+      "item": 6242,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 9,
+      "slot": "Legs",
+      "item": 4309,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 10,
+      "slot": "Legs",
+      "item": 10047,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 11,
+      "slot": "Feet",
+      "item": 4312,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 12,
+      "slot": "Chest",
+      "item": 2582,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 12,
+      "slot": "Hands",
+      "item": 4310,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 13,
+      "slot": "Ranged",
+      "item": 11288,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 14,
+      "slot": "Back",
+      "item": 5542,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 14,
+      "slot": "Feet",
+      "item": 2583,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 14,
+      "slot": "Legs",
+      "item": 10048,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 15,
+      "slot": "Back",
+      "item": 7283,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 15,
+      "slot": "Feet",
+      "item": 4313,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 16,
+      "slot": "Back",
+      "item": 4311,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 16,
+      "slot": "Chest",
+      "item": 2585,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 4314,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 19,
+      "slot": "Shoulder",
+      "item": 4315,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 20,
+      "slot": "Feet",
+      "item": 4320,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 21,
+      "slot": "Hands",
+      "item": 4318,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 22,
+      "slot": "Chest",
+      "item": 5766,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 24,
+      "slot": "Hands",
+      "item": 7047,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 24,
+      "slot": "Head",
+      "item": 7048,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 25,
+      "slot": "Back",
+      "item": 3719,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 25,
+      "slot": "Chest",
+      "item": 5770,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 25,
+      "slot": "Hands",
+      "item": 7049,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 25,
+      "slot": "Shoulder",
+      "item": 215365,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 25,
+      "slot": "Waist",
+      "item": 215366,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 26,
+      "slot": "Ranged",
+      "item": 11289,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 27,
+      "slot": "Head",
+      "item": 7050,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 28,
+      "slot": "Chest",
+      "item": 7065,
+      "core": true
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 28,
+      "slot": "Head",
+      "item": 4322,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 29,
+      "slot": "Head",
+      "item": 4323,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 30,
+      "slot": "Ranged",
+      "item": 217287,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 277055,
+      "core": false
+    },
+    {
+      "cls": "Priest",
+      "role": "caster",
+      "level": 30,
+      "slot": "Waist",
+      "item": 7055,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 4,
+      "slot": "One-Hand",
+      "item": 2847,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 5,
+      "slot": "Legs",
+      "item": 2303,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 6,
+      "slot": "One-Hand",
+      "item": 7166,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 7,
+      "slot": "Chest",
+      "item": 2300,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 8,
+      "slot": "Feet",
+      "item": 2569,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 8,
+      "slot": "Hands",
+      "item": 4239,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 9,
+      "slot": "Wrist",
+      "item": 7281,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 10,
+      "slot": "Back",
+      "item": 2308,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 11,
+      "slot": "Waist",
+      "item": 4246,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 12,
+      "slot": "Chest",
+      "item": 4243,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 13,
+      "slot": "Back",
+      "item": 6466,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 13,
+      "slot": "Feet",
+      "item": 2307,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 13,
+      "slot": "Waist",
+      "item": 5780,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 14,
+      "slot": "Chest",
+      "item": 5781,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 14,
+      "slot": "Legs",
+      "item": 7282,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 15,
+      "slot": "Chest",
+      "item": 2317,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 15,
+      "slot": "Feet",
+      "item": 2315,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 15,
+      "slot": "One-Hand",
+      "item": 3848,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 16,
+      "slot": "Hands",
+      "item": 6467,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 16,
+      "slot": "One-Hand",
+      "item": 250602,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 16,
+      "slot": "Ranged",
+      "item": 4369,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 17,
+      "slot": "Back",
+      "item": 2316,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 4314,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 18,
+      "slot": "Legs",
+      "item": 5961,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 18,
+      "slot": "Waist",
+      "item": 6468,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 19,
+      "slot": "Hands",
+      "item": 7285,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 19,
+      "slot": "One-Hand",
+      "item": 2850,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 20,
+      "slot": "One-Hand",
+      "item": 3490,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 20,
+      "slot": "Waist",
+      "item": 4249,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 22,
+      "slot": "Hands",
+      "item": 4253,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 23,
+      "slot": "Shoulder",
+      "item": 4252,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 25,
+      "slot": "One-Hand",
+      "item": 3492,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 26,
+      "slot": "One-Hand",
+      "item": 250604,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 27,
+      "slot": "One-Hand",
+      "item": 3849,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 27,
+      "slot": "Wrist",
+      "item": 18948,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 28,
+      "slot": "Legs",
+      "item": 7373,
+      "core": true
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 29,
+      "slot": "Legs",
+      "item": 5963,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 30,
+      "slot": "Chest",
+      "item": 7374,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 30,
+      "slot": "Head",
+      "item": 277050,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 30,
+      "slot": "One-Hand",
+      "item": 3850,
+      "core": false
+    },
+    {
+      "cls": "Rogue",
+      "role": "melee",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 5964,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 5,
+      "slot": "Hands",
+      "item": 4307,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 5,
+      "slot": "Legs",
+      "item": 4343,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 5,
+      "slot": "Ranged",
+      "item": 11287,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 5,
+      "slot": "Waist",
+      "item": 277037,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 5,
+      "slot": "Wrist",
+      "item": 277035,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 7,
+      "slot": "Back",
+      "item": 2580,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 7,
+      "slot": "Chest",
+      "item": 6239,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 7,
+      "slot": "Chest",
+      "item": 6240,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 7,
+      "slot": "Wrist",
+      "item": 4308,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 8,
+      "slot": "Feet",
+      "item": 2569,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 9,
+      "slot": "Chest",
+      "item": 2578,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 9,
+      "slot": "Chest",
+      "item": 6242,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 9,
+      "slot": "Legs",
+      "item": 4309,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 10,
+      "slot": "Legs",
+      "item": 10047,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 11,
+      "slot": "Feet",
+      "item": 4312,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 12,
+      "slot": "Chest",
+      "item": 2582,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 12,
+      "slot": "Hands",
+      "item": 4310,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 13,
+      "slot": "Ranged",
+      "item": 11288,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 14,
+      "slot": "Back",
+      "item": 5542,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 14,
+      "slot": "Feet",
+      "item": 2583,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 14,
+      "slot": "Legs",
+      "item": 10048,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 15,
+      "slot": "Back",
+      "item": 7283,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 15,
+      "slot": "Feet",
+      "item": 4313,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 16,
+      "slot": "Back",
+      "item": 4311,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 16,
+      "slot": "Chest",
+      "item": 2585,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 4314,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 19,
+      "slot": "Shoulder",
+      "item": 4315,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 20,
+      "slot": "Feet",
+      "item": 4320,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 21,
+      "slot": "Hands",
+      "item": 4318,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 22,
+      "slot": "Chest",
+      "item": 5766,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 24,
+      "slot": "Hands",
+      "item": 7047,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 24,
+      "slot": "Head",
+      "item": 7048,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 25,
+      "slot": "Back",
+      "item": 3719,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 25,
+      "slot": "Chest",
+      "item": 5770,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 25,
+      "slot": "Shoulder",
+      "item": 215365,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 25,
+      "slot": "Waist",
+      "item": 215366,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 26,
+      "slot": "Ranged",
+      "item": 11289,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 27,
+      "slot": "Head",
+      "item": 7050,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 28,
+      "slot": "Chest",
+      "item": 7065,
+      "core": true
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 28,
+      "slot": "Head",
+      "item": 4322,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 29,
+      "slot": "Head",
+      "item": 4323,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 30,
+      "slot": "Ranged",
+      "item": 217287,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 277055,
+      "core": false
+    },
+    {
+      "cls": "Warlock",
+      "role": "caster",
+      "level": 30,
+      "slot": "Waist",
+      "item": 7055,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 4,
+      "slot": "Feet",
+      "item": 277672,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 5,
+      "slot": "Chest",
+      "item": 3471,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 6,
+      "slot": "Two-Hand",
+      "item": 7955,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 7,
+      "slot": "Hands",
+      "item": 3472,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 8,
+      "slot": "Legs",
+      "item": 3473,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 8,
+      "slot": "Two-Hand",
+      "item": 3488,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 9,
+      "slot": "Wrist",
+      "item": 7281,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 10,
+      "slot": "Back",
+      "item": 2308,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 10,
+      "slot": "Feet",
+      "item": 250620,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 11,
+      "slot": "Two-Hand",
+      "item": 6214,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 12,
+      "slot": "Chest",
+      "item": 4243,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 12,
+      "slot": "Waist",
+      "item": 250513,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 13,
+      "slot": "Back",
+      "item": 6466,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 13,
+      "slot": "Waist",
+      "item": 2857,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 14,
+      "slot": "Legs",
+      "item": 7282,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 14,
+      "slot": "Two-Hand",
+      "item": 3487,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 14,
+      "slot": "Wrist",
+      "item": 2854,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 15,
+      "slot": "Chest",
+      "item": 250488,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 15,
+      "slot": "Hands",
+      "item": 250508,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 16,
+      "slot": "Ranged",
+      "item": 4369,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 17,
+      "slot": "Back",
+      "item": 2316,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 17,
+      "slot": "Feet",
+      "item": 250503,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 17,
+      "slot": "Shoulder",
+      "item": 3480,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 18,
+      "slot": "Waist",
+      "item": 6468,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 20,
+      "slot": "Head",
+      "item": 250528,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 20,
+      "slot": "Legs",
+      "item": 250493,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 20,
+      "slot": "Two-Hand",
+      "item": 7956,
+      "core": true
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 20,
+      "slot": "Two-Hand",
+      "item": 250603,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 20,
+      "slot": "Wrist",
+      "item": 2868,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 22,
+      "slot": "Chest",
+      "item": 250518,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 22,
+      "slot": "Hands",
+      "item": 4253,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 22,
+      "slot": "Two-Hand",
+      "item": 7958,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 24,
+      "slot": "Chest",
+      "item": 2870,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 25,
+      "slot": "Head",
+      "item": 250498,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 25,
+      "slot": "Legs",
+      "item": 250523,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 26,
+      "slot": "Two-Hand",
+      "item": 3851,
+      "core": false
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 27,
+      "slot": "Shoulder",
+      "item": 7913,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 27,
+      "slot": "Wrist",
+      "item": 18948,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 29,
+      "slot": "Two-Hand",
+      "item": 3852,
+      "core": true
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 30,
+      "slot": "Shoulder",
+      "item": 5964,
+      "core": false,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    },
+    {
+      "cls": "Warrior",
+      "role": "melee",
+      "level": 30,
+      "slot": "Waist",
+      "item": 250556,
+      "core": true,
+      "profs": [
+        "Mining",
+        "Blacksmithing"
+      ]
+    }
+  ]
+}

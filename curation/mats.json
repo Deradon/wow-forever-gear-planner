@@ -1,0 +1,96 @@
+{
+  "vendor": [
+    {
+      "why": "Thread sold by trade-goods and profession suppliers (vanilla; the AH copies are noise)",
+      "items": [2320, 2321, 4291, 8343, 14341],
+      "names": ["Coarse Thread", "Fine Thread", "Silken Thread", "Heavy Silken Thread", "Rune Thread"],
+      "cite": ["VAN"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Dyes and bleach sold by trade-goods and profession suppliers (vanilla)",
+      "items": [2324, 2325, 2604, 2605, 4340, 4342, 6260, 6261],
+      "names": ["Bleach", "Black Dye", "Red Dye", "Green Dye", "Gray Dye", "Purple Dye", "Blue Dye", "Orange Dye"],
+      "cite": ["VAN"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Salt and spices sold by trade-goods and cooking suppliers (vanilla)",
+      "items": [2678, 2692, 4289],
+      "names": ["Mild Spices", "Hot Spices", "Salt"],
+      "cite": ["VAN"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Fluxes sold by blacksmithing suppliers (vanilla)",
+      "items": [2880, 3466],
+      "names": ["Weak Flux", "Strong Flux"],
+      "cite": ["VAN"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Vials sold by alchemy suppliers (vanilla)",
+      "items": [3371, 3372, 8925],
+      "names": ["Empty Vial", "Leaded Vial", "Crystal Vial"],
+      "cite": ["VAN"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Engineering and enchanting supplies sold by vendors (vanilla)",
+      "items": [814, 4399, 4400, 4470],
+      "names": ["Flask of Oil", "Wooden Stock", "Heavy Stock", "Simple Wood"],
+      "cite": ["VAN"],
+      "checked": "2026-10-08"
+    }
+  ],
+  "gathered": [
+    {
+      "why": "Hides, leather and scales from Skinning",
+      "prof": "Skinning",
+      "items": [783, 2318, 2319, 2934, 4232, 4234, 4235, 4304, 4461, 7428, 8154, 8165, 8169, 8170, 8171, 8368, 12607, 15408, 15412, 15414, 15415, 15416, 15417, 15419, 15422, 15423, 17012, 19767, 19768, 20498, 20500, 20501, 248824, 248825, 249427, 249428, 249429],
+      "names": ["Light Hide", "Light Leather", "Medium Leather", "Ruined Leather Scraps", "Medium Hide", "Heavy Leather", "Heavy Hide", "Thick Leather", "Raptor Hide", "Shadowcat Hide", "Scorpid Scale", "Worn Dragonscale", "Thick Hide", "Rugged Leather", "Rugged Hide", "Thick Wolfhide", "Brilliant Chromatic Scale", "Heavy Scorpid Scale", "Green Dragonscale", "Red Dragonscale", "Blue Dragonscale", "Black Dragonscale", "Devilsaur Leather", "Warbear Leather", "Frostsaber Leather", "Chimera Leather", "Core Leather", "Primal Bat Leather", "Primal Tiger Leather", "Silithid Chitin", "Light Silithid Carapace", "Heavy Silithid Carapace", "Fel Hide", "Fel Leather", "Pristine Leather", "Pristine Hide", "Pristine Scale"],
+      "cite": ["DB"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Ores, stones and smelted bars from Mining",
+      "prof": "Mining",
+      "items": [2770, 2771, 2772, 2775, 2776, 2835, 2836, 2838, 2840, 2841, 2842, 3575, 3576, 3577, 3858, 3859, 3860, 6037, 7911, 7912, 10620, 11370, 11371, 12359, 12365, 248815, 251291, 249391, 249425, 249426],
+      "names": ["Copper Ore", "Tin Ore", "Iron Ore", "Silver Ore", "Gold Ore", "Rough Stone", "Coarse Stone", "Heavy Stone", "Copper Bar", "Bronze Bar", "Silver Bar", "Iron Bar", "Tin Bar", "Gold Bar", "Mithril Ore", "Steel Bar", "Mithril Bar", "Truesilver Bar", "Truesilver Ore", "Solid Stone", "Thorium Ore", "Dark Iron Ore", "Dark Iron Bar", "Thorium Bar", "Dense Stone", "Heavy Thorium Ore", "Heavy Thorium Bar", "Pyrite", "Bauxite", "Pitchblende"],
+      "cite": ["DB"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Gems found while mining",
+      "prof": "Mining",
+      "items": [774, 818, 1206, 1210, 1529, 1705, 3864, 7909, 7910, 11382, 12361, 12363, 12364, 12799, 12800],
+      "names": ["Malachite", "Tigerseye", "Moss Agate", "Shadowgem", "Jade", "Lesser Moonstone", "Citrine", "Aquamarine", "Star Ruby", "Blood of the Mountain", "Blue Sapphire", "Arcane Crystal", "Huge Emerald", "Large Opal", "Azerothian Diamond"],
+      "cite": ["DB"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Herbs from Herbalism",
+      "prof": "Herbalism",
+      "items": [765, 785, 2447, 2449, 2450, 2452, 2453, 3355, 3356, 3358, 3369, 3818, 3819, 3820, 3821, 4625, 8153, 8831, 8845, 8846, 13463, 13465, 13467, 13468, 19726, 248822, 249274, 249399, 249424],
+      "names": ["Silverleaf", "Mageroyal", "Peacebloom", "Earthroot", "Briarthorn", "Swiftthistle", "Bruiseweed", "Wild Steelbloom", "Kingsblood", "Khadgar's Whisker", "Grave Moss", "Fadeleaf", "Wintersbite", "Stranglekelp", "Goldthorn", "Firebloom", "Wildvine", "Purple Lotus", "Ghost Mushroom", "Gromsblood", "Dreamfoil", "Mountain Silversage", "Icecap", "Black Lotus", "Bloodvine", "Death Lotus", "Stranglevine", "Frilled Lichen", "Rosecap"],
+      "cite": ["DB"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Dusts, essences and shards from disenchanting",
+      "prof": "Enchanting",
+      "items": [10938, 10939, 10940, 10978, 11082, 11083, 11084, 11134, 11135, 11137, 11139, 11174, 11175, 11176, 11177, 11178, 14343, 14344, 16202, 16203, 16204, 20725],
+      "names": ["Lesser Magic Essence", "Greater Magic Essence", "Strange Dust", "Small Glimmering Shard", "Greater Astral Essence", "Soul Dust", "Large Glimmering Shard", "Lesser Mystic Essence", "Greater Mystic Essence", "Vision Dust", "Large Glowing Shard", "Lesser Nether Essence", "Greater Nether Essence", "Dream Dust", "Small Radiant Shard", "Large Radiant Shard", "Small Brilliant Shard", "Large Brilliant Shard", "Lesser Eternal Essence", "Greater Eternal Essence", "Illusion Dust", "Nexus Crystal"],
+      "cite": ["DB"],
+      "checked": "2026-10-08"
+    },
+    {
+      "why": "Fish caught with Fishing",
+      "prof": "Fishing",
+      "items": [6359, 13422],
+      "names": ["Firefin Snapper", "Stonescale Eel"],
+      "cite": ["DB"],
+      "checked": "2026-10-08"
+    }
+  ]
+}

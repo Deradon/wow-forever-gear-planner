@@ -1,0 +1,173 @@
+{
+  "amy-davenport": {
+    "name": "Amy Davenport",
+    "zone": "Lakeshire, Redridge Mountains",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "archmage-alvareaux": {
+    "name": "Archmage Alvareaux",
+    "zone": "Dalaran, Alterac Mountains",
+    "coords": [
+      14.0,
+      63.2
+    ],
+    "side": "alliance",
+    "role": "quartermaster",
+    "note": "Kirin Tor quartermaster. The Horde counterparts are Earthen Ring patterns from Mulgore."
+  },
+  "brienna-starglow": {
+    "name": "Brienna Starglow",
+    "zone": "Feralas",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "clyde-ranthal": {
+    "name": "Clyde Ranthal",
+    "zone": "Redridge Mountains",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "daniel-stitchsong": {
+    "name": "Daniel Stitchsong",
+    "zone": "Three Corners, Redridge Mountains",
+    "coords": [
+      10.0,
+      72.6
+    ],
+    "side": "alliance",
+    "role": "favor",
+    "note": "Azeroth Commerce Authority Favor vendor, Leatherworking patterns."
+  },
+  "drake-lindgren": {
+    "name": "Drake Lindgren",
+    "zone": "Elwynn Forest",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "durotar-favor-blacksmithing": {
+    "name": "Horde Favor vendor, Blacksmithing (unverified)",
+    "zone": "Durotar supply post",
+    "side": "horde",
+    "role": "favor",
+    "note": "Horde Favor vendor for Blacksmithing, assumed to mirror the Alliance one; not verified."
+  },
+  "durotar-favor-leatherworking": {
+    "name": "Horde Favor vendor, Leatherworking (unverified)",
+    "zone": "Durotar supply post",
+    "side": "horde",
+    "role": "favor",
+    "note": "Horde Favor vendor for Leatherworking, assumed to mirror the Alliance one; not verified."
+  },
+  "durotar-favor-tailoring": {
+    "name": "Horde Favor vendor, Tailoring (unverified)",
+    "zone": "Durotar supply post",
+    "side": "horde",
+    "role": "favor",
+    "note": "Horde Favor vendor for Tailoring, assumed to mirror the Alliance one; not verified."
+  },
+  "gina-macgregor": {
+    "name": "Gina MacGregor",
+    "zone": "Westfall",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "granny-finespindle": {
+    "name": "Granny Finespindle",
+    "zone": "The Great Forge, Ironforge",
+    "coords": [
+      39.3,
+      33.7
+    ],
+    "side": "alliance",
+    "role": "vendor",
+    "note": "New Forever vendor; not flagged limited supply."
+  },
+  "hammon-karwn": {
+    "name": "Hammon Karwn",
+    "zone": "Arathi Highlands",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "jannos-ironwill": {
+    "name": "Jannos Ironwill",
+    "zone": "Arathi Highlands",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "jazzrik": {
+    "name": "Jazzrik",
+    "zone": "Badlands",
+    "side": "neutral",
+    "role": "vendor"
+  },
+  "kaita-deepforge": {
+    "name": "Kaita Deepforge",
+    "zone": "Stormwind City",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "kalldan-felmoon": {
+    "name": "Kalldan Felmoon",
+    "zone": "Wailing Caverns (inside the instance)",
+    "side": "neutral",
+    "role": "vendor"
+  },
+  "mavralyn": {
+    "name": "Mavralyn",
+    "zone": "Darkshore",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "mivin-shadowweave": {
+    "name": "Mivin Shadowweave",
+    "zone": "Three Corners, Redridge Mountains",
+    "coords": [
+      10.0,
+      72.8
+    ],
+    "side": "alliance",
+    "role": "favor",
+    "note": "Azeroth Commerce Authority Favor vendor, Tailoring patterns (BoP, no reputation needed)."
+  },
+  "saenorion": {
+    "name": "Saenorion",
+    "zone": "Darnassus",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "stondry-darkhammer": {
+    "name": "Stondry Darkhammer",
+    "zone": "Three Corners, Redridge Mountains",
+    "coords": [
+      10.4,
+      74.6
+    ],
+    "side": "alliance",
+    "role": "favor",
+    "note": "Azeroth Commerce Authority Favor vendor, Blacksmithing plans."
+  },
+  "tharynn-bouden": {
+    "name": "Tharynn Bouden",
+    "zone": "Elwynn Forest",
+    "side": "alliance",
+    "role": "vendor"
+  },
+  "vayn-moongaze": {
+    "name": "Vayn Moongaze",
+    "zone": "Shadowgale Forest, Zephras Isle",
+    "coords": [
+      63.8,
+      36.0
+    ],
+    "side": "neutral",
+    "role": "quartermaster",
+    "note": "Nightclaw Druids quartermaster. Whether non-Skyborne characters can reach the isle is disputed."
+  },
+  "xizk-goodstitch": {
+    "name": "Xizk Goodstitch",
+    "zone": "Booty Bay, Stranglethorn Vale",
+    "side": "neutral",
+    "role": "vendor"
+  }
+}

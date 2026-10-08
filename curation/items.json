@@ -1,0 +1,55 @@
+[
+  {
+    "why": "SoD-range items whose patterns are SoD-range too (R4); the patterns were seen on the beta Auction House, so the items are live",
+    "items": [215365, 215366],
+    "names": ["Invoker's Mantle", "Invoker's Cord"],
+    "avail": "ok",
+    "cite": ["AH"],
+    "checked": "2026-10-07"
+  },
+  {
+    "why": "SoD-range item ID, but Forever makes it with the vanilla spell 14810 (R4, R7)",
+    "items": [217287],
+    "names": ["Greater Mystic Wand"],
+    "avail": "ok",
+    "cite": ["DB"],
+    "checked": "2026-10-08"
+  },
+  {
+    "why": "SoD item with an SoD pattern; the maintainer's beta notes list it as not obtainable (R4)",
+    "items": [210781],
+    "names": ["Phoenix Bindings"],
+    "avail": "unobtainable",
+    "reason": "Season of Discovery item; not obtainable in Forever",
+    "cite": ["NOTES"],
+    "checked": "2026-10-07"
+  },
+  {
+    "why": "SoD copies of the vanilla items 8187 and 9366 with SoD patterns (R4); the vanilla IDs are the live ones",
+    "items": [217270, 217273],
+    "names": ["Turtle Scale Gloves", "Golden Scale Gauntlets"],
+    "avail": "unobtainable",
+    "reason": "Season of Discovery duplicate of the vanilla item with the same name",
+    "cite": ["DB"],
+    "checked": "2026-10-08"
+  },
+  {
+    "why": "Vanilla random-suffix items; the suffix tables are not in the client data, so their stats are unknown (R8)",
+    "items": [8210, 8211, 8212, 8213, 8214, 8215],
+    "names": ["Wild Leather Shoulders", "Wild Leather Vest", "Wild Leather Leggings", "Wild Leather Boots", "Wild Leather Helmet", "Wild Leather Cloak"],
+    "avail": "unconfirmed",
+    "reason": "Random-suffix item: stats are rolled and not in the game data",
+    "flags": ["randomStats"],
+    "cite": ["DB"],
+    "checked": "2026-10-08"
+  },
+  {
+    "why": "Forever epic set pieces without any stats, an item-name description and a limit category; probably unfinished (R8)",
+    "items": [276538, 276539, 276540, 276541],
+    "names": ["Spiritcaller Kilt", "Spiritcaller Gloves", "Spiritcaller Mantle", "Spiritcaller Boots"],
+    "avail": "unconfirmed",
+    "reason": "Epic set piece without stats in this build; probably unfinished content",
+    "cite": ["DB"],
+    "checked": "2026-10-08"
+  }
+]

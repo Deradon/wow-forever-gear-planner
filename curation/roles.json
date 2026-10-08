@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "why": "Leveling heuristics for ranking crafted gear per class and role (docs/roles-stat-weights.md §3-§4.7, §6.4; synthesis D22, D23, D25, D27). Weights are points per stat; 1.0 is one point of the profile's main stat.",
+  "cite": ["DB"],
+  "checked": "2026-10-08",
+  "levelScaled": ["Crit", "Hit", "Haste", "Expertise"],
+  "levelScale": {"ref": 60, "floor": 0.25},
+  "apPerDps": 14,
+  "offHandFactor": 0.5,
+  "dualWieldHit": 0.8,
+  "dualWieldHitWhy": "Dual wielding raises the white-hit miss chance from about 5% to 24% in vanilla: auto-attacks of both hands x 0.8; special attacks are unaffected",
+  "profiles": {
+    "melee-str": {
+      "why": "Warrior/Paladin get 2 AP per Str (ChrClasses); Agility adds crit, armor and dodge",
+      "weights": {"Str": 1, "Agi": 0.6, "Sta": 0.6, "Spi": 0.05, "AP": 0.5, "HP5": 0.3, "Crit": 1, "Hit": 1, "Haste": 0.8, "Expertise": 0.8, "Def": 0.1, "Dodge": 0.3, "Parry": 0.2, "Armor": 0.02},
+      "weapon": {"mh": 1, "specials": 4, "ranged": 0, "wand": 0}
+    },
+    "melee-agi": {
+      "why": "Rogues get 1 AP per Str and per Agi (ChrClasses); Agility adds crit on top",
+      "weights": {"Str": 0.55, "Agi": 1, "Sta": 0.6, "Spi": 0.05, "AP": 0.55, "HP5": 0.3, "Crit": 1, "Hit": 1.1, "Haste": 0.8, "Expertise": 0.8, "Def": 0.1, "Dodge": 0.3, "Parry": 0.2, "Armor": 0.02},
+      "weapon": {"mh": 1, "specials": 10, "ranged": 0.05, "wand": 0}
+    },
+    "ranged-agi": {
+      "why": "Hunters get 2 RAP per Agi (ChrClasses); Int keeps the mana bar up while leveling",
+      "weights": {"Str": 0.05, "Agi": 1, "Sta": 0.6, "Int": 0.35, "Spi": 0.1, "AP": 0.1, "RAP": 0.5, "MP5": 0.6, "HP5": 0.2, "Crit": 1, "Hit": 1, "Haste": 0.6, "Def": 0.05, "Dodge": 0.2, "Armor": 0.02},
+      "weapon": {"mh": 0, "specials": 3, "ranged": 1, "wand": 0}
+    },
+    "caster": {
+      "why": "Leveling casters are limited by mana and downtime; SP and spell damage equal for pure damage",
+      "weights": {"Sta": 0.5, "Int": 0.7, "Spi": 0.5, "SP": 1, "SpellDmg": 1, "Heal": 0.05, "MP5": 1.2, "HP5": 0.1, "Crit": 0.4, "Hit": 0.4, "Haste": 0.6, "SpellPen": 0.1, "Armor": 0.015},
+      "schoolBase": "SpellDmg",
+      "weapon": {"mh": 0, "specials": 0, "ranged": 0, "wand": 0}
+    },
+    "healer": {
+      "why": "A leveling healer also solos: SP (healing and damage) first, healing-only 0.8, damage-only 0.2",
+      "weights": {"Sta": 0.5, "Int": 0.8, "Spi": 0.6, "SP": 1, "SpellDmg": 0.2, "Heal": 0.8, "MP5": 1.5, "HP5": 0.1, "Crit": 0.4, "Haste": 0.6, "Armor": 0.015},
+      "schoolBase": "SpellDmg",
+      "weapon": {"mh": 0, "specials": 0, "ranged": 0, "wand": 0}
+    },
+    "tank": {
+      "why": "Effective health first (Sta, Armor, Def, avoidance), threat second",
+      "weights": {"Str": 0.5, "Agi": 0.6, "Sta": 1, "Spi": 0.05, "AP": 0.25, "HP5": 0.3, "Crit": 0.2, "Hit": 0.6, "Haste": 0.3, "Expertise": 0.6, "Def": 1, "Dodge": 1, "Parry": 0.9, "Block": 0.7, "BlockValue": 0.3, "Armor": 0.05},
+      "weapon": {"mh": 0.5, "specials": 4, "ranged": 0, "wand": 0}
+    }
+  },
+  "roles": {
+    "melee": {"label": "Melee"},
+    "ranged": {"label": "Ranged"},
+    "caster": {"label": "Caster DPS"},
+    "healer": {"label": "Healer"},
+    "tank": {"label": "Tank"}
+  },
+  "classes": {
+    "Warrior": {"id": 1, "bit": 1, "roles": [
+      {"role": "melee", "profile": "melee-str", "tweaks": {"Spi": 0}, "weapon": {"mh": 1, "specials": 8, "ranged": 0.05}, "why": "Spirit is only out-of-combat regen; Heroic Strike, Mortal Strike, Overpower, Slam favour slow weapons"},
+      {"role": "tank", "profile": "tank", "weapon": {"mh": 0.5, "specials": 4, "ranged": 0.05}}
+    ]},
+    "Paladin": {"id": 2, "bit": 2, "roles": [
+      {"role": "melee", "profile": "melee-str", "tweaks": {"Agi": 0.5, "Int": 0.3, "Spi": 0.2, "SP": 0.3, "HolyDmg": 0.3, "MP5": 0.5, "Crit": 0.8}, "why": "Mana-limited; seals and Exorcism scale with holy spell damage"},
+      {"role": "healer", "profile": "healer", "schools": {"HolyDmg": 1}},
+      {"role": "tank", "profile": "tank", "tweaks": {"Int": 0.2, "SP": 0.2, "HolyDmg": 0.2}, "why": "Holy threat"}
+    ]},
+    "Hunter": {"id": 3, "bit": 4, "roles": [
+      {"role": "ranged", "profile": "ranged-agi", "why": "Melee weapons are stat sticks; Aimed Shot and Multi-Shot use the ranged weapon"}
+    ]},
+    "Rogue": {"id": 4, "bit": 8, "roles": [
+      {"role": "melee", "profile": "melee-agi"}
+    ]},
+    "Priest": {"id": 5, "bit": 16, "roles": [
+      {"role": "caster", "profile": "caster", "tweaks": {"SpellDmg": 0.95, "Heal": 0.15, "Spi": 0.6}, "weapon": {"wand": 1},
+       "options": {"school": {"default": "shadow", "choices": {
+         "shadow": {"ShadowDmg": 0.8, "HolyDmg": 0.2},
+         "holy": {"HolyDmg": 0.7, "ShadowDmg": 0.3},
+         "mixed": {"ShadowDmg": 0.5, "HolyDmg": 0.5}}}},
+       "why": "Self-heals, Spirit Tap; wanding finishes mobs"},
+      {"role": "healer", "profile": "healer", "schools": {"HolyDmg": 1}, "weapon": {"wand": 1}}
+    ]},
+    "Shaman": {"id": 7, "bit": 64, "roles": [
+      {"role": "melee", "profile": "melee-str", "tweaks": {"Agi": 0.5, "Int": 0.3, "Spi": 0.1, "SP": 0.25, "NatureDmg": 0.15, "FireDmg": 0.1, "FrostDmg": 0.05, "MP5": 0.5},
+       "options": {"twoHand": {"default": true, "from": 20, "adds": ["2H Axe", "2H Mace"]}},
+       "why": "Shocks and totems use spell power; 2H axes and maces were an Enhancement talent"},
+      {"role": "caster", "profile": "caster", "tweaks": {"SpellDmg": 0.95, "Heal": 0.15, "Spi": 0.3}, "schools": {"NatureDmg": 0.75, "FireDmg": 0.2, "FrostDmg": 0.05}},
+      {"role": "healer", "profile": "healer", "schools": {"NatureDmg": 1}}
+    ]},
+    "Mage": {"id": 8, "bit": 128, "roles": [
+      {"role": "caster", "profile": "caster", "tweaks": {"Int": 0.75, "Spi": 0.55}, "weapon": {"wand": 0.6},
+       "options": {"school": {"default": "frost", "choices": {
+         "frost": {"FrostDmg": 0.85, "FireDmg": 0.08, "ArcaneDmg": 0.07},
+         "fire": {"FireDmg": 0.85, "FrostDmg": 0.08, "ArcaneDmg": 0.07},
+         "arcane": {"ArcaneDmg": 0.7, "FireDmg": 0.15, "FrostDmg": 0.15},
+         "mixed": {"FrostDmg": 0.34, "FireDmg": 0.33, "ArcaneDmg": 0.33}}}},
+       "why": "Mana-hungry AoE leveling with good Spirit regen; mages wand less"}
+    ]},
+    "Warlock": {"id": 9, "bit": 256, "roles": [
+      {"role": "caster", "profile": "caster", "tweaks": {"Spi": 0.25, "Sta": 0.7}, "weapon": {"wand": 1},
+       "options": {"school": {"default": "shadow", "choices": {
+         "shadow": {"ShadowDmg": 0.8, "FireDmg": 0.2},
+         "fire": {"FireDmg": 0.7, "ShadowDmg": 0.3},
+         "mixed": {"ShadowDmg": 0.5, "FireDmg": 0.5}}}},
+       "why": "Life Tap turns health into mana; low Spirit regen"}
+    ]},
+    "Druid": {"id": 11, "bit": 1024, "roles": [
+      {"role": "melee", "profile": "melee-str", "tweaks": {"Agi": 0.9, "Int": 0.15, "Spi": 0.1}, "weapon": {"mh": 0, "ranged": 0}, "why": "Cat Form: 2 AP per Str, Agility adds AP and crit; form attacks ignore the weapon"},
+      {"role": "caster", "profile": "caster", "tweaks": {"SpellDmg": 0.95, "Heal": 0.15, "Spi": 0.5}, "schools": {"NatureDmg": 0.6, "ArcaneDmg": 0.4}},
+      {"role": "tank", "profile": "tank", "tweaks": {"Agi": 0.8, "Parry": 0, "Block": 0, "BlockValue": 0, "Def": 0.5}, "weapon": {"mh": 0}, "why": "Bears can't parry or block; Agility gives armor and dodge"},
+      {"role": "healer", "profile": "healer", "schools": {"NatureDmg": 1}}
+    ]}
+  },
+  "baseline": {
+    "why": "Par item: a quest-reward green of item level = level; stat points = efficiency x the green stat budget, spread over the profile's two best primary stats; weapons get dpsEfficiency x the green table DPS at the given speed",
+    "quality": 2,
+    "efficiency": 0.5,
+    "dpsEfficiency": 0.9,
+    "speed": {"oneHand": 2.6, "twoHand": 3.3, "ranged": 2.8, "wand": 1.6}
+  },
+  "worth": {
+    "why": "Upgrade rule of roles-stat-weights §6.4; unpriced pieces count as tier mid (D25). Copper caps scale with max(1, (level / fromLevel)^power).",
+    "minGainAbs": 1,
+    "minGainRel": 0.08,
+    "tierCap": {"cheap": 1500, "mid": 5000},
+    "tierScale": {"fromLevel": 20, "power": 2},
+    "keepMin": {"cheap": 3, "mid": 5, "keeper": 8},
+    "laterMax": 5,
+    "horizon": 10,
+    "planEnd": 60,
+    "coreGain": 0.25,
+    "coreKeep": 5,
+    "coreAlone": 10
+  },
+  "pace": {
+    "why": "Heuristic crafter skill by character level (D27): about the median yellow rank of the gear recipes with that required level in build 1.60.1.70205, capped at 300. Used only for estimated (~) skill flags.",
+    "heuristic": true,
+    "points": [[1, 1], [5, 50], [10, 80], [15, 105], [20, 130], [25, 150], [30, 175], [35, 195], [40, 220], [45, 245], [50, 270], [55, 290], [60, 300]]
+  }
+}
