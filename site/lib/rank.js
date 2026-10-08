@@ -417,9 +417,15 @@
           (setKey(a) < setKey(b) ? -1 : setKey(a) > setKey(b) ? 1 : 0);
       });
       var best = sets[0] || null, p = par(data, entry, ew, group, lvl);
+      // Pieces in hand win (ui.md §4.3 rule 5) unless a candidate beats them by the minimum gain.
+      for (var k = 0; k < sets.length; k++) {
+        if (!pinned(sets[k], opts)) continue;
+        if (sets[k].s + Math.max(worth.minGainAbs, worth.minGainRel * sets[k].s) >= best.s) best = sets[k];
+        break;
+      }
       if (cur) {
         var need = cur.score + Math.max(worth.minGainAbs, worth.minGainRel * cur.score);
-        if (best && setKey(best) !== cur.key && best.s >= need) { cur.to = lvl - 1; cur = null; }
+        if (best && setKey(best) !== cur.key && (best.s >= need || (pinned(best, opts) && !cur.pinned))) { cur.to = lvl - 1; cur = null; }
         else if (cur.score <= p && !cur.pinned) { cur.to = lvl - 1; cur = null; }
         else continue;
       }
