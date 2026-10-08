@@ -233,7 +233,10 @@
       var rt = route(+id, item, entry, roster, data, opts);
       if (!rt) continue;
       if (gate.flag) rt.flags.push("equip " + gate.flag);
-      var c = { id: +id, item: item, route: rt, alt: !!(rt.scarce || rt.unconfirmed) && !(opts.inHand && opts.inHand[id]), places: {} };
+      // A gadget (no stats, an unscored use/equip effect, no weapon) would rank on armor alone: list it as an
+      // alternative instead of a step, unless curation gave its effect a score.
+      var gadget = !!(item.effects && !item.weapon && !item.effectScore && !Object.keys(item.stats).length);
+      var c = { id: +id, item: item, route: rt, gadget: gadget, alt: !!(rt.scarce || rt.unconfirmed || gadget) && !(opts.inHand && opts.inHand[id]), places: {} };
       var req = Math.max(1, item.req), p;
       if (item.slot === "Two-Hand" || item.slot === "Main Hand" || item.slot === "One-Hand") {
         p = proficiencyLevel(item, entry, ew, data.rules, "main");
@@ -529,7 +532,7 @@
           var why = [];
           s.items.forEach(function (id) {
             var c = all.filter(function (x) { return x.id === id; })[0];
-            if (c.alt) why.push(c.route.unconfirmed ? "unconfirmed" : "needs " + SCARCE_TEXT[c.route.scarce]);
+            if (c.alt) why.push(c.route.unconfirmed ? "unconfirmed" : c.route.scarce ? "needs " + SCARCE_TEXT[c.route.scarce] : "effect not scored");
           });
           if (why.length) alternatives.push({ from: s.from, to: s.to, items: s.items, score: s.score, routes: s.routes, why: why });
         });

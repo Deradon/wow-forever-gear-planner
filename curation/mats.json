@@ -37,8 +37,8 @@
     },
     {
       "why": "Engineering and enchanting supplies sold by vendors (vanilla)",
-      "items": [814, 4399, 4400, 4470],
-      "names": ["Flask of Oil", "Wooden Stock", "Heavy Stock", "Simple Wood"],
+      "items": [814, 4399, 4400, 4470, 11291],
+      "names": ["Flask of Oil", "Wooden Stock", "Heavy Stock", "Simple Wood", "Star Wood"],
       "cite": ["VAN"],
       "checked": "2026-10-08"
     }

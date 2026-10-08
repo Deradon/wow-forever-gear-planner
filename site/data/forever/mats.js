@@ -241,7 +241,7 @@ window.FGP_DATA.mats = {
 "11185":{"name":"Green Power Crystal","quality":1,"bind":"none","madeBy":[],"vendor":null,"gathered":null},
 "11186":{"name":"Red Power Crystal","quality":1,"bind":"none","madeBy":[],"vendor":null,"gathered":null},
 "11188":{"name":"Yellow Power Crystal","quality":1,"bind":"none","madeBy":[],"vendor":null,"gathered":null},
-"11291":{"name":"Star Wood","quality":1,"bind":"none","madeBy":[],"vendor":null,"gathered":null},
+"11291":{"name":"Star Wood","quality":1,"bind":"none","madeBy":[],"vendor":{"copper":4500,"stack":1},"gathered":null},
 "11370":{"name":"Dark Iron Ore","quality":1,"bind":"none","madeBy":[],"vendor":null,"gathered":"Mining"},
 "11371":{"name":"Dark Iron Bar","quality":1,"bind":"none","madeBy":[14891],"vendor":null,"gathered":"Mining"},
 "11382":{"name":"Blood of the Mountain","quality":2,"bind":"none","madeBy":[],"vendor":null,"gathered":"Mining"},
