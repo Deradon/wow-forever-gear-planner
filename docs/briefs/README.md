@@ -13,4 +13,4 @@ A brief is launched with the command in its closing chat message, from the repo 
 | [2026-10-08-m1-page.md](2026-10-08-m1-page.md) | M1 part 2: the static page in `site/` (onboarding, Gear view, Prices, About), site-static test | done (51f5bb5) |
 | [2026-10-08-p1-publish.md](2026-10-08-p1-publish.md) | P1: weapon-rule corrections, opt-in icons, Node privacy check, re-authored history, GitHub push, Actions, Pages, `v0.1.0` | done (9c70cf7, `v0.1.0`) |
 | [2026-10-08-m1-1-rehearsal.md](2026-10-08-m1-1-rehearsal.md) | M1.1 rehearsal: refresh on beta build 1.60.1.70245 with the diff report, data release v0.1.2 | done, no release (70245 is byte-identical to 70205) |
-| [2026-10-08-m2-queue.md](2026-10-08-m2-queue.md) | M2: Queue view, shopping list with owned mats, crafter choice, specialisations, default-price-list tool, v0.2.0 | written |
+| [2026-10-08-m2-queue.md](2026-10-08-m2-queue.md) | M2: Queue view, shopping list with owned mats, crafter choice, specialisations, default-price-list tool, v0.2.0 | done (83dc854, v0.2.0) |
