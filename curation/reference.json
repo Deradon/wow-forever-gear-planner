@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "notice": {
-    "beta": "Beta data: WoW: Forever beta build {build}. Forever launches on 2026-11-05; the data will be refreshed for the live game.",
+    "beta": "Beta data (build {build}). WoW: Forever launches 2026-11-05; the data will be refreshed after launch.",
     "derived": "Generated from the game client's data tables. Nothing here is confirmed by Blizzard.",
     "prices": "Prices come only from your own Auctionator file and the prices you type. Nothing is uploaded."
   },

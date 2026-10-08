@@ -617,6 +617,8 @@
     d.addEventListener("input", onInput);
     d.addEventListener("submit", onSubmit);
     d.addEventListener("keydown", onKey);
+    // An icon the image host does not have keeps its space but shows nothing (error events do not bubble).
+    d.addEventListener("error", function (ev) { var t = ev.target; if (t && t.tagName === "IMG") t.classList.add("icon-missing"); }, true);
     root.addEventListener("hashchange", function () {
       if (A.fileMode()) return;
       var v = A.currentView();

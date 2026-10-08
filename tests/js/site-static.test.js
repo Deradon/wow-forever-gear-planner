@@ -1,6 +1,7 @@
 "use strict";
 // Static-page constraints (docs/roadmap.md §M1, synthesis D3, D4, D7): classic scripts in a fixed order, relative
-// paths, no modules, no fetch, no external requests. The page must work from file:// with networking off.
+// paths, no modules, no fetch, no external requests. The page must work from file:// with networking off. The one
+// exception is the opt-in icon switch (D7 as amended 2026-10-08): one image host, used only behind prefs.icons.
 const test = require("node:test");
 const assert = require("node:assert");
 const fs = require("fs");
@@ -44,9 +45,11 @@ test("index.html: a pre-paint theme script reads the state key before the styles
 
 test("no modules, fetch, workers, beacons, sockets or dynamic imports anywhere in site code", () => {
   const banned = [/\bfetch\s*\(/, /XMLHttpRequest/, /\bimport\s*\(\s*["'`]/, /^\s*import\s/m, /^\s*export\s/m, /new\s+Worker\b/,
-    /sendBeacon/, /WebSocket/, /EventSource/, /createElement\(\s*["']script/, /createElement\(\s*["']img/, /<img\b/, /<iframe\b/,
-    /\.src\s*=/, /serviceWorker/];
+    /sendBeacon/, /WebSocket/, /EventSource/, /createElement\(\s*["']script/, /createElement\(\s*["']img/, /<iframe\b/,
+    /\.src\s*=/, /serviceWorker/, /new\s+Image\b/, /<(?:video|audio|source|object|embed)\b/];
   for (const [f, text] of Object.entries(code)) for (const re of banned) assert.doesNotMatch(text, re, `${f}: ${re}`);
+  for (const [f, text] of Object.entries(code)) if (f !== "app/tooltip.js") assert.doesNotMatch(text, /<img\b/, `${f}: only the icon helper writes images`);
+  assert.doesNotMatch(html, /<img\b/);
   for (const re of banned) assert.doesNotMatch(html.replace(/<script\b[^>]*\ssrc="[^"]*"><\/script>/g, ""), re, `index.html: ${re}`);
 });
 
@@ -57,9 +60,29 @@ test("no external requests: CSS has no url() or @import; site code links only to
   for (const f of list("lib")) assert.doesNotMatch(code[f], /https?:\/\//, f);
   for (const f of list("app")) {
     for (const m of code[f].matchAll(/https?:\/\/[^\s"'<>)]*/g)) {
+      if (f === "app/tooltip.js" && m[0] === ICON_HOST) continue;
       assert.match(m[0], /^https:\/\/www\.wowhead\.com\/forever\/$|^https:\/\/www\.wowhead\.com\/forever\/item=$/, `${f}: ${m[0]}`);
     }
   }
+});
+
+// The icon host may appear once, as a constant, and be used only by A.icon, which returns nothing unless the
+// visitor switched icons on; the image is lazy and sends no referrer.
+const ICON_HOST = "https://wow.zamimg.com/images/wow/icons/small/";
+test("icons: one host constant, used only by A.icon behind prefs.icons, lazy and without referrer", () => {
+  const all = Object.values(code).join("\n");
+  assert.strictEqual(all.split(ICON_HOST).length - 1, 1, "the host string occurs once");
+  const tt = code["app/tooltip.js"];
+  assert.ok(tt.includes(`var ICON_HOST = "${ICON_HOST}";`), "declared as a constant in tooltip.js");
+  const fn = /A\.icon = function \(id\) \{\n([\s\S]*?)\n  \};/.exec(tt);
+  assert.ok(fn, "A.icon defined in tooltip.js");
+  assert.match(fn[1].split("\n")[0], /^\s*if \(A\.S\.prefs\.icons !== true\) return "";$/, "the pref check comes first");
+  assert.strictEqual(tt.split("ICON_HOST").length - 1, 2, "ICON_HOST is declared and used once");
+  assert.ok(fn[1].includes("ICON_HOST"), "the one use is inside A.icon");
+  assert.strictEqual(tt.split("<img").length - 1, 1, "one image tag");
+  assert.ok(fn[1].includes("<img"), "the image tag is inside A.icon");
+  assert.match(fn[1], /loading="lazy"/);
+  assert.match(fn[1], /referrerpolicy="no-referrer"/);
 });
 
 test("no root-relative URLs in the page, the stylesheet or the app code", () => {

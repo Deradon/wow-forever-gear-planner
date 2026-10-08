@@ -1,5 +1,6 @@
-// Offline item tooltips from the shipped data, item links to Wowhead (no script, no icons; D7), stat chips and
-// recipe-source badges (docs/ui.md §11; synthesis D18, D19, D21). Shared by the Gear, Prices and About views.
+// Offline item tooltips from the shipped data, item links to Wowhead (no script), opt-in icons (D7 as amended
+// 2026-10-08), stat chips and recipe-source badges (docs/ui.md §11; synthesis D18, D19, D21). Shared by the Gear,
+// Prices and About views.
 (function (root) {
   "use strict";
 
@@ -10,6 +11,8 @@
   var SPELLY = { SP: 1, Heal: 1, SpellDmg: 1 };
   var BIND_TEXT = { BoP: "Binds when picked up", BoE: "Binds when equipped", BoU: "Binds when used" };
   var ON_TEXT = { use: "Use", equip: "Equip", hit: "Chance on hit" };
+  // The only third-party host the page ever loads from, and only while the visitor has switched icons on (About).
+  var ICON_HOST = "https://wow.zamimg.com/images/wow/icons/small/";
 
   function D() { return A.D; }
   function esc(v) { return A.esc(v); }
@@ -30,12 +33,20 @@
   // Attributes for an element that shows a planner tooltip.
   A.ttAttrs = function (kind, id) { return ' data-tt="' + kind + '" data-id="' + esc(id) + '"'; };
 
+  // Icon of an item or mat; empty unless the visitor switched icons on (no image request otherwise).
+  A.icon = function (id) {
+    if (A.S.prefs.icons !== true) return "";
+    var it = D().items.rows[id] || D().mats.rows[id];
+    if (!it || !it.icon || !/^[a-z0-9_-]+$/.test(it.icon)) return "";
+    return '<img class="icon" src="' + ICON_HOST + it.icon + '.jpg" alt="" width="18" height="18" loading="lazy" referrerpolicy="no-referrer">';
+  };
+
   // Item name as a link to its Wowhead page (opens in a new tab; no request until clicked).
   A.itemLink = function (id, idAttr) {
     var it = A.item(id) || D().mats.rows[id];
     if (!it) return esc("Item " + id);
     return '<a class="iname q' + (it.quality || 1) + '" href="' + esc(A.whUrl(id)) + '" target="_blank" rel="noopener"' +
-      (idAttr ? ' id="' + esc(idAttr) + '"' : "") + A.ttAttrs(D().items.rows[id] ? "item" : "mat", id) + ">" + esc(it.name) + "</a>";
+      (idAttr ? ' id="' + esc(idAttr) + '"' : "") + A.ttAttrs(D().items.rows[id] ? "item" : "mat", id) + ">" + A.icon(id) + esc(it.name) + "</a>";
   };
 
   A.statChips = function (it) {
@@ -159,7 +170,7 @@
 
   function itemTip(id) {
     var it = A.item(id), o = [];
-    o.push('<div class="wtt-name q' + (it.quality || 1) + '">' + esc(it.name) + "</div>");
+    o.push('<div class="wtt-name q' + (it.quality || 1) + '">' + A.icon(id) + esc(it.name) + "</div>");
     o.push('<div class="wtt-y">Item Level ' + esc(it.ilvl) + "</div>");
     if (BIND_TEXT[it.bind]) o.push("<div>" + BIND_TEXT[it.bind] + "</div>");
     var type = A.typeText(it);
@@ -217,7 +228,7 @@
 
   function matTip(id) {
     var m = D().mats.rows[id], pr = A.pricer(), u = pr.unitPrice(+id, 0);
-    var o = ['<div class="wtt-name q' + (m.quality || 1) + '">' + esc(m.name) + "</div>"];
+    var o = ['<div class="wtt-name q' + (m.quality || 1) + '">' + A.icon(id) + esc(m.name) + "</div>"];
     var p = [ttRow('<span class="wtt-k">Unit</span> ' + (u ? A.money(u.copper) : "no price"), u ? esc(A.priceSource(u)) : "")];
     if (m.vendor) p.push('<div class="wtt-d">Sold by vendors</div>');
     if (m.gathered) p.push('<div class="wtt-d">Gathered: ' + esc(m.gathered) + "</div>");

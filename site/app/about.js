@@ -1,6 +1,7 @@
 // About: data freshness, the beta notice, source coverage per level band and faction, data notes and citations,
-// and "Your data": storage status, export, import, reset, orphans and the privacy statement (docs/ui.md §9,
-// §10.6, §10.7; synthesis D20, D35, D37).
+// display prefs (theme, tooltips, opt-in icons with their disclosure), and "Your data": storage status, export,
+// import, reset, orphans and the privacy statement (docs/ui.md §9, §10.6, §10.7; synthesis D7 as amended, D20,
+// D35, D37).
 (function (root) {
   "use strict";
 
@@ -110,6 +111,16 @@
         }).join("") + "</ul></div>");
       out.push("</div>");
 
+      var pr = A.S.prefs;
+      out.push('<div class="panel section"><h2>Display</h2><div class="actions">' +
+        '<label class="small">Theme <select id="pref-theme" data-change="pref-theme">' + [["auto", "follow system"], ["light", "light"], ["dark", "dark"]].map(function (o) {
+          return '<option value="' + o[0] + '"' + (pr.theme === o[0] ? " selected" : "") + ">" + o[1] + "</option>";
+        }).join("") + "</select></label>" +
+        '<label class="small"><input type="checkbox" id="pref-tooltips" data-change="pref-tooltips"' + (pr.tooltips !== "off" ? " checked" : "") + "> item tooltips on hover</label>" +
+        '<label class="small"><input type="checkbox" id="pref-icons" data-change="pref-icons"' + (pr.icons === true ? " checked" : "") + "> show item icons</label></div>" +
+        '<p class="small muted" style="margin-top:8px">Icons are off by default. Switched on, the page loads each icon from Wowhead\'s image host (wow.zamimg.com), ' +
+        "so that server sees your IP address and browser, as with any website. No other data is sent, and nothing loads from there while icons are off.</p></div>");
+
       var st = A.store, orph = FGP.state.orphans(A.S, D()), nOrph = orph.items.length + orph.recipes.length;
       out.push('<div class="panel section"><h2>Your data</h2><dl class="kv">' +
         "<dt>Storage</dt><dd>" + (st.ok ? "this browser (localStorage)" : '<span class="err">blocked: changes are lost on reload; use Export</span>') + (st.readOnly ? ' · <span class="err">read-only (saved by a newer page)</span>' : "") + "</dd>" +
@@ -122,7 +133,7 @@
         '<button type="button" class="btn" id="import-state" data-act="import-state">Import planner file…</button>' +
         '<button type="button" class="btn btn-danger right" id="reset-state" data-act="reset-state">Reset…</button></div>' +
         '<p class="small muted" style="margin-top:10px">Nothing leaves your browser: no account, no upload, no tracking. Your Auctionator file is read here and never sent anywhere. ' +
-        "Item names link to Wowhead; nothing loads from there unless you click a link. A planner file contains your roster, labels and progress.</p></div>");
+        "Item names link to Wowhead; nothing loads from there unless you click a link or switch icons on. A planner file contains your roster, labels and progress.</p></div>");
       return out.join("");
     },
   };
@@ -130,6 +141,13 @@
   // --- actions ---------------------------------------------------------------------------------------------------
 
   A.acts["export-state"] = function () { A.exportFile(); };
+  A.changes["pref-theme"] = function (el) {
+    if (["auto", "light", "dark"].indexOf(el.value) < 0) return;
+    A.S.prefs.theme = el.value;
+    A.commit(["pref-theme"]);
+  };
+  A.changes["pref-tooltips"] = function (el) { A.S.prefs.tooltips = el.checked ? "planner" : "off"; A.commit(["pref-tooltips"]); };
+  A.changes["pref-icons"] = function (el) { A.S.prefs.icons = !!el.checked; A.commit(["pref-icons"]); };
   A.changes["export-prices"] = function (el) { A.exportPrices = !!el.checked; };
   A.acts["import-state"] = function () {
     A.pickFile(".json,application/json", function (file) {

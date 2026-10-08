@@ -379,6 +379,8 @@ table.items td.c-skill { min-width: 120px; }
 table.items td.c-skill .badge { white-space: normal; }
 .iname { font-weight: 650; text-decoration: none; }
 .iname:hover { text-decoration: underline; }
+img.icon { width: 18px; height: 18px; vertical-align: -4px; margin-right: 5px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .45); }
+img.icon.icon-missing { visibility: hidden; }
 .q1 { color: var(--q1); } .q2 { color: var(--q2); } .q3 { color: var(--q3); } .q4 { color: var(--q4); }
 .inote { color: var(--muted); font-size: 12px; margin-top: 1px; max-width: 52ch; }
 .inote.warn { color: var(--warn); }

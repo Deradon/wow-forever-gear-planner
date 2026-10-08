@@ -446,3 +446,25 @@ test("views over http(s) route through the hash, and prefs.view follows it", () 
   ctx.location._hash = "";
   assert.strictEqual(A.currentView(), "about", "no hash: the stored view");
 });
+
+test("icons: off by default with no image anywhere; the About switch turns them on in the Gear view and tooltips", () => {
+  const { A } = loadApp();
+  A.acts.start(el({ "data-key": "example" }));
+  const id = String(A.gearModel(A.selected()).rows[0].id);
+  const pages = () => ["gear", "prices", "about"].map((v) => A.viewHtml(v)).join("") + A.tipHtml("item", id) + A.tipHtml("mat", String(LINEN));
+  assert.strictEqual(A.S.prefs.icons, false);
+  assert.doesNotMatch(pages(), /<img\b|zamimg\.com\/images/, "icons off: no image markup, so no image request");
+  const about = A.viewHtml("about");
+  assert.match(about, /id="pref-icons" data-change="pref-icons">/, "the switch is unchecked");
+  assert.match(about, /wow\.zamimg\.com/, "the About view discloses the image host");
+  A.changes["pref-icons"]({ checked: true });
+  assert.strictEqual(A.S.prefs.icons, true);
+  const icon = new RegExp(`<img class="icon" src="https://wow\\.zamimg\\.com/images/wow/icons/small/${A.D.items.rows[id].icon}\\.jpg" alt="" width="18" height="18" loading="lazy" referrerpolicy="no-referrer">`);
+  assert.match(A.viewHtml("gear"), icon);
+  assert.match(A.tipHtml("item", id), icon);
+  assert.match(A.tipHtml("mat", String(LINEN)), /icons\/small\/inv_fabric_linen_01\.jpg/);
+  A.resetState();
+  assert.strictEqual(A.S.prefs.icons, true, "Reset keeps the icon pref");
+  A.changes["pref-icons"]({ checked: false });
+  assert.doesNotMatch(pages(), /<img\b/);
+});
